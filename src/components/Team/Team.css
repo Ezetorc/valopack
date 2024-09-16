@@ -1,0 +1,8 @@
+.team {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  place-items: center;
+  width: 100%;
+  min-height: 100dvh;
+  padding-top: 10vh;
+}

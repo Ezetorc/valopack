@@ -1,0 +1,31 @@
+@keyframes appear {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.modal-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #0b1430;
+  width: 25%;
+  min-width: 400px;
+  aspect-ratio: 12/13;
+  position: relative;
+  border-style: solid none solid none;
+  border-color: #fff;
+  border-width: 1px;
+  animation: appear 0.2s forwards;
+}

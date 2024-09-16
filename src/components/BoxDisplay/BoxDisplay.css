@@ -1,0 +1,43 @@
+.game__box {
+  cursor: pointer;
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff24;
+  border: 5px solid transparent;
+  font-size: clamp(30px, 3vw, 40px);
+}
+
+.game__box.ally img {
+  border-bottom: 5px solid #348ac7;
+}
+
+.game__box.ally:hover {
+  border-color: #348ac7;
+}
+
+.game__box.enemy img {
+  border-bottom: 5px solid #b83231;
+}
+
+/* .game__box.enemy:hover {
+  border-color: #b83231;
+} */
+
+.empty:hover {
+  border-color: #fff;
+}
+
+.collision {
+  background-color: #d16c6c;
+}
+
+.agent img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-bottom: 4px solid;
+  padding: 0;
+  margin: 0;
+}

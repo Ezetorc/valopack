@@ -1,0 +1,36 @@
+:root {
+  font-family: stroke;
+  color-scheme: light dark;
+  color: #fff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --main-color: #da3848;
+  --hover-color: #00ffff;
+  --red-gradient: linear-gradient(0deg, #cd515d 0%, #da3848 100%);
+  --blue-gradient: linear-gradient(0deg, #7ea9ab 0%, #6a9a9c 100%);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100dvh;
+}
+
+#root {
+  width: 100vw;
+  min-height: 100dvh;
+  position: relative;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: stroke;
+  font-display: swap;
+  src: url('src/assets/fonts/stroke.woff2') format('woff2');
+}

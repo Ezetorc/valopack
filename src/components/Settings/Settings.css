@@ -1,0 +1,70 @@
+.settings-modal {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.settings-modal header {
+  width: 100%;
+  height: 100px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  border-bottom: 1px solid #fff;
+  place-items: center;
+}
+
+.settings-modal header span {
+  width: 100%;
+  height: 100%;
+  font-size: clamp(70px, 4vw, 100px);
+  text-align: center;
+}
+
+.settings-modal header button {
+  width: 90%;
+  margin-right: 20%;
+  aspect-ratio: 16/9;
+  background: var(--red-gradient);
+  border: 2px solid var(--main-color);
+  font-family: stroke;
+  font-size: clamp(30px, 2vw, 40px);
+}
+
+.settings-modal header button:hover {
+  border-color: #fff;
+  cursor: pointer;
+}
+
+.settings-modal div {
+  width: 100%;
+  height: 150px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  place-items: center;
+}
+
+.settings-modal div span {
+  font-size: clamp(40px, 2.5vw, 60px);
+  padding-left: 20%;
+  display: flex;
+}
+
+.settings-modal div select {
+  cursor: pointer;
+  width: 70%;
+  aspect-ratio: 16/6;
+  text-align: center;
+  font-size: clamp(30px, 2vw, 50px);
+  font-family: stroke;
+  background: var(--red-gradient);
+  border: 2px solid var(--main-color);
+}
+
+.settings-modal div select:hover {
+  border-color: #fff;
+}
+
+.settings-modal div option {
+  font-family: stroke;
+  background-color: #7ea9ab;
+}
