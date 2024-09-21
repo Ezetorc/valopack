@@ -29,6 +29,36 @@ export const dictionary: Dictionaries = {
     shop: "Shop",
     start: "Start",
     team: "Team",
+    clickToDescriptions: "Click on an attribute to see its description",
+    attack: {
+      name: "Attack",
+      description: "Base damage dealt with normal attacks",
+    },
+    health: {
+      name: "Health",
+      description: "Damage you can take before being defeated",
+    },
+    defense: {
+      name: "Defense",
+      description: "Reduces damage from enemy attacks",
+    },
+    speed: {
+      name: "Speed",
+      description: "Determines movement range on the grid",
+    },
+    precision: {
+      name: "Precision",
+      description: "Chance to hit with attacks or abilities",
+    },
+    critic: {
+      name: "Critic",
+      description: "Chance to deal double damage",
+    },
+    resistance: {
+      name: "Resistance",
+      description: "Reduces negative effects",
+    },
+
     wannaBuy: (product: ProductType) => `Do you want to buy ${product.name}?`,
   },
 
@@ -59,6 +89,37 @@ export const dictionary: Dictionaries = {
     shop: "Tienda",
     start: "Empezar",
     team: "Equipo",
+    clickToDescriptions: "Click en un atributo para ver su descripción",
+    attack: {
+      name: "Ataque",
+      description: "Daño base que puede infligir en ataques normales",
+    },
+    health: {
+      name: "Vida",
+      description:
+        "La cantidad de daño que puede recibir antes de ser derrotado",
+    },
+    defense: {
+      name: "Defensa",
+      description: "Reduce el daño recibido de ataques enemigos",
+    },
+    speed: {
+      name: "Velocidad",
+      description: "Determina el rango de movimiento en la cuadrícula",
+    },
+    precision: {
+      name: "Precisión",
+      description: "Probabilidad de ataque o habilidad de acertar",
+    },
+    critic: {
+      name: "Crítico",
+      description:
+        "Probabilidad de infligir un golpe crítico que haga el doble de daño base",
+    },
+    resistance: {
+      name: "Resistencia",
+      description: "Reducción porcentual de los efectos negativos",
+    },
     wannaBuy: (product: ProductType) => `¿Quieres comprar ${product.name}?`,
   },
 };

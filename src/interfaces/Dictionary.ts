@@ -26,5 +26,34 @@ export interface Dictionary {
   shop: string;
   start: string;
   team: string;
+  clickToDescriptions: string;
+  attack: {
+    name: string;
+    description: string;
+  };
+  health: {
+    name: string;
+    description: string;
+  };
+  defense: {
+    name: string;
+    description: string;
+  };
+  speed: {
+    name: string;
+    description: string;
+  };
+  precision: {
+    name: string;
+    description: string;
+  };
+  critic: {
+    name: string;
+    description: string;
+  };
+  resistance: {
+    name: string;
+    description: string;
+  };
   wannaBuy: (product: ProductType) => string;
 }

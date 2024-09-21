@@ -22,22 +22,32 @@
   border-bottom: 5px solid #b83231;
 }
 
-/* .game__box.enemy:hover {
+.game__box.enemy:hover {
   border-color: #b83231;
-} */
+}
 
 .empty:hover {
   border-color: #fff;
 }
 
-.collision {
-  background-color: #d16c6c;
+.box {
+  background-image: url('src/assets/images/box.webp');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
-.agent img {
+.stimBeacon {
+  background-image: url('src/assets/images/stim_beacon.webp');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.smoke {
+  background-color: rgb(132, 73, 25);
+}
+
+.player img {
   width: 100%;
-  aspect-ratio: 1/1;
-  border-bottom: 4px solid;
-  padding: 0;
-  margin: 0;
 }

@@ -1,1 +1,1 @@
-export type BoxType = "agent" | "collision" | "empty";
+export type BoxType = "player" | "box" | "empty" | "stimBeacon" | "smoke";

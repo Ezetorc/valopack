@@ -1,24 +1,26 @@
 import React, { createContext, ReactNode, useState } from "react";
 import Map from "../interfaces/Map";
 import { maps } from "../constants/maps";
-import BoxWithAgent from "../interfaces/BoxWithAgent";
-import initializeBoard from "../utils/initializeBoard";
-import Agent from "../interfaces/Agent";
-import getTeam from "../utils/getTeam";
-import { initialTeam } from "../constants/initialTeam";
 import { Team } from "../types/Team";
+import { Action } from "../types/Action";
+import Box from "../interfaces/Box";
+import Effect from "../interfaces/Effect";
 
 interface GameContextType {
   board: Map;
   setBoard: React.Dispatch<React.SetStateAction<Map>>;
   map: Map;
   setMap: React.Dispatch<React.SetStateAction<Map>>;
-  selectedAgent: BoxWithAgent | null;
-  setSelectedAgent: React.Dispatch<React.SetStateAction<BoxWithAgent | null>>;
-  enemyTeam: Agent[];
-  allyTeam: Agent[];
+  selectedBox: Box | null;
+  setSelectedBox: React.Dispatch<React.SetStateAction<Box | null>>;
+  targetBox: Box | null;
+  setTargetBox: React.Dispatch<React.SetStateAction<Box | null>>;
   turn: Team;
   setTurn: React.Dispatch<React.SetStateAction<Team>>;
+  action: Action | null;
+  setAction: React.Dispatch<React.SetStateAction<Action | null>>;
+  effects: Effect[];
+  setEffects: React.Dispatch<React.SetStateAction<Effect[]>>;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -28,12 +30,11 @@ export const GameContext = createContext<GameContextType | undefined>(
 export function GameContextProvider({ children }: { children: ReactNode }) {
   const [turn, setTurn] = useState<Team>("ally");
   const [map, setMap] = useState<Map>(maps.bind);
-  const [selectedAgent, setSelectedAgent] = useState<BoxWithAgent | null>(null);
-  const [enemyTeam] = useState<Agent[]>(getTeam());
-  const [allyTeam] = useState<Agent[]>(initialTeam);
-  const [board, setBoard] = useState<Map>(
-    initializeBoard(map, allyTeam, enemyTeam)
-  );
+  const [selectedBox, setSelectedBox] = useState<Box | null>(null);
+  const [targetBox, setTargetBox] = useState<Box | null>(null);
+  const [action, setAction] = useState<Action | null>(null);
+  const [board, setBoard] = useState<Map>(map);
+  const [effects, setEffects] = useState<Effect[]>([]);
 
   return (
     <GameContext.Provider
@@ -42,12 +43,16 @@ export function GameContextProvider({ children }: { children: ReactNode }) {
         setBoard,
         map,
         setMap,
-        selectedAgent,
-        setSelectedAgent,
-        enemyTeam,
-        allyTeam,
+        selectedBox,
+        setSelectedBox,
         turn,
         setTurn,
+        action,
+        setAction,
+        targetBox,
+        setTargetBox,
+        effects,
+        setEffects,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import Box from "../../interfaces/Box";
-import BoxWithAgent from "../../interfaces/BoxWithAgent";
+import Player from "../../interfaces/Player";
 import "./BoxDisplay.css";
 
 interface BoxDisplayProps {
@@ -9,19 +9,25 @@ interface BoxDisplayProps {
 }
 
 export default function BoxDisplay({ box, onClick, bgColor }: BoxDisplayProps) {
-  const color = box.type != "collision" ? bgColor : "";
-  const isBoxWithAgent = box.type === "agent";
-  const boxWithAgent = isBoxWithAgent ? (box as BoxWithAgent) : null;
-  const flip = isBoxWithAgent ? (boxWithAgent?.team == "ally" ? 1 : -1) : 1;
+  const color =
+    box.type == "empty" ||
+    box.type == "player" ||
+    box.type == "stimBeacon" ||
+    box.type == "box"
+      ? bgColor
+      : "";
+  const isPlayer = box.type === "player";
+  const player = isPlayer ? (box as Player) : null;
+  const flip = isPlayer ? (player?.team == "ally" ? 1 : -1) : 1;
 
   return (
     <button
       onClick={onClick}
-      className={`game__box ${box.type} ${boxWithAgent?.team}`}
+      className={`game__box ${box.type} ${player?.team}`}
       style={{ backgroundColor: color, transform: `scaleX(${flip})` }}
     >
-      {isBoxWithAgent && boxWithAgent?.agent && (
-        <img src={boxWithAgent.agent.icon} alt={boxWithAgent.agent.name} />
+      {isPlayer && player?.agent && (
+        <img src={player.agent.icon} alt={player.agent.name} />
       )}
     </button>
   );

@@ -1,0 +1,40 @@
+.game__actions {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5%;
+  padding: 1%;
+  margin-inline: 5%;
+  place-content: center;
+  align-items: center;
+  background-color: #7979a8;
+  border-radius: 10px;
+  animation: appear 0.1s forwards;
+}
+
+.game__actions img {
+  width: 80%;
+  min-width: 70px;
+  max-width: 250px;
+  border-bottom: 5px solid transparent;
+}
+
+.game__actions button {
+  background: var(--red-gradient);
+  border: 2px solid var(--main-color);
+  font-family: stroke;
+  font-size: clamp(20px, 2vw, 40px);
+  width: 100%;
+  min-width: 70px;
+  max-width: 250px;
+  aspect-ratio: 16/9;
+  cursor: pointer;
+}
+
+.game__actions > button:nth-child(6) {
+  background: var(--blue-gradient);
+  border: 2px solid var(--hover-color);
+}
+
+.game__actions button:hover {
+  border-color: #fff;
+}

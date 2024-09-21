@@ -1,4 +1,5 @@
 import { Role } from "../types/Role";
+import Ability from "./Ability";
 
 export default interface Agent {
   name: string;
@@ -7,6 +8,5 @@ export default interface Agent {
   icon: string;
   level: number;
   role: Role;
+  abilities: Ability[];
 }
-
-
