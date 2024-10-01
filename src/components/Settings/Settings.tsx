@@ -1,8 +1,8 @@
-import React from "react";
 import useSettings from "../../hooks/useSettings";
 import { Language } from "../../types/Language";
 import Modal from "../Modal/Modal";
 import sounds from "../../constants/sounds";
+import Select, { SingleValue, StylesConfig } from "react-select";
 import "./Settings.css";
 
 export default function Settings() {
@@ -13,9 +13,39 @@ export default function Settings() {
     sounds.click.play();
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLanguage: Language = event.currentTarget.value as Language;
+  const handleReactSelectChange = (
+    selectedOption: SingleValue<{ value: string; label: string }>
+  ) => {
+    const newLanguage = selectedOption?.value as Language;
     setLanguage(newLanguage);
+  };
+
+  const options = [
+    { value: "en", label: "English" },
+    { value: "es", label: "Español" },
+  ];
+
+  const customStyles: StylesConfig<{ value: string; label: string }, false> = {
+    control: (provided) => ({
+      ...provided,
+      cursor: "pointer",
+      aspectRatio: "16 / 16", 
+      textAlign: "center",
+      fontSize: "clamp(30px, 2vw, 50px)",
+      fontFamily: "stroke",
+      background: "var(--red-gradient)",
+      border: "2px solid var(--main-color)",
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      cursor: "pointer",
+      backgroundColor: state.isSelected
+        ? "var(--main-color)"
+        : provided.backgroundColor,
+      "&:hover": {
+        borderColor: "#fff",
+      },
+    }),
   };
 
   return (
@@ -26,11 +56,16 @@ export default function Settings() {
       </header>
 
       <div className="settings__language">
-        <span>Language</span>
-        <select onChange={handleChange} name="select-language" value={language}>
-          <option value="en">English</option>
-          <option value="es">Español</option>
-        </select>
+        <span>{texts.language}</span>
+
+        <Select
+          className="language-selector"
+          name="select-language"
+          options={options}
+          value={options.find((option) => option.value === language)}
+          onChange={handleReactSelectChange}
+          styles={customStyles}
+        />
       </div>
     </Modal>
   );

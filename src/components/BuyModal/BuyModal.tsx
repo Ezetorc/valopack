@@ -14,16 +14,24 @@ export default function BuyModal({ canBuy }: { canBuy: boolean }) {
   const handleClick = () => selectedProduct && buy(selectedProduct);
   const handleLoad = () => sounds.purchase.play();
 
-  return canBuy ? (
+  return (
     <Modal className="buy-modal" onLoad={handleLoad}>
-      <span>{texts.wannaBuy(selectedProduct.product)}</span>
-      <button onClick={() => setSelectedProduct(null)}>{texts.close}</button>
-      <button onClick={handleClick}>{texts.buy}</button>
-    </Modal>
-  ) : (
-    <Modal className="buy-modal" onLoad={handleLoad}>
-      <span>{texts.cantBuy(selectedProduct.product, credits)}</span>
-      <button onClick={() => setSelectedProduct(null)}>{texts.close}</button>
+      {canBuy ? (
+        <>
+          <span>{texts.wannaBuy(selectedProduct.product)}</span>
+          <button onClick={() => setSelectedProduct(null)}>
+            {texts.close}
+          </button>
+          <button onClick={handleClick}>{texts.buy}</button>
+        </>
+      ) : (
+        <>
+          <span>{texts.cantBuy(selectedProduct.product, credits)}</span>
+          <button onClick={() => setSelectedProduct(null)}>
+            {texts.close}
+          </button>
+        </>
+      )}
     </Modal>
   );
 }

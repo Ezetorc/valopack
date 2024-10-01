@@ -8,7 +8,7 @@ import getDistance from "./getDistance";
 
 export default function getInRange<T extends Box>(
   board: Map,
-  boxType: BoxType | "all",
+  boxTypes: BoxType[] | "all",
   position: Vector2,
   range: number,
   team: Team | "any" = "any"
@@ -33,9 +33,8 @@ export default function getInRange<T extends Box>(
         neighborX < grid[0].length
       ) {
         const neighborBox = grid[neighborY][neighborX];
-
-        if (boxType === "all" || neighborBox.type === boxType) {
-          if (boxType === "player" && team !== "any") {
+        if (boxTypes === "all" || boxTypes.includes(neighborBox.type)) {
+          if (neighborBox.type === "player" && team !== "any") {
             const playerBox = neighborBox as Player;
             if (playerBox.team === team) {
               boxesInRange.push(neighborBox as T);

@@ -8,52 +8,64 @@ export interface Dictionary {
   close: string;
   controller: string;
   controllerPack: string;
-  credits: string;
-  duelist: string;
   duelistPack: string;
-  game: string;
-  home: string;
-  initiator: string;
   initiatorPack: string;
-  kingdomCredits: string;
+  sentinelPack: string;
   mixedPack: string;
   newPack: string;
+  credits: string;
+  duelist: string;
+  home: string;
+  initiator: string;
   noCards: string;
   play: string;
   sentinel: string;
-  sentinelPack: string;
   settings: string;
   shop: string;
   start: string;
   team: string;
   clickToDescriptions: string;
-  attack: {
-    name: string;
-    description: string;
+  attributes: {
+    attack: {
+      name: string;
+      description: string;
+    };
+    health: {
+      name: string;
+      description: string;
+    };
+    defense: {
+      name: string;
+      description: string;
+    };
+    speed: {
+      name: string;
+      description: string;
+    };
+    precision: {
+      name: string;
+      description: string;
+    };
+    critic: {
+      name: string;
+      description: string;
+    };
+    resistance: {
+      name: string;
+      description: string;
+    };
   };
-  health: {
-    name: string;
-    description: string;
+  winner: {
+    ally: string;
+    enemy: string;
+    draw: string;
   };
-  defense: {
-    name: string;
-    description: string;
+  actions: {
+    move: string;
+    attack: string;
   };
-  speed: {
-    name: string;
-    description: string;
-  };
-  precision: {
-    name: string;
-    description: string;
-  };
-  critic: {
-    name: string;
-    description: string;
-  };
-  resistance: {
-    name: string;
-    description: string;
-  };
+  loading: string;
+  language: string;
+  level: string;
   wannaBuy: (product: ProductType) => string;
 }

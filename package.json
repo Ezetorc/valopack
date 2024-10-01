@@ -18,6 +18,7 @@
     "react-audio-player": "^0.17.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
+    "react-select": "^5.8.1",
     "react-window": "^1.8.10",
     "swr": "^2.2.5"
   },

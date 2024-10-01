@@ -1,3 +1,4 @@
+import { skySmoke } from "../abilities/brimstone/skySmoke";
 import { stimBeacon } from "../abilities/brimstone/stimBeacon";
 import Agent from "../interfaces/Agent";
 
@@ -10,7 +11,7 @@ export const agents: Agent[] = [
     icon: "https://media.valorant-api.com/agents/9f0d8ba9-4140-b941-57d3-a7ad57c6b417/displayiconsmall.png",
     level: 1,
     id: 0,
-    abilities: [stimBeacon, stimBeacon],
+    abilities: [stimBeacon, skySmoke],
   },
   {
     name: "Phoenix",

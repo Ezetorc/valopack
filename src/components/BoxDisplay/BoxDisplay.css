@@ -1,5 +1,4 @@
 .game__box {
-  cursor: pointer;
   width: 100%;
   aspect-ratio: 1/1;
   display: flex;
@@ -8,6 +7,7 @@
   color: #ffffff24;
   border: 5px solid transparent;
   font-size: clamp(30px, 3vw, 40px);
+  position: relative;
 }
 
 .game__box.ally img {
@@ -16,6 +16,7 @@
 
 .game__box.ally:hover {
   border-color: #348ac7;
+  cursor: pointer;
 }
 
 .game__box.enemy img {
@@ -24,10 +25,12 @@
 
 .game__box.enemy:hover {
   border-color: #b83231;
+  cursor: pointer;
 }
 
 .empty:hover {
   border-color: #fff;
+  cursor: pointer;
 }
 
 .box {
@@ -42,12 +45,24 @@
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  animation: level-up 2s forwards;
 }
 
 .smoke {
-  background-color: rgb(132, 73, 25);
+  background: var(--blue-gradient);
 }
 
 .player img {
   width: 100%;
+}
+
+@keyframes level-up {
+  from {
+    background: var(--blue-gradient);
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

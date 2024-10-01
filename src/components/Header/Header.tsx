@@ -6,6 +6,7 @@ import useSettings from "../../hooks/useSettings";
 import useUser from "../../hooks/useUser";
 import sounds from "../../constants/sounds";
 import "./Header.css";
+import Loading from "../Loading/Loading";
 
 const LazySettings = lazy(() => import("../Settings/Settings"));
 
@@ -38,7 +39,7 @@ export default function Header() {
           <div className="header__credits header__option">
             <span>{credits}</span>
             <img
-              title={texts.kingdomCredits}
+              title={texts.credits}
               src={creditsKingdomImage}
               alt={texts.credits}
             />
@@ -47,7 +48,7 @@ export default function Header() {
       </header>
 
       {settingsOpen && (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <LazySettings />
         </Suspense>
       )}

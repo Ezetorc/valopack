@@ -2,6 +2,8 @@ import duelistPackImage from "../../assets/images/packs/duelist_pack.webp";
 import controllerPackImage from "../../assets/images/packs/controller_pack.webp";
 import initiatorPackImage from "../../assets/images/packs/initiator_pack.webp";
 import sentinelPackImage from "../../assets/images/packs/sentinel_pack.webp";
+import mixedPackImage from "../../assets/images/packs/mixed_pack.webp";
+import newPackImage from "../../assets/images/packs/new_pack.webp";
 import { useEffect } from "react";
 import useSettings from "../../hooks/useSettings";
 import useUser from "../../hooks/useUser";
@@ -72,7 +74,7 @@ export default function Shop() {
             product={{
               name: texts.mixedPack,
               price: 3000,
-              image: sentinelPackImage,
+              image: mixedPackImage,
               type: "all",
             }}
             color="#70226d"
@@ -82,7 +84,7 @@ export default function Shop() {
             product={{
               name: texts.newPack,
               price: 5000,
-              image: sentinelPackImage,
+              image: newPackImage,
               type: "new",
             }}
             color="#7b0707"

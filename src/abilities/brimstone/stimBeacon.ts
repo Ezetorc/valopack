@@ -4,16 +4,17 @@ export const stimBeacon: Ability = {
   name: "Stim Beacon",
   description:
     "Throw a stim beacon that increase speed by one of allies around it for two turns.",
-  available: true,
+  usesLeft: 1,
   range: [1, 10],
+  boxTypes: ["empty"],
   methods: [
     {
       type: "replace",
       params: {
         get: {
           getType: "targetBox",
+          boxTypes: ["empty"],
         },
-        from: ["empty"],
         to: "stimBeacon",
       },
     },
@@ -22,7 +23,7 @@ export const stimBeacon: Ability = {
       params: {
         get: {
           getType: "range",
-          boxType: "player",
+          boxTypes: ["player"],
           team: "ally",
           range: 2,
         },
@@ -31,18 +32,30 @@ export const stimBeacon: Ability = {
       },
     },
     {
+      type: "affect",
+      params: {
+        get: {
+          getType: "range",
+          boxTypes: ["player"],
+          team: "ally",
+          range: 2,
+        },
+        affectedCodes: ["stimBeacon"],
+      },
+    },
+    {
       type: "wait",
       params: {
         type: "miliseconds",
-        time: 2000,
+        time: 1000,
         methods: [
           {
             type: "replace",
             params: {
               get: {
                 getType: "targetBox",
+                boxTypes: ["stimBeacon"],
               },
-              from: ["stimBeacon"],
               to: "empty",
             },
           },
@@ -53,16 +66,17 @@ export const stimBeacon: Ability = {
       type: "wait",
       params: {
         type: "turns",
-        time: 2,
+        time: 3,
         methods: [
           {
-            type: "replace",
+            type: "modifyAttribute",
             params: {
               get: {
-                getType: "targetBox",
+                getType: "affected",
+                affectedCodes: ["stimBeacon"],
               },
-              from: ["stimBeacon", "player", "box", "empty"],
-              to: "box",
+              attribute: "speed",
+              amount: -1,
             },
           },
         ],

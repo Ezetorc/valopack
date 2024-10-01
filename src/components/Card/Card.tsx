@@ -21,7 +21,7 @@ function Card({ name, role, image, level }: CardProps) {
         <span>{name}</span>
         <span>{texts[role]}</span>
       </div>
-      <span className="card__level">Level: {level}</span>
+      <span className="card__level">{`${texts.level}: ${level}`}</span>
     </div>
   );
 }

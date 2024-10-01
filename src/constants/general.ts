@@ -3,6 +3,7 @@ import { Language } from "../types/Language";
 export const appName: string = "VALOPACK";
 export const levelMultiplier: number = 1;
 export const defaultLanguage: Language = "en";
+export const creditsPerGameWinned: number = 1000;
 export const teamColors = {
   ally: "#348ac7",
   enemy: "#b83231",
@@ -26,5 +27,4 @@ export const paths: { [key: string]: string } = {
   shop: "/shop",
   team: "/team",
   play: "/play",
-  game: "/play/game",
 };

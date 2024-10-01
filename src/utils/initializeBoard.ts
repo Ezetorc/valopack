@@ -24,7 +24,8 @@ export default function initializeBoard(
 
       const player: Player = {
         type: "player",
-        effect: { name: "" },
+        free: false,
+        codes: [],
         position: {
           x: position.x,
           y: position.y,

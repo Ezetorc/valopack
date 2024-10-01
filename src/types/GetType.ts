@@ -1,1 +1,1 @@
-export type GetType = "range" | "targetBox" | "selectedBox";
+export type GetType = "range" | "targetBox" | "selectedBox" | "affected";

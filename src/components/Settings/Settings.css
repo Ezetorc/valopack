@@ -63,8 +63,3 @@
 .settings-modal div select:hover {
   border-color: #fff;
 }
-
-.settings-modal div option {
-  font-family: stroke;
-  background-color: #7ea9ab;
-}

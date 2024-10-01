@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { GameContext } from "../contexts/GameContext";
 import getDistance from "../utils/getDistance";
 import Box from "../interfaces/Box";
@@ -11,6 +11,7 @@ import GetParams from "../interfaces/MethodParams/GetParams";
 import getInRange from "../utils/getInRange";
 import ModifyAttributeParams from "../interfaces/MethodParams/ModifyAttributeParams";
 import WaitParams from "../interfaces/MethodParams/WaitParams";
+import AffectParams from "../interfaces/MethodParams/AffectParams";
 
 export default function useGame() {
   const context = useContext(GameContext);
@@ -18,23 +19,49 @@ export default function useGame() {
 
   const { setBoard, board, selectedBox, targetBox, setEffects } = context;
 
+  const getTotalPlayers = useCallback(() => {
+    return board.grid.flat().reduce(
+      (acc, box) => {
+        if (box.type === "player") {
+          const { team } = box as Player;
+          if (team === "ally") acc.allyPlayers++;
+          else acc.enemyPlayers++;
+        }
+        return acc;
+      },
+      { allyPlayers: 0, enemyPlayers: 0 }
+    );
+  }, [board.grid]);
+
   const getBoxes = (params: GetParams): Box[] => {
     switch (params.getType) {
       case "targetBox":
-        if (targetBox) return [targetBox];
+        if (targetBox && params.boxTypes?.includes(targetBox.type)) {
+          return [targetBox];
+        }
         break;
       case "selectedBox":
-        if (selectedBox) return [selectedBox];
+        if (selectedBox && params.boxTypes?.includes(selectedBox.type)) {
+          return [selectedBox];
+        }
         break;
       case "range":
-        if (!targetBox || !params.boxType || !params.range) return [];
+        if (!targetBox || !params.boxTypes || !params.range) return [];
         return getInRange(
           board,
-          params.boxType,
+          params.boxTypes,
           targetBox.position,
           params.range,
           params.team
         );
+      case "affected":
+        return board.grid
+          .flat()
+          .filter((box) =>
+            box.codes.some((code) =>
+              (params.affectedCodes ?? []).includes(code)
+            )
+          );
     }
 
     return [];
@@ -60,7 +87,8 @@ export default function useGame() {
 
     newBoard.grid[agentPosition.y][agentPosition.x] = {
       type: "empty",
-      code: "",
+      free: true,
+      codes: [""],
       position: agentPosition,
     };
 
@@ -68,7 +96,13 @@ export default function useGame() {
   };
 
   const applyDamage = (attacker: Player, target: Player) => {
-    target.attributes.health -= attacker.attributes.attack;
+    const damage = Math.max(
+      attacker.attributes.attack - target.attributes.defense,
+      0
+    );
+
+    target.attributes.health -= damage;
+
     if (target.attributes.health <= 0) {
       killAgent(target);
     }
@@ -96,7 +130,8 @@ export default function useGame() {
 
     newBoard.grid[playerPosition.y][playerPosition.x] = {
       type: "empty",
-      code: "",
+      free: true,
+      codes: [""],
       position: playerPosition,
     };
     setBoard(newBoard);
@@ -110,7 +145,11 @@ export default function useGame() {
   const handleAbility = (ability: Ability): boolean => {
     if (!selectedBox || !targetBox) return false;
     const distance = getDistance(selectedBox.position, targetBox.position);
-    if (!isWithinRange(distance, ability.range)) return false;
+    if (
+      !isWithinRange(distance, ability.range) ||
+      !ability.boxTypes.includes(targetBox.type)
+    )
+      return false;
 
     let abilitySuccess = false;
 
@@ -130,6 +169,19 @@ export default function useGame() {
     const { params, type } = method;
     let success = false;
 
+    if ("get" in params) {
+      if (params.get.getType === "affected") {
+        const affectParams = params as AffectParams;
+        const affectedBoxes = getBoxes(params.get);
+
+        affectedBoxes.forEach((box) => {
+          box.codes = box.codes.filter(
+            (code) => !(affectParams.affectedCodes ?? []).includes(code)
+          );
+        });
+      }
+    }
+
     switch (type) {
       case "replace":
         success = handleReplaceMethod(params as ReplaceParams);
@@ -140,11 +192,26 @@ export default function useGame() {
       case "wait":
         success = handleWaitMethod(params as WaitParams);
         break;
+      case "affect":
+        success = handleAffectMethod(params as AffectParams);
+        break;
     }
 
     if (success) {
       setBoard(newBoard);
     }
+
+    return success;
+  };
+
+  const handleAffectMethod = (params: AffectParams) => {
+    const boxes = getBoxes(params.get);
+    let success = false;
+
+    boxes.forEach((box) => {
+      box.codes.push(...params.affectedCodes);
+      success = true;
+    });
 
     return success;
   };
@@ -163,7 +230,6 @@ export default function useGame() {
             turnsLeft: params.time,
           },
         ];
-        console.log(newEffects);
         return newEffects;
       });
     }
@@ -191,10 +257,8 @@ export default function useGame() {
     let success = false;
 
     boxes.forEach((box) => {
-      if (params.from.includes(box.type)) {
-        box.type = params.to;
-        success = true;
-      }
+      box.type = params.to;
+      success = true;
     });
 
     return success;
@@ -207,5 +271,6 @@ export default function useGame() {
     attackPlayer,
     handleAbility,
     handleMethod,
+    getTotalPlayers,
   };
 }

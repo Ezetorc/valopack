@@ -4,7 +4,8 @@ import { Team } from "../../types/Team";
 
 export default interface GetParams {
   getType: GetType;
-  boxType?: BoxType;
+  boxTypes?: BoxType[];
   range?: number;
   team?: Team | "any";
+  affectedCodes?: string[];
 }
