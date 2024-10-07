@@ -5,8 +5,8 @@ import { appName, paths } from "../../constants/general";
 import useSettings from "../../hooks/useSettings";
 import useUser from "../../hooks/useUser";
 import sounds from "../../constants/sounds";
-import "./Header.css";
 import Loading from "../Loading/Loading";
+import "./Header.css";
 
 const LazySettings = lazy(() => import("../Settings/Settings"));
 
@@ -42,7 +42,7 @@ export default function Header() {
               title={texts.credits}
               src={creditsKingdomImage}
               alt={texts.credits}
-            />
+            ></img>
           </div>
         </div>
       </header>

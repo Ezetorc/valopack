@@ -1,11 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSettings from "../../hooks/useSettings";
 import { sectionsBg } from "../../constants/sectionsBg";
-import BoxDisplay from "../BoxDisplay/BoxDisplay";
-import getBackgroundColor from "../../utils/getBackgroundColor";
-import Box from "../../interfaces/Box";
 import useGame from "../../hooks/useGame";
-import Player from "../../interfaces/Player";
 import PlayerInfo from "../PlayerInfo/PlayerInfo";
 import getTeam from "../../utils/getTeam";
 import initializeBoard from "../../utils/initializeBoard";
@@ -14,11 +10,12 @@ import Actions from "../Actions/Actions";
 import Ability from "../../interfaces/Ability";
 import { Team } from "../../types/Team";
 import WinnerModal from "../WinnerModal/WinnerModal";
+import Board from "../Board/Board";
+import Player from "../../classes/Player";
 import "./Play.css";
 
 export default function Play() {
   const {
-    board,
     map,
     action,
     setAction,
@@ -37,6 +34,7 @@ export default function Play() {
     setEffects,
     handleMethod,
     getTotalPlayers,
+    selectedSquare,
   } = useGame();
   const { team } = useUser();
   const { texts, updateSection } = useSettings();
@@ -44,7 +42,7 @@ export default function Play() {
   const [showActions, setShowActions] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [winner, setWinner] = useState<Team | "draw" | undefined>(undefined);
-  const [isInitialized, setIsInitialized] = useState(false); // Estado para verificar si el juego ha sido inicializado
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const changeTurn = useCallback(() => {
     const newTurn: Team = turn === "ally" ? "enemy" : "ally";
@@ -86,11 +84,13 @@ export default function Play() {
   }, [setAction, setSelectedBox, setTargetBox, changeTurn]);
 
   const handleMoveAction = useCallback(() => {
-    if (!selectedBox || !targetBox || action !== "move") return;
+    if (!selectedBox || !selectedSquare || !targetBox || action !== "move")
+      return;
 
-    const selectedPlayer = selectedBox as Player;
-    const isMoveValid =
-      targetBox.free &&
+    const isSquareFree: boolean = selectedSquare.boxes.every((box) => box.free);
+    const selectedPlayer: Player = selectedBox as Player;
+    const isMoveValid: boolean =
+      isSquareFree &&
       canMakeAction(selectedPlayer, targetBox, selectedPlayer.attributes.speed);
 
     if (isMoveValid) {
@@ -108,13 +108,14 @@ export default function Play() {
     resetActions,
     setTargetBox,
     canMakeAction,
+    selectedSquare,
   ]);
 
   const handleAbilityAction = useCallback(() => {
-    const isAbility = action == "ability0" || action == "ability1";
+    const isAbility: boolean = action == "ability0" || action == "ability1";
     if (!selectedBox || !targetBox || !isAbility) return;
 
-    const selectedPlayer = selectedBox as Player;
+    const selectedPlayer: Player = selectedBox as Player;
     const ability: Ability =
       action == "ability0"
         ? selectedPlayer.agent.abilities[0]
@@ -124,12 +125,12 @@ export default function Play() {
       if (handleAbility(ability)) {
         resetActions();
       } else {
-        console.log("Can't execute ability", ability);
+        // Can't execute ability
         showInvalidMove();
         setTargetBox(null);
       }
     } else {
-      console.log("Invalid ability or function not found", ability);
+      // Invalid ability or function not found
       showInvalidMove();
       setTargetBox(null);
     }
@@ -145,10 +146,12 @@ export default function Play() {
   const handleAttackAction = useCallback(() => {
     if (!selectedBox || !targetBox || action !== "attack") return;
 
-    const selectedPlayer = selectedBox as Player;
-    const isAttackValid =
-      targetBox.type == "player" &&
-      (targetBox as Player).team == "enemy" &&
+    const selectedPlayer: Player = selectedBox as Player;
+    const isTargetPlayer: boolean = targetBox.type == "player";
+    const isTargetEnemy: boolean = (targetBox as Player).team == "enemy";
+    const isAttackValid: boolean =
+      isTargetPlayer &&
+      isTargetEnemy &&
       canMakeAction(selectedPlayer, targetBox, 1);
 
     if (isAttackValid) {
@@ -168,38 +171,6 @@ export default function Play() {
     setTargetBox,
   ]);
 
-  const handleClick = useCallback(
-    (box: Box) => {
-      if (box.type != "player" && action && targetBox) {
-        setSelectedBox(null);
-        setShowActions(false);
-      } else {
-        if (!selectedBox && box.type == "player") {
-          setSelectedBox(box);
-          setShowActions(true);
-        } else {
-          if (action) {
-            setTargetBox(box);
-          } else if (box.type != "player") {
-            setSelectedBox(null);
-            setShowActions(false);
-          } else {
-            setSelectedBox(box);
-            setShowActions(true);
-          }
-        }
-      }
-    },
-    [
-      selectedBox,
-      setSelectedBox,
-      setShowActions,
-      setTargetBox,
-      action,
-      targetBox,
-    ]
-  );
-
   useEffect(() => handleMoveAction(), [handleMoveAction]);
   useEffect(() => handleAttackAction(), [handleAttackAction]);
   useEffect(() => handleAbilityAction(), [handleAbilityAction]);
@@ -209,16 +180,14 @@ export default function Play() {
     [map, team, setBoard]
   );
 
-  // Verificación de inicialización
   useEffect(() => {
     const { allyPlayers, enemyPlayers } = getTotalPlayers();
 
     if (allyPlayers > 0 || enemyPlayers > 0) {
-      setIsInitialized(true); // Juego inicializado
+      setIsInitialized(true);
     }
   }, [getTotalPlayers]);
 
-  // Lógica para definir el ganador, solo si el juego está inicializado
   useEffect(() => {
     if (!isInitialized) return;
 
@@ -243,19 +212,7 @@ export default function Play() {
       {showInfo && <PlayerInfo onClose={() => setShowInfo(false)} />}
 
       <section className="game">
-        <div className="game__board" ref={boardRef}>
-          {board.grid.map((row, rowIndex) =>
-            row.map((box, boxIndex) => (
-              <BoxDisplay
-                onClick={() => handleClick(box)}
-                key={`${rowIndex}-${boxIndex}`}
-                box={box}
-                bgColor={getBackgroundColor(box, map)}
-              />
-            ))
-          )}
-        </div>
-
+        <Board setShowActions={setShowActions} boardRef={boardRef} />
         {showActions && <Actions onOpenInfo={() => setShowInfo(true)} />}
       </section>
     </>

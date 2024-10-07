@@ -5,47 +5,81 @@ import sounds from "../../constants/sounds";
 import Select, { SingleValue, StylesConfig } from "react-select";
 import "./Settings.css";
 
+interface Option {
+  value: string;
+  label: string;
+}
+
 export default function Settings() {
   const { setSettingsOpen, texts, setLanguage, language } = useSettings();
+  const options: Option[] = [
+    { value: "en", label: "English" },
+    { value: "es", label: "Español" },
+  ];
+
+  const styles: StylesConfig<Option, false> = {
+    control: (baseStyles) => ({
+      ...baseStyles,
+      cursor: "pointer",
+      aspectRatio: "16 / 6",
+      textAlign: "center",
+      fontSize: "clamp(30px, 2vw, 50px)",
+      fontFamily: "stroke",
+      background: "var(--red-gradient)",
+      border: "2px solid var(--main-color)",
+      "&:hover": {
+        borderColor: "#fff",
+      },
+    }),
+
+    menu: (baseStyles) => ({
+      ...baseStyles,
+      background: "var(--red-gradient)",
+      borderRadius: "5px",
+      marginTop: "10px",
+      display: "flex",
+      flexDirection: "column",
+    }),
+
+    menuList: (baseStyles) => ({
+      ...baseStyles,
+      display: "flex",
+      flexDirection: "column",
+    }),
+
+    option: (baseStyles, { isFocused, isSelected }) => ({
+      ...baseStyles,
+      padding: "10px 15px",
+      textAlign: "center",
+      backgroundColor: isFocused
+        ? "rgba(255, 255, 255, 0.2)"
+        : isSelected
+        ? "rgba(255, 255, 255, 0.5)"
+        : "transparent",
+      cursor: "pointer",
+      display: "block",
+      width: "100%",
+      "&:hover": {
+        backgroundColor: "rgba(255, 255, 255, 0.3)",
+      },
+    }),
+
+    singleValue: (baseStyles) => ({
+      ...baseStyles,
+      color: "#fff",
+    }),
+  };
+
+  const getValue = () => options.find((option) => option.value === language);
 
   const handleClose = () => {
     setSettingsOpen(false);
     sounds.click.play();
   };
 
-  const handleReactSelectChange = (
-    selectedOption: SingleValue<{ value: string; label: string }>
-  ) => {
+  const handleChange = (selectedOption: SingleValue<Option>) => {
     const newLanguage = selectedOption?.value as Language;
     setLanguage(newLanguage);
-  };
-
-  const options = [
-    { value: "en", label: "English" },
-    { value: "es", label: "Español" },
-  ];
-
-  const customStyles: StylesConfig<{ value: string; label: string }, false> = {
-    control: (provided) => ({
-      ...provided,
-      cursor: "pointer",
-      aspectRatio: "16 / 16", 
-      textAlign: "center",
-      fontSize: "clamp(30px, 2vw, 50px)",
-      fontFamily: "stroke",
-      background: "var(--red-gradient)",
-      border: "2px solid var(--main-color)",
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      cursor: "pointer",
-      backgroundColor: state.isSelected
-        ? "var(--main-color)"
-        : provided.backgroundColor,
-      "&:hover": {
-        borderColor: "#fff",
-      },
-    }),
   };
 
   return (
@@ -59,12 +93,12 @@ export default function Settings() {
         <span>{texts.language}</span>
 
         <Select
-          className="language-selector"
-          name="select-language"
           options={options}
-          value={options.find((option) => option.value === language)}
-          onChange={handleReactSelectChange}
-          styles={customStyles}
+          value={getValue()}
+          onChange={handleChange}
+          styles={styles}
+          isClearable={false}
+          isSearchable={false}
         />
       </div>
     </Modal>

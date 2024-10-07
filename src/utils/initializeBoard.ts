@@ -1,17 +1,17 @@
-import { defaultAttributes } from "../constants/defaultAttributes";
+import Player from "../classes/Player";
+import Square from "../classes/Square";
 import { allyPositions, enemyPositions } from "../constants/general";
 import Agent from "../interfaces/Agent";
 import Map from "../interfaces/Map";
 import { Team } from "../types/Team";
 import { Vector2 } from "../types/Vector2";
-import Player from "../interfaces/Player";
 
 export default function initializeBoard(
   board: Map,
   allyTeam: Agent[],
   enemyTeam: Agent[]
 ): Map {
-  const newBoard = JSON.parse(JSON.stringify(board));
+  const newBoard: Map = JSON.parse(JSON.stringify(board));
 
   const placeAgentsOnBoard = (
     agents: Agent[],
@@ -20,25 +20,15 @@ export default function initializeBoard(
   ) => {
     positions.forEach((position, index) => {
       const agent: Agent = agents[index];
-      if (!agent) return;
+      const square: Square = newBoard.grid[position.y][position.x];
 
-      const player: Player = {
-        type: "player",
-        free: false,
-        codes: [],
-        position: {
-          x: position.x,
-          y: position.y,
-        },
+      const newPlayer = new Player({
         agent: { ...agent },
-        attributes: { ...defaultAttributes },
         team: team,
-      };
+        position: position,
+      });
 
-      const row = newBoard.grid[position.y];
-      if (row) {
-        row[position.x] = player;
-      }
+      square.boxes = [newPlayer];
     });
   };
 

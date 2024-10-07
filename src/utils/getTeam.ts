@@ -2,26 +2,21 @@ import { Filter } from "./../types/Filter";
 import { agents } from "../constants/agents";
 import Agent from "../interfaces/Agent";
 import getAgents from "./getAgents";
-import { Role } from "../types/Role";
-
-const DEFAULT_TEAM_ROLES: Role[] = [
-  "controller",
-  "duelist",
-  "sentinel",
-  "duelist",
-  "initiator",
-];
+import { defaultTeamRoles } from "../constants/general";
 
 export default function getTeam(agentNames?: string[]): Agent[] {
   if (agentNames) {
-    return Object.values(agents).filter((agent) =>
-      agentNames.includes(agent.name)
-    );
+    const agentsValues: Agent[] = Object.values(agents);
+    return agentsValues.filter((agent) => agentNames.includes(agent.name));
   }
 
-  return DEFAULT_TEAM_ROLES.reduce<Agent[]>((team, role) => {
-    const agent = getAgents(role as Filter, 1)[0];
-    if (agent) team.push(agent);
+  return defaultTeamRoles.reduce<Agent[]>((team, role) => {
+    const agent: Agent = getAgents(role as Filter, 1)[0];
+
+    if (agent) {
+      team.push(agent);
+    }
+
     return team;
   }, []);
 }

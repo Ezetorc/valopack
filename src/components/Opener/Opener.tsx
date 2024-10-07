@@ -34,7 +34,7 @@ export default function Opener() {
                 />
               ))
             ) : (
-              <span>Loading...</span>
+              <span>{`${texts.loading}...`}</span>
             )}
           </div>
 

@@ -1,1 +1,1 @@
-export type BoxType = "player" | "box" | "empty" | "stimBeacon" | "smoke";
+export type BoxType = "player" | "box" | "stimBeacon" | "skySmoke" | "empty";

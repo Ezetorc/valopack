@@ -1,6 +1,6 @@
+import Player from "../../classes/Player";
 import useGame from "../../hooks/useGame";
 import useSettings from "../../hooks/useSettings";
-import Player from "../../interfaces/Player";
 import Attribute from "../Attribute/Attribute";
 import Modal from "../Modal/Modal";
 import "./PlayerInfo.css";

@@ -1,23 +1,24 @@
-import Box from "../../interfaces/Box";
-import Player from "../../interfaces/Player";
+import Box from "../../classes/Box";
+import Player from "../../classes/Player";
 import "./BoxDisplay.css";
 
 interface BoxDisplayProps {
   box: Box;
   onClick: () => void;
-  bgColor: string;
+  opacity: number;
 }
 
-export default function BoxDisplay({ box, onClick, bgColor }: BoxDisplayProps) {
+export default function BoxDisplay({ box, onClick, opacity }: BoxDisplayProps) {
   const isPlayer = box.type === "player";
   const player = isPlayer ? (box as Player) : null;
   const flip = isPlayer ? (player?.team == "ally" ? 1 : -1) : 1;
+  const team = player ? player.team : "";
 
   return (
     <button
       onClick={onClick}
-      className={`game__box ${box.type} ${player?.team}`}
-      style={{ backgroundColor: bgColor, transform: `scaleX(${flip})` }}
+      className={`box-display ${box.type} ${team}`}
+      style={{ transform: `scaleX(${flip})`, opacity: opacity }}
     >
       {isPlayer && player?.agent && (
         <img src={player.agent.icon} alt={player.agent.name} />

@@ -5,7 +5,11 @@ import useUser from "../../hooks/useUser";
 import sounds from "../../constants/sounds";
 import "./BuyModal.css";
 
-export default function BuyModal({ canBuy }: { canBuy: boolean }) {
+interface BuyModalProps {
+  canBuy: boolean;
+}
+
+export default function BuyModal({ canBuy }: BuyModalProps) {
   const { texts } = useSettings();
   const { credits } = useUser();
   const { selectedProduct, setSelectedProduct, buy } = useShop();

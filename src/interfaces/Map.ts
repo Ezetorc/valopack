@@ -1,12 +1,12 @@
-import Box from "./Box";
+import Square from "../classes/Square";
 
 export default interface Map {
   color: [`#${string}`, `#${string}`];
   grid: [
-    [Box, Box, Box, Box, Box, Box, Box],
-    [Box, Box, Box, Box, Box, Box, Box],
-    [Box, Box, Box, Box, Box, Box, Box],
-    [Box, Box, Box, Box, Box, Box, Box],
-    [Box, Box, Box, Box, Box, Box, Box]
+    [Square, Square, Square, Square, Square, Square, Square],
+    [Square, Square, Square, Square, Square, Square, Square],
+    [Square, Square, Square, Square, Square, Square, Square],
+    [Square, Square, Square, Square, Square, Square, Square],
+    [Square, Square, Square, Square, Square, Square, Square]
   ];
 }

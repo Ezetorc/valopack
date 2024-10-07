@@ -4,7 +4,7 @@ export default function getLightColor(hex: string, factor: number): string {
   }
 
   hex = hex.replace(/^#/, "");
-  const n = parseInt(hex, 16);
+  const n: number = parseInt(hex, 16);
 
   const r = Math.min(
     255,

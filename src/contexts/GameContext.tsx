@@ -1,27 +1,12 @@
-import React, { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import Map from "../interfaces/Map";
 import { maps } from "../constants/maps";
 import { Team } from "../types/Team";
 import { Action } from "../types/Action";
-import Box from "../interfaces/Box";
 import Effect from "../interfaces/Effect";
-
-interface GameContextType {
-  board: Map;
-  setBoard: React.Dispatch<React.SetStateAction<Map>>;
-  map: Map;
-  setMap: React.Dispatch<React.SetStateAction<Map>>;
-  selectedBox: Box | null;
-  setSelectedBox: React.Dispatch<React.SetStateAction<Box | null>>;
-  targetBox: Box | null;
-  setTargetBox: React.Dispatch<React.SetStateAction<Box | null>>;
-  turn: Team;
-  setTurn: React.Dispatch<React.SetStateAction<Team>>;
-  action: Action | null;
-  setAction: React.Dispatch<React.SetStateAction<Action | null>>;
-  effects: Effect[];
-  setEffects: React.Dispatch<React.SetStateAction<Effect[]>>;
-}
+import Box from "../classes/Box";
+import GameContextType from "../interfaces/GameContextType";
+import Square from "../classes/Square";
 
 export const GameContext = createContext<GameContextType | undefined>(
   undefined
@@ -34,6 +19,7 @@ export function GameContextProvider({ children }: { children: ReactNode }) {
   const [targetBox, setTargetBox] = useState<Box | null>(null);
   const [action, setAction] = useState<Action | null>(null);
   const [board, setBoard] = useState<Map>(map);
+  const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
   const [effects, setEffects] = useState<Effect[]>([]);
 
   return (
@@ -53,6 +39,8 @@ export function GameContextProvider({ children }: { children: ReactNode }) {
         setTargetBox,
         effects,
         setEffects,
+        selectedSquare,
+        setSelectedSquare,
       }}
     >
       {children}

@@ -48,18 +48,3 @@
   padding-left: 20%;
   display: flex;
 }
-
-.settings-modal div select {
-  cursor: pointer;
-  width: 70%;
-  aspect-ratio: 16/6;
-  text-align: center;
-  font-size: clamp(30px, 2vw, 50px);
-  font-family: stroke;
-  background: var(--red-gradient);
-  border: 2px solid var(--main-color);
-}
-
-.settings-modal div select:hover {
-  border-color: #fff;
-}

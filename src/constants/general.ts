@@ -1,4 +1,5 @@
 import { Language } from "../types/Language";
+import { Role } from "../types/Role";
 
 export const appName: string = "VALOPACK";
 export const levelMultiplier: number = 1;
@@ -28,3 +29,10 @@ export const paths: { [key: string]: string } = {
   team: "/team",
   play: "/play",
 };
+export const defaultTeamRoles: Role[] = [
+  "controller",
+  "duelist",
+  "sentinel",
+  "duelist",
+  "initiator",
+];

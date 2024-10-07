@@ -1,1 +1,7 @@
-export type MethodType = "replace" | "modifyAttribute" | "wait" | "affect";
+export type MethodType =
+  | "replace"
+  | "modifyAttribute"
+  | "wait"
+  | "affect"
+  | "add"
+  | "remove";
