@@ -1,95 +1,95 @@
-import useSettings from "../../hooks/useSettings";
-import { Language } from "../../types/Language";
-import Modal from "../Modal/Modal";
-import sounds from "../../constants/sounds";
-import Select, { SingleValue, StylesConfig } from "react-select";
-import "./Settings.css";
+import useSettings from '../../hooks/useSettings'
+import { Language } from '../../types/Language'
+import Modal from '../Modal/Modal'
+import sounds from '../../constants/sounds'
+import Select, { SingleValue, StylesConfig } from 'react-select'
+import './Settings.css'
 
 interface Option {
-  value: string;
-  label: string;
+  value: string
+  label: string
 }
 
-export default function Settings() {
-  const { setSettingsOpen, texts, setLanguage, language } = useSettings();
+export default function Settings () {
+  const { setSettingsOpen, texts, setLanguage, language } = useSettings()
   const options: Option[] = [
-    { value: "en", label: "English" },
-    { value: "es", label: "Español" },
-  ];
+    { value: 'en', label: 'English' },
+    { value: 'es', label: 'Español' }
+  ]
 
   const styles: StylesConfig<Option, false> = {
-    control: (baseStyles) => ({
+    control: baseStyles => ({
       ...baseStyles,
-      cursor: "pointer",
-      aspectRatio: "16 / 6",
-      textAlign: "center",
-      fontSize: "clamp(30px, 2vw, 50px)",
-      fontFamily: "stroke",
-      background: "var(--red-gradient)",
-      border: "2px solid var(--main-color)",
-      "&:hover": {
-        borderColor: "#fff",
-      },
+      cursor: 'pointer',
+      aspectRatio: '16 / 6',
+      textAlign: 'center',
+      fontSize: 'clamp(30px, 2vw, 50px)',
+      fontFamily: 'stroke',
+      background: 'var(--red-gradient)',
+      border: '2px solid var(--main-color)',
+      '&:hover': {
+        borderColor: '#fff'
+      }
     }),
 
-    menu: (baseStyles) => ({
+    menu: baseStyles => ({
       ...baseStyles,
-      background: "var(--red-gradient)",
-      borderRadius: "5px",
-      marginTop: "10px",
-      display: "flex",
-      flexDirection: "column",
+      background: 'var(--red-gradient)',
+      borderRadius: '5px',
+      marginTop: '10px',
+      display: 'flex',
+      flexDirection: 'column'
     }),
 
-    menuList: (baseStyles) => ({
+    menuList: baseStyles => ({
       ...baseStyles,
-      display: "flex",
-      flexDirection: "column",
+      display: 'flex',
+      flexDirection: 'column'
     }),
 
     option: (baseStyles, { isFocused, isSelected }) => ({
       ...baseStyles,
-      padding: "10px 15px",
-      textAlign: "center",
+      padding: '10px 15px',
+      textAlign: 'center',
       backgroundColor: isFocused
-        ? "rgba(255, 255, 255, 0.2)"
+        ? 'rgba(255, 255, 255, 0.2)'
         : isSelected
-        ? "rgba(255, 255, 255, 0.5)"
-        : "transparent",
-      cursor: "pointer",
-      display: "block",
-      width: "100%",
-      "&:hover": {
-        backgroundColor: "rgba(255, 255, 255, 0.3)",
-      },
+        ? 'rgba(255, 255, 255, 0.5)'
+        : 'transparent',
+      cursor: 'pointer',
+      display: 'block',
+      width: '100%',
+      '&:hover': {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)'
+      }
     }),
 
-    singleValue: (baseStyles) => ({
+    singleValue: baseStyles => ({
       ...baseStyles,
-      color: "#fff",
-    }),
-  };
+      color: '#fff'
+    })
+  }
 
-  const getValue = () => options.find((option) => option.value === language);
+  const getValue = () => options.find(option => option.value === language)
 
   const handleClose = () => {
-    setSettingsOpen(false);
-    sounds.click.play();
-  };
+    setSettingsOpen(false)
+    sounds.click.play()
+  }
 
   const handleChange = (selectedOption: SingleValue<Option>) => {
-    const newLanguage = selectedOption?.value as Language;
-    setLanguage(newLanguage);
-  };
+    const newLanguage = selectedOption?.value as Language
+    setLanguage(newLanguage)
+  }
 
   return (
-    <Modal className="settings-modal">
+    <Modal className='settings-modal'>
       <header>
         <span>{texts.settings}</span>
         <button onClick={handleClose}>{texts.close}</button>
       </header>
 
-      <div className="settings__language">
+      <div className='settings__language'>
         <span>{texts.language}</span>
 
         <Select
@@ -102,5 +102,5 @@ export default function Settings() {
         />
       </div>
     </Modal>
-  );
+  )
 }

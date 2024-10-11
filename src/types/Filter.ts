@@ -1,3 +1,3 @@
-import { Role } from "./Role";
+import { Role } from './Role'
 
-export type Filter = Role | "all" | "new";
+export type Filter = Role | 'all' | 'new'

@@ -1,1 +1,1 @@
-export type Team = "ally" | "enemy";
+export type Team = 'ally' | 'enemy'

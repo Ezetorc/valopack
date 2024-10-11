@@ -1,6 +1,6 @@
-import Method from "./Method";
+import Method from './Method'
 
 export default interface Effect {
-  turnsLeft: number;
-  methods: Method[];
+  turnsLeft: number
+  methods: Method[]
 }

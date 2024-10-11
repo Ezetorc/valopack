@@ -1,17 +1,18 @@
-import Player from "../classes/Player";
-import Square from "../classes/Square";
-import { allyPositions, enemyPositions } from "../constants/general";
-import Agent from "../interfaces/Agent";
-import Map from "../interfaces/Map";
-import { Team } from "../types/Team";
-import { Vector2 } from "../types/Vector2";
+import Player from '../classes/Player'
+import Square from '../classes/Square'
+import { allyPositions, enemyPositions } from '../constants/general'
+import Agent from '../interfaces/Agent'
+import Board from '../interfaces/Board'
+import { Team } from '../types/Team'
+import { Vector2 } from '../types/Vector2'
+import getBoardCopy from './getBoardCopy'
 
-export default function initializeBoard(
-  board: Map,
+export default function initializeBoard (
+  board: Board,
   allyTeam: Agent[],
   enemyTeam: Agent[]
-): Map {
-  const newBoard: Map = JSON.parse(JSON.stringify(board));
+): Board {
+  const newBoard: Board = getBoardCopy(board)
 
   const placeAgentsOnBoard = (
     agents: Agent[],
@@ -19,21 +20,21 @@ export default function initializeBoard(
     team: Team
   ) => {
     positions.forEach((position, index) => {
-      const agent: Agent = agents[index];
-      const square: Square = newBoard.grid[position.y][position.x];
+      const agent: Agent = agents[index]
+      const square: Square = newBoard.grid[position.y][position.x]
 
       const newPlayer = new Player({
         agent: { ...agent },
         team: team,
-        position: position,
-      });
+        position: position
+      })
 
-      square.boxes = [newPlayer];
-    });
-  };
+      square.boxes = [newPlayer]
+    })
+  }
 
-  placeAgentsOnBoard(allyTeam, allyPositions, "ally");
-  placeAgentsOnBoard(enemyTeam, enemyPositions, "enemy");
+  placeAgentsOnBoard(allyTeam, allyPositions, 'ally')
+  placeAgentsOnBoard(enemyTeam, enemyPositions, 'enemy')
 
-  return newBoard;
+  return newBoard
 }

@@ -1,25 +1,25 @@
-import Modal from "../Modal/Modal";
-import useShop from "../../hooks/useShop";
-import useSettings from "../../hooks/useSettings";
-import useUser from "../../hooks/useUser";
-import sounds from "../../constants/sounds";
-import "./BuyModal.css";
+import Modal from '../Modal/Modal'
+import useShop from '../../hooks/useShop'
+import useSettings from '../../hooks/useSettings'
+import useUser from '../../hooks/useUser'
+import sounds from '../../constants/sounds'
+import './BuyModal.css'
 
 interface BuyModalProps {
-  canBuy: boolean;
+  canBuy: boolean
 }
 
-export default function BuyModal({ canBuy }: BuyModalProps) {
-  const { texts } = useSettings();
-  const { credits } = useUser();
-  const { selectedProduct, setSelectedProduct, buy } = useShop();
-  if (!selectedProduct) return;
+export default function BuyModal ({ canBuy }: BuyModalProps) {
+  const { texts } = useSettings()
+  const { credits } = useUser()
+  const { selectedProduct, setSelectedProduct, buy } = useShop()
+  if (!selectedProduct) return
 
-  const handleClick = () => selectedProduct && buy(selectedProduct);
-  const handleLoad = () => sounds.purchase.play();
+  const handleClick = () => selectedProduct && buy(selectedProduct)
+  const handleLoad = () => sounds.purchase.play()
 
   return (
-    <Modal className="buy-modal" onLoad={handleLoad}>
+    <Modal className='buy-modal' onLoad={handleLoad}>
       {canBuy ? (
         <>
           <span>{texts.wannaBuy(selectedProduct.product)}</span>
@@ -37,5 +37,5 @@ export default function BuyModal({ canBuy }: BuyModalProps) {
         </>
       )}
     </Modal>
-  );
+  )
 }

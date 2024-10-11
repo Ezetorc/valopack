@@ -1,15 +1,24 @@
-import { ReactNode } from "react";
-import "./SquareDisplay.css";
+import { ReactNode } from 'react'
+import './SquareDisplay.css'
 
 interface SquareDisplayProps {
-  children: ReactNode;
-  color: string;
+  children: ReactNode
+  color: string
+  onClick: () => void
 }
 
-export default function SquareDisplay({ children, color }: SquareDisplayProps) {
+export default function SquareDisplay ({
+  children,
+  color,
+  onClick
+}: SquareDisplayProps) {
   return (
-    <div className="square" style={{ backgroundColor: color }}>
+    <button
+      onClick={onClick}
+      className='square'
+      style={{ backgroundColor: color }}
+    >
       {children}
-    </div>
-  );
+    </button>
+  )
 }

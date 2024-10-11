@@ -1,53 +1,55 @@
-import Ability from "../../interfaces/Ability";
+import Ability from '../../interfaces/Ability'
 
 export const skySmoke: Ability = {
-  name: "Sky Smoke",
-  description: "Throw a 3x3 smoke that let pass your allies but no enemies",
+  name: 'Sky Smoke',
+  description: 'Throw a 3x3 smoke that let pass your allies but no enemies',
   usesLeft: 1,
   range: [0, 10],
-  boxTypes: ["empty", "player", "box", "stimBeacon", "skySmoke"],
+  boxTypes: ['empty', 'player', 'box', 'stimBeacon', 'skySmoke'],
   methods: [
     {
-      type: "add",
+      type: 'add',
       params: {
         get: {
-          getType: "range",
-          boxTypes: ["box", "skySmoke", "stimBeacon", "player", "empty"],
-          team: "any",
-          range: 2,
+          getBy: 'range',
+          boxTypes: ['box', 'skySmoke', 'stimBeacon', 'player', 'empty'],
+          team: 'any',
+          range: 1
         },
-        boxType: "skySmoke",
-      },
+        boxType: 'skySmoke'
+      }
     },
     {
-      type: "affect",
+      type: 'tag',
       params: {
         get: {
-          getType: "range",
-          boxTypes: ["skySmoke"],
-          team: "any",
-          range: 2,
+          getBy: 'range',
+          boxTypes: ['skySmoke'],
+          team: 'any',
+          range: 2
         },
-        affectedCodes: ["skySmoke"],
-      },
+        tags: ['skySmoke']
+      }
     },
     {
-      type: "wait",
+      type: 'wait',
       params: {
-        type: "turns",
+        type: 'turns',
         time: 3,
         methods: [
           {
-            type: "remove",
+            type: 'remove',
             params: {
               get: {
-                getType: "affected",
-                affectedCodes: ["skySmoke"],
-              },
-            },
-          },
-        ],
-      },
-    },
-  ],
-};
+                getBy: 'tag',
+                tags: ['skySmoke'],
+                team: 'any',
+                range: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

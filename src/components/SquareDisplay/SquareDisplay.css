@@ -6,4 +6,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 5px solid transparent;
+}
+
+.square:hover {
+  cursor: pointer;
+  border-color: #fff;
 }

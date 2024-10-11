@@ -1,5 +1,5 @@
-import { Dictionary } from "../interfaces/Dictionary";
+import { Dictionary } from '../interfaces/Dictionary'
 
 export type Dictionaries = {
-  [key: string]: Dictionary;
-};
+  [key: string]: Dictionary
+}

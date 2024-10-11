@@ -1,3 +1,3 @@
-import Pack from "../interfaces/Pack";
+import Pack from '../interfaces/Pack'
 
-export type ProductType = Pack;
+export type ProductType = Pack

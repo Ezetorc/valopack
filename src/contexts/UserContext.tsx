@@ -1,17 +1,15 @@
-import { createContext, ReactNode, useState } from "react";
-import Agent from "../interfaces/Agent";
-import { initialTeam } from "../constants/initialTeam";
-import UserContextType from "../interfaces/UserContextType";
+import { createContext, ReactNode, useState } from 'react'
+import Agent from '../interfaces/Agent'
+import UserContextType from '../interfaces/UserContextType'
+import { initialTeam } from '../constants/general'
 
-export const UserContext = createContext<UserContextType | undefined>(
-  undefined
-);
+export const UserContext = createContext<UserContextType | undefined>(undefined)
 
-export function UserContextProvider({ children }: { children: ReactNode }) {
-  const [credits, setCredits] = useState<number>(10000);
-  const [inventory, setInventory] = useState<Agent[]>(initialTeam);
-  const [agentToChange, setAgentToChange] = useState<number | null>(null);
-  const [team, setTeam] = useState<Agent[]>(initialTeam);
+export function UserContextProvider ({ children }: { children: ReactNode }) {
+  const [credits, setCredits] = useState<number>(10000)
+  const [inventory, setInventory] = useState<Agent[]>(initialTeam)
+  const [agentToChange, setAgentToChange] = useState<number | null>(null)
+  const [team, setTeam] = useState<Agent[]>(initialTeam)
 
   return (
     <UserContext.Provider
@@ -23,10 +21,10 @@ export function UserContextProvider({ children }: { children: ReactNode }) {
         team,
         setTeam,
         agentToChange,
-        setAgentToChange,
+        setAgentToChange
       }}
     >
       {children}
     </UserContext.Provider>
-  );
+  )
 }

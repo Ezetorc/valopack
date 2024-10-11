@@ -1,5 +1,5 @@
-import Map from "../interfaces/Map";
+import Board from '../interfaces/Board'
 
-export default function getBoardCopy(board: Map): Map {
-  return { ...board, grid: [...board.grid] };
+export default function getBoardCopy (board: Board): Board {
+  return { ...board, grid: [...board.grid] }
 }

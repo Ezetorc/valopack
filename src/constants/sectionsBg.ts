@@ -33,5 +33,5 @@ export const sectionsBg: { [key: string]: string } = {
         #271E59 39%,
         #0C0924 81%,
         #15103E 100%
-      )`,
-};
+      )`
+}

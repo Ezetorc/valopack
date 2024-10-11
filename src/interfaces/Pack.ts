@@ -1,8 +1,8 @@
-import { Filter } from "../types/Filter";
+import { Filter } from '../types/Filter'
 
 export default interface Pack {
-  type: Filter;
-  name: string;
-  price: number;
-  image: string;
+  type: Filter
+  name: string
+  price: number
+  image: string
 }

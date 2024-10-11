@@ -14,7 +14,6 @@
   background-color: transparent;
 }
 
-
 .box-display img {
   width: 100%;
 }
@@ -23,23 +22,8 @@
   border-bottom: 5px solid var(--ally-color);
 }
 
-.box-display.ally:hover {
-  border-color: var(--ally-color);
-  cursor: pointer;
-}
-
 .box-display.enemy img {
   border-bottom: 5px solid var(--enemy-color);
-}
-
-.box-display.enemy:hover {
-  border-color: var(--enemy-color);
-  cursor: pointer;
-}
-
-.empty:hover {
-  border-color: #fff;
-  cursor: pointer;
 }
 
 .box {

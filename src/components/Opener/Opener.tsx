@@ -1,27 +1,27 @@
-import { useState } from "react";
-import useShop from "../../hooks/useShop";
-import useSettings from "../../hooks/useSettings";
-import Card from "../Card/Card";
-import Pack from "../Pack/Pack";
-import sounds from "../../constants/sounds";
-import "./Opener.css";
+import { useState } from 'react'
+import useShop from '../../hooks/useShop'
+import useSettings from '../../hooks/useSettings'
+import Card from '../Card/Card'
+import Pack from '../Pack/Pack'
+import sounds from '../../constants/sounds'
+import './Opener.css'
 
-export default function Opener() {
-  const { ownedProduct, ownedAgents, setOwnedProduct } = useShop();
-  const { texts } = useSettings();
-  const [showCards, setShowCards] = useState<boolean>(false);
-  if (!ownedProduct) return null;
+export default function Opener () {
+  const { ownedProduct, ownedAgents, setOwnedProduct } = useShop()
+  const { texts } = useSettings()
+  const [showCards, setShowCards] = useState<boolean>(false)
+  if (!ownedProduct) return null
 
-  const handleAnimationEnd = () => setShowCards(true);
+  const handleAnimationEnd = () => setShowCards(true)
   const handleClose = () => {
-    setOwnedProduct(null);
-    sounds.click.play();
-  };
+    setOwnedProduct(null)
+    sounds.click.play()
+  }
 
   return (
-    <section className="opener">
+    <section className='opener'>
       {showCards ? (
-        <div className="opener__cards">
+        <div className='opener__cards'>
           <div>
             {ownedAgents ? (
               ownedAgents.map((card, index) => (
@@ -44,5 +44,5 @@ export default function Opener() {
         <Pack onAnimationEnd={handleAnimationEnd} />
       )}
     </section>
-  );
+  )
 }

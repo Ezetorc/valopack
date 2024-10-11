@@ -1,16 +1,14 @@
-import { createContext, ReactNode, useState } from "react";
-import Product from "../interfaces/Product";
-import Agent from "../interfaces/Agent";
-import ShopContextType from "../interfaces/ShopContextType";
+import { createContext, ReactNode, useState } from 'react'
+import Product from '../interfaces/Product'
+import Agent from '../interfaces/Agent'
+import ShopContextType from '../interfaces/ShopContextType'
 
-export const ShopContext = createContext<ShopContextType | undefined>(
-  undefined
-);
+export const ShopContext = createContext<ShopContextType | undefined>(undefined)
 
-export function ShopContextProvider({ children }: { children: ReactNode }) {
-  const [ownedProduct, setOwnedProduct] = useState<Product | null>(null);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [ownedAgents, setOwnedAgents] = useState<Agent[]>([]);
+export function ShopContextProvider ({ children }: { children: ReactNode }) {
+  const [ownedProduct, setOwnedProduct] = useState<Product | null>(null)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [ownedAgents, setOwnedAgents] = useState<Agent[]>([])
 
   return (
     <ShopContext.Provider
@@ -20,10 +18,10 @@ export function ShopContextProvider({ children }: { children: ReactNode }) {
         ownedProduct,
         setOwnedProduct,
         selectedProduct,
-        setSelectedProduct,
+        setSelectedProduct
       }}
     >
       {children}
     </ShopContext.Provider>
-  );
+  )
 }

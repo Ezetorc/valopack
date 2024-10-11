@@ -1,5 +1,6 @@
 import GetParams from './GetParams'
 
-export default interface RemoveParams {
+export default interface TagParams {
   get: GetParams
+  tags: string[]
 }

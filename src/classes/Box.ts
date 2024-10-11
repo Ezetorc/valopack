@@ -1,21 +1,21 @@
-import { BoxType } from "../types/BoxType";
-import { Vector2 } from "../types/Vector2";
+import { BoxType } from '../types/BoxType'
+import { Vector2 } from '../types/Vector2'
 
 export default class Box {
-  public free: boolean;
-  public codes: string[];
-  public type: BoxType;
-  public position: Vector2;
+  public free: boolean
+  public tags: string[]
+  public type: BoxType
+  public position: Vector2
 
-  constructor({
+  constructor ({
     position = { x: 0, y: 0 },
     free = true,
-    codes = [],
-    type = "empty",
+    tags = [],
+    type = 'empty'
   }: Partial<Box> = {}) {
-    this.position = position;
-    this.free = free;
-    this.codes = codes;
-    this.type = type;
+    this.position = position
+    this.free = free
+    this.tags = tags
+    this.type = type
   }
 }

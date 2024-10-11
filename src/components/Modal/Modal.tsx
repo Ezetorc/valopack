@@ -1,27 +1,27 @@
-import { useEffect, useRef, ReactNode } from "react";
-import "./Modal.css";
+import { useEffect, useRef, ReactNode } from 'react'
+import './Modal.css'
 
 interface ModalProps {
-  children?: ReactNode;
-  onLoad?: () => Promise<void>;
-  className?: string;
+  children?: ReactNode
+  onLoad?: () => Promise<void>
+  className?: string
 }
 
-export default function Modal({ children, onLoad, className }: ModalProps) {
-  const modalRef = useRef<HTMLDivElement>(null);
+export default function Modal ({ children, onLoad, className }: ModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       if (onLoad) {
-        await onLoad();
+        await onLoad()
       }
     }
-    fetchData();
-  }, [onLoad]);
+    fetchData()
+  }, [onLoad])
 
   return (
-    <div className="modal-container" ref={modalRef}>
+    <div className='modal-container' ref={modalRef}>
       <div className={`modal-content ${className}`}>{children}</div>
     </div>
-  );
+  )
 }
