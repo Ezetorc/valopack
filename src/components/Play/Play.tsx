@@ -18,7 +18,7 @@ import './Play.css'
 export default function Play () {
   const {
     getTotalPlayers,
-    chooseWinner,
+    getResult,
     movePlayer,
     squareTo,
     squareFrom,
@@ -26,7 +26,7 @@ export default function Play () {
     setBoard,
     resetActions,
     attackPlayer,
-    isInAttackRange
+    setSquareTo,
   } = useBoard()
   const { team } = useUser()
   const { texts, updateSection } = useSettings()
@@ -86,39 +86,24 @@ export default function Play () {
   }, [movePlayer, squareFrom, squareTo, action, resetActions])
 
   const handleAttackAction = useCallback(() => {
-    console.log('Start ')
     if (!squareFrom || !squareTo || action !== 'attack') return
-    const playerFrom = squareFrom.get('player') as Player
+
     const playerTo = squareTo.get('player') as Player
-    console.log('FirstIf: ', playerFrom, playerTo)
+    const isAttackValid: boolean =
+      playerTo &&
+      playerTo.team == 'enemy' &&
+      isValidDistance(squareFrom.position, squareTo.position, 1)
 
-    if (!playerFrom || !playerTo) return
-    console.log('SecondIf: ', playerFrom, playerTo)
-
-    const validDistance = isInAttackRange(
-      playerFrom.position,
-      playerTo.position
-    )
-
-    const canAttack = validDistance && squareTo.isFree()
-
-    if (canAttack) {
-      console.log('atacado')
+    if (isAttackValid) {
+      const playerFrom = squareFrom.get('player') as Player
       attackPlayer(playerFrom, playerTo)
       resetActions()
     } else {
       showInvalidMove()
+      setSquareTo(null)
     }
-  }, [
-    attackPlayer,
-    squareFrom,
-    squareTo,
-    action,
-    isInAttackRange,
-    resetActions
-  ])
+  }, [action, attackPlayer, resetActions, setSquareTo, squareFrom, squareTo])
 
-  useEffect(() => console.log(action), [action])
   useEffect(() => handleMoveAction(), [handleMoveAction])
   useEffect(() => handleAttackAction(), [handleAttackAction])
 
@@ -136,8 +121,9 @@ export default function Play () {
 
   useEffect(() => {
     if (!isInitialized) return
-    chooseWinner(setResult)
-  }, [chooseWinner, isInitialized])
+    const gameResult = getResult()
+    setResult(gameResult)
+  }, [getResult, isInitialized])
 
   useEffect(
     () => updateSection(texts.play, sectionsBg.play, false),

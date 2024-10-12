@@ -12,27 +12,17 @@ interface BoardProps {
 }
 
 export default function Board ({ boardRef }: BoardProps) {
-  const { board, setSquareFrom, setSquareTo, action, squareFrom } = useBoard()
+  const { board, setSquareFrom, setSquareTo, action } = useBoard()
 
   const handleClick = useCallback(
     (clickedSquare: Square) => {
-      const hasPlayer = clickedSquare.has('player')
-
-      if (hasPlayer) {
-        if (squareFrom) {
-          if (!action) {
-            setSquareFrom(clickedSquare)
-          }
-        } else {
-          setSquareFrom(clickedSquare)
-        }
+      if (action) {
+        setSquareTo(clickedSquare)
       } else {
-        if (action) {
-          setSquareTo(clickedSquare)
-        }
+        setSquareFrom(clickedSquare)
       }
     },
-    [squareFrom, action, setSquareFrom, setSquareTo]
+    [action, setSquareFrom, setSquareTo]
   )
 
   return (

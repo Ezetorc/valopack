@@ -24,6 +24,6 @@ export default class Square {
   }
 
   isFree (): boolean {
-    return Boolean(this.boxes.find(box => box.free))
+    return this.boxes.every(box => box.free === true)
   }
 }

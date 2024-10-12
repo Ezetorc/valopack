@@ -29,7 +29,7 @@ export default function initializeBoard (
         position: position
       })
 
-      square.boxes = [newPlayer]
+      square.boxes.unshift(newPlayer)
     })
   }
 

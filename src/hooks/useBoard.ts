@@ -6,9 +6,9 @@ import Square from '../classes/Square'
 import { BoxType } from '../types/BoxType'
 import { Team } from '../types/Team'
 import { Vector2 } from '../types/Vector2'
-import getBoardCopy from '../utils/getBoardCopy'
 import getDistance from '../utils/getDistance'
 import { Result } from '../types/Result'
+import getBoardCopy from '../utils/getBoardCopy'
 
 export default function useBoard () {
   const context = useContext(GameContext)
@@ -17,16 +17,15 @@ export default function useBoard () {
   const { board, setBoard, setSquareFrom, setSquareTo, setAction } = context
 
   const getTotalPlayers = useCallback(() => {
-    return board.grid.flat().reduce(
-      (acc, square) => {
+    const grid = board.grid.flat()
+    return grid.reduce(
+      (accumulator, square) => {
         square.boxes.forEach(box => {
-          if (box.type === 'player') {
-            const { team } = box as Player
-            if (team === 'ally') acc.allyPlayers++
-            else acc.enemyPlayers++
-          }
+          if (box.type !== 'player') return
+          const { team } = box as Player
+          accumulator[`${team}Players`] += 1
         })
-        return acc
+        return accumulator
       },
       { allyPlayers: 0, enemyPlayers: 0 }
     )
@@ -38,23 +37,31 @@ export default function useBoard () {
     const playerPosition = player.position
     const playerSquare = newBoard.grid[playerPosition.y][playerPosition.x]
 
-    squareTo.boxes.unshift({ ...player, position: squarePosition })
+    squareTo.boxes.unshift({ ...player, position: squarePosition } as Player)
     playerSquare.boxes = playerSquare.boxes.filter(box => box !== player)
 
     setBoard(newBoard)
   }
 
   const attackPlayer = (attacker: Player, target: Player) => {
+    const newBoard = getBoardCopy(board)
+
+    const targetPlayer = newBoard.grid[target.position.y][
+      target.position.x
+    ].boxes.find(box => box === target) as Player
+
     const damage = Math.max(
-      attacker.attributes.attack - target.attributes.defense,
+      attacker.attributes.attack - targetPlayer.attributes.defense,
       0
     )
 
-    target.attributes.health -= damage
+    targetPlayer.attributes.health -= damage
 
-    if (target.attributes.health <= 0) {
-      killPlayer(target)
+    if (targetPlayer.attributes.health <= 0) {
+      killPlayer(targetPlayer)
     }
+
+    setBoard(newBoard)
   }
 
   const killPlayer = (player: Player) => {
@@ -66,21 +73,15 @@ export default function useBoard () {
     setBoard(newBoard)
   }
 
-  const isInAttackRange = (pos1: Vector2, pos2: Vector2) => {
-    return getDistance(pos1, pos2) === 1
-  }
-
-  const chooseWinner = (
-    setWinner: React.Dispatch<React.SetStateAction<Result>>
-  ) => {
+  const getResult = (): Result => {
     const { allyPlayers, enemyPlayers } = getTotalPlayers()
 
     if (allyPlayers === 0 && enemyPlayers > 0) {
-      setWinner('enemy')
+      return 'enemy'
     } else if (enemyPlayers === 0 && allyPlayers > 0) {
-      setWinner('ally')
+      return 'ally'
     } else if (allyPlayers === 0 && enemyPlayers === 0) {
-      setWinner('draw')
+      return 'draw'
     }
   }
 
@@ -140,8 +141,7 @@ export default function useBoard () {
     attackPlayer,
     killPlayer,
     getTotalPlayers,
-    isInAttackRange,
     resetActions,
-    chooseWinner
+    getResult
   }
 }
