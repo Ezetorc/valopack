@@ -13,9 +13,8 @@ const LazyPlay = React.lazy(() => import('./components/Play/Play'))
 export default function App () {
   const { headerVisible } = useSettings()
 
-  // 3 Las habilidades tienen que poder ser usadas por la IA también [PERSONALIZAR TEAM]
-  // 2 Bug con skySmoke [SI NO ME EQUIVOCO ES PORQUE EL WAIT TAG ELIMINA CONSECUTIVAMENTE A TODOS LOS SMOKES!!]
-  // 1 stimBeacon mal incrementa el speed de los jugadores [MATENME]
+  // 3 Las habilidades tienen que poder ser usadas por la IA también [PERSONALIZAR TEAM EN FUNCIONES]
+  // 
 
   return (
     <Suspense fallback={<Loading />}>

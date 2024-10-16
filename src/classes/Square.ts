@@ -1,12 +1,16 @@
 import { BoxType } from '../types/BoxType'
-import { Vector2 } from '../types/Vector2'
+import { Hexadecimal } from '../types/Hexadecimal'
 import Box from './Box'
+import Position from './Position'
 
 export default class Square {
   public boxes: Box[]
-  public position: Vector2
+  public position: Position
 
-  constructor ({ position = { x: 0, y: 0 }, boxes = [] }: Partial<Square> = {}) {
+  constructor ({
+    position = new Position(0, 0),
+    boxes = []
+  }: Partial<Square> = {}) {
     this.position = position
     this.boxes = boxes
   }
@@ -25,5 +29,21 @@ export default class Square {
 
   isFree (): boolean {
     return this.boxes.every(box => box.free === true)
+  }
+
+  add (box: Box): void {
+    this.boxes.unshift(box)
+  }
+
+  remove (boxToRemove: Box): void {
+    this.boxes = this.boxes.filter(box => box !== boxToRemove)
+  }
+
+  getColor (colors: Hexadecimal[]): Hexadecimal {
+    const { x, y } = this.position
+    const isEven: boolean = (x + y) % 2 === 0
+    const squareColor: string = isEven ? colors[0] : colors[1]
+
+    return squareColor as Hexadecimal
   }
 }

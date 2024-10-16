@@ -1,165 +1,166 @@
+import Board from '../classes/Board'
 import Box from '../classes/Box'
+import Position from '../classes/Position'
 import Square from '../classes/Square'
-import Board from '../interfaces/Board'
 
 export const boards: { [key: string]: Board } = {
-  bind: {
-    color: ['#bfa594cc', '#826b59cc'],
-    grid: [
+  bind: new Board(
+    ['#bfa594cc', '#826b59cc'],
+    [
       [
         new Square({
-          boxes: [new Box({ position: { x: 0, y: 0 } })],
-          position: { x: 0, y: 0 }
+          boxes: [new Box({ position: new Position(0, 0) })],
+          position: new Position(0, 0)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 1, y: 0 } })],
-          position: { x: 1, y: 0 }
+          boxes: [new Box({ position: new Position(1, 0) })],
+          position: new Position(1, 0)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 2, y: 0 } })],
-          position: { x: 2, y: 0 }
+          boxes: [new Box({ position: new Position(2, 0) })],
+          position: new Position(2, 0)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 3, y: 0 } })],
-          position: { x: 3, y: 0 }
+          boxes: [new Box({ position: new Position(3, 0) })],
+          position: new Position(3, 0)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 4, y: 0 } })],
-          position: { x: 4, y: 0 }
+          boxes: [new Box({ position: new Position(4, 0) })],
+          position: new Position(4, 0)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 5, y: 0 } })],
-          position: { x: 5, y: 0 }
+          boxes: [new Box({ position: new Position(5, 0) })],
+          position: new Position(5, 0)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 6, y: 0 } })],
-          position: { x: 6, y: 0 }
+          boxes: [new Box({ position: new Position(6, 0) })],
+          position: new Position(6, 0)
         })
       ],
       [
         new Square({
-          boxes: [new Box({ position: { x: 0, y: 1 } })],
-          position: { x: 0, y: 1 }
+          boxes: [new Box({ position: new Position(0, 1) })],
+          position: new Position(0, 1)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 1, y: 1 } })],
-          position: { x: 1, y: 1 }
+          boxes: [new Box({ position: new Position(1, 1) })],
+          position: new Position(1, 1)
         }),
         new Square({
           boxes: [
-            new Box({ position: { x: 2, y: 1 }, type: 'box', free: false })
+            new Box({ position: new Position(2, 1), type: 'box', free: false })
           ],
-          position: { x: 2, y: 1 }
+          position: new Position(2, 1)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 3, y: 1 } })],
-          position: { x: 3, y: 1 }
+          boxes: [new Box({ position: new Position(3, 1) })],
+          position: new Position(3, 1)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 4, y: 1 } })],
-          position: { x: 4, y: 1 }
+          boxes: [new Box({ position: new Position(4, 1) })],
+          position: new Position(4, 1)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 5, y: 1 } })],
-          position: { x: 5, y: 1 }
+          boxes: [new Box({ position: new Position(5, 1) })],
+          position: new Position(5, 1)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 6, y: 1 } })],
-          position: { x: 6, y: 1 }
+          boxes: [new Box({ position: new Position(6, 1) })],
+          position: new Position(6, 1)
         })
       ],
       [
         new Square({
-          boxes: [new Box({ position: { x: 0, y: 2 } })],
-          position: { x: 0, y: 2 }
+          boxes: [new Box({ position: new Position(0, 2) })],
+          position: new Position(0, 2)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 1, y: 2 } })],
-          position: { x: 1, y: 2 }
+          boxes: [new Box({ position: new Position(1, 2) })],
+          position: new Position(1, 2)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 2, y: 2 } })],
-          position: { x: 2, y: 2 }
+          boxes: [new Box({ position: new Position(2, 2) })],
+          position: new Position(2, 2)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 3, y: 2 } })],
-          position: { x: 3, y: 2 }
+          boxes: [new Box({ position: new Position(3, 2) })],
+          position: new Position(3, 2)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 4, y: 2 } })],
-          position: { x: 4, y: 2 }
+          boxes: [new Box({ position: new Position(4, 2) })],
+          position: new Position(4, 2)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 5, y: 2 } })],
-          position: { x: 5, y: 2 }
+          boxes: [new Box({ position: new Position(5, 2) })],
+          position: new Position(5, 2)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 6, y: 2 } })],
-          position: { x: 6, y: 2 }
+          boxes: [new Box({ position: new Position(6, 2) })],
+          position: new Position(6, 2)
         })
       ],
       [
         new Square({
-          boxes: [new Box({ position: { x: 0, y: 3 } })],
-          position: { x: 0, y: 3 }
+          boxes: [new Box({ position: new Position(0, 3) })],
+          position: new Position(0, 3)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 1, y: 3 } })],
-          position: { x: 1, y: 3 }
+          boxes: [new Box({ position: new Position(1, 3) })],
+          position: new Position(1, 3)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 2, y: 3 } })],
-          position: { x: 2, y: 3 }
+          boxes: [new Box({ position: new Position(2, 3) })],
+          position: new Position(2, 3)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 3, y: 3 } })],
-          position: { x: 3, y: 3 }
+          boxes: [new Box({ position: new Position(3, 3) })],
+          position: new Position(3, 3)
         }),
         new Square({
           boxes: [
-            new Box({ position: { x: 4, y: 3 }, type: 'box', free: false })
+            new Box({ position: new Position(4, 3), type: 'box', free: false })
           ],
-          position: { x: 4, y: 3 }
+          position: new Position(4, 3)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 5, y: 3 } })],
-          position: { x: 5, y: 3 }
+          boxes: [new Box({ position: new Position(5, 3) })],
+          position: new Position(5, 3)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 6, y: 3 } })],
-          position: { x: 6, y: 3 }
+          boxes: [new Box({ position: new Position(6, 3) })],
+          position: new Position(6, 3)
         })
       ],
       [
         new Square({
-          boxes: [new Box({ position: { x: 0, y: 4 } })],
-          position: { x: 0, y: 4 }
+          boxes: [new Box({ position: new Position(0, 4) })],
+          position: new Position(0, 4)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 1, y: 4 } })],
-          position: { x: 1, y: 4 }
+          boxes: [new Box({ position: new Position(1, 4) })],
+          position: new Position(1, 4)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 2, y: 4 } })],
-          position: { x: 2, y: 4 }
+          boxes: [new Box({ position: new Position(2, 4) })],
+          position: new Position(2, 4)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 3, y: 4 } })],
-          position: { x: 3, y: 4 }
+          boxes: [new Box({ position: new Position(3, 4) })],
+          position: new Position(3, 4)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 4, y: 4 } })],
-          position: { x: 4, y: 4 }
+          boxes: [new Box({ position: new Position(4, 4) })],
+          position: new Position(4, 4)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 5, y: 4 } })],
-          position: { x: 5, y: 4 }
+          boxes: [new Box({ position: new Position(5, 4) })],
+          position: new Position(5, 4)
         }),
         new Square({
-          boxes: [new Box({ position: { x: 6, y: 4 } })],
-          position: { x: 6, y: 4 }
+          boxes: [new Box({ position: new Position(6, 4) })],
+          position: new Position(6, 4)
         })
       ]
     ]
-  }
+  )
 }

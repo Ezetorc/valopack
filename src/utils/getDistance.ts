@@ -1,7 +1,13 @@
-import { Vector2 } from '../types/Vector2'
+import Position from '../classes/Position'
 
-export default function getDistance (pos1: Vector2, pos2: Vector2): number {
+export default function getDistance (
+  positionA: Position,
+  positionB: Position
+): number {
   return Math.floor(
-    Math.max(Math.abs(pos2.x - pos1.x), Math.abs(pos2.y - pos1.y))
+    Math.max(
+      Math.abs(positionB.x - positionA.x),
+      Math.abs(positionB.y - positionA.y)
+    )
   )
 }

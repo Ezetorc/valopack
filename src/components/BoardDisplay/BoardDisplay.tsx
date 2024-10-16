@@ -1,17 +1,15 @@
 import { useCallback } from 'react'
 import BoxDisplay from '../BoxDisplay/BoxDisplay'
-import getSquareColor from '../../utils/getSquareColor'
 import SquareDisplay from '../SquareDisplay/SquareDisplay'
-import getBoxOpacity from '../../utils/getBoxOpacity'
 import Square from '../../classes/Square'
 import useBoard from '../../hooks/useBoard'
-import './Board.css'
+import './BoardDisplay.css'
 
-interface BoardProps {
+interface BoardDisplayProps {
   boardRef: React.RefObject<HTMLDivElement>
 }
 
-export default function Board ({ boardRef }: BoardProps) {
+export default function BoardDisplay ({ boardRef }: BoardDisplayProps) {
   const { board, setSquareFrom, setSquareTo, action } = useBoard()
 
   const handleClick = useCallback(
@@ -30,14 +28,14 @@ export default function Board ({ boardRef }: BoardProps) {
       {board.grid.flat().map((square, squareIndex) => (
         <SquareDisplay
           onClick={() => handleClick(square)}
-          color={getSquareColor(square, board)}
+          color={square.getColor(board.colors)}
           key={`square-${squareIndex}`}
         >
           {square.boxes.map((box, boxIndex) => (
             <BoxDisplay
               box={box}
               key={`box-${squareIndex}-${boxIndex}`}
-              opacity={getBoxOpacity(square, box)}
+              opacity={box.getOpacity(square)}
             />
           ))}
         </SquareDisplay>

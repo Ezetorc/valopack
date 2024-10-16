@@ -5,10 +5,9 @@ import Player from '../classes/Player'
 import Square from '../classes/Square'
 import { BoxType } from '../types/BoxType'
 import { Team } from '../types/Team'
-import { Vector2 } from '../types/Vector2'
 import getDistance from '../utils/getDistance'
-import { Result } from '../types/Result'
-import getBoardCopy from '../utils/getBoardCopy'
+import Position from '../classes/Position'
+import getDamage from '../utils/getDamage'
 
 export default function useBoard () {
   const context = useContext(GameContext)
@@ -16,73 +15,42 @@ export default function useBoard () {
 
   const { board, setBoard, setSquareFrom, setSquareTo, setAction } = context
 
-  const getTotalPlayers = useCallback(() => {
-    const grid = board.grid.flat()
-    return grid.reduce(
-      (accumulator, square) => {
-        square.boxes.forEach(box => {
-          if (box.type !== 'player') return
-          const { team } = box as Player
-          accumulator[`${team}Players`] += 1
-        })
-        return accumulator
-      },
-      { allyPlayers: 0, enemyPlayers: 0 }
-    )
-  }, [board.grid])
+  const movePlayer = (player: Player, square: Square) => {
+    setBoard(prevBoard => {
+      const squareTo = prevBoard.getSquare(square.position)
+      const playerSquare = prevBoard.getSquare(player.position)
+      const movedPlayer = new Player({
+        ...player,
+        position: new Position(square.position.x, square.position.y)
+      })
 
-  const movePlayer = (player: Player, squareTo: Square) => {
-    const newBoard = getBoardCopy(board)
-    const squarePosition = { ...squareTo.position }
-    const playerPosition = player.position
-    const playerSquare = newBoard.grid[playerPosition.y][playerPosition.x]
+      squareTo.add(movedPlayer)
+      playerSquare.remove(player)
 
-    squareTo.boxes.unshift({ ...player, position: squarePosition } as Player)
-    playerSquare.boxes = playerSquare.boxes.filter(box => box !== player)
-
-    setBoard(newBoard)
+      return prevBoard
+    })
   }
 
   const attackPlayer = (attacker: Player, target: Player) => {
-    const newBoard = getBoardCopy(board)
+    setBoard(prevBoard => {
+      const damage = getDamage(attacker, target)
+      target.setHealth(prevHealth => (prevHealth -= damage))
 
-    const targetPlayer = newBoard.grid[target.position.y][
-      target.position.x
-    ].boxes.find(box => box === target) as Player
+      if (target.isDead()) {
+        const targetSquare = prevBoard.getSquare(target.position)
+        targetSquare.remove(target)
+      }
 
-    const damage = Math.max(
-      attacker.attributes.attack - targetPlayer.attributes.defense,
-      0
-    )
-
-    targetPlayer.attributes.health -= damage
-
-    if (targetPlayer.attributes.health <= 0) {
-      killPlayer(targetPlayer)
-    }
-
-    setBoard(newBoard)
+      return prevBoard
+    })
   }
 
   const killPlayer = (player: Player) => {
-    const newBoard = getBoardCopy(board)
-    const agentPosition = { ...player.position }
-    const square = newBoard.grid[agentPosition.y][agentPosition.x]
-
-    square.boxes = square.boxes.filter(box => box !== player)
-    setBoard(newBoard)
-  }
-
-  const getResult = (): Result => {
-    const { allyPlayers, enemyPlayers } = getTotalPlayers()
-
-    if (allyPlayers === 0 && enemyPlayers > 0) {
-      return 'enemy'
-    } else if (enemyPlayers === 0 && allyPlayers > 0) {
-      return 'ally'
-    } else if (allyPlayers === 0 && enemyPlayers === 0) {
-      return 'draw'
-    }
+    setBoard(prevBoard => {
+      const playerSquare = prevBoard.getSquare(player.position)
+      playerSquare.remove(player)
+      return prevBoard
+    })
   }
 
   const resetActions = useCallback(() => {
@@ -93,7 +61,7 @@ export default function useBoard () {
 
   const getInRange = <T extends Box>(
     boxTypes: BoxType[] | 'all',
-    position: Vector2,
+    position: Position,
     range: number,
     team: Team | 'any' = 'any'
   ) => {
@@ -104,7 +72,7 @@ export default function useBoard () {
       for (let j = -range; j <= range; j++) {
         const neighborX: number = x + i
         const neighborY: number = y + j
-        const neighborPosition: Vector2 = { x: neighborX, y: neighborY }
+        const neighborPosition: Position = new Position(neighborX, neighborY)
         const distance: number = getDistance(position, neighborPosition)
 
         if (
@@ -140,8 +108,6 @@ export default function useBoard () {
     movePlayer,
     attackPlayer,
     killPlayer,
-    getTotalPlayers,
-    resetActions,
-    getResult
+    resetActions
   }
 }

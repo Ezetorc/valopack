@@ -1,3 +1,4 @@
+import Position from '../classes/Position'
 import Agent from '../interfaces/Agent'
 import Attributes from '../interfaces/Attributes'
 import { Language } from '../types/Language'
@@ -12,19 +13,19 @@ export const teamColors = {
   ally: '#348ac7',
   enemy: '#b83231'
 }
-export const allyPositions = [
-  { x: 0, y: 0 },
-  { x: 0, y: 1 },
-  { x: 0, y: 2 },
-  { x: 0, y: 3 },
-  { x: 0, y: 4 }
+export const allyPositions: Position[] = [
+  new Position(5, 0),
+  new Position(0, 1),
+  new Position(0, 2),
+  new Position(0, 3),
+  new Position(0, 4)
 ]
-export const enemyPositions = [
-  { x: 6, y: 0 },
-  { x: 6, y: 1 },
-  { x: 6, y: 2 },
-  { x: 6, y: 3 },
-  { x: 6, y: 4 }
+export const enemyPositions: Position[] = [
+  new Position(6, 0),
+  new Position(6, 1),
+  new Position(6, 2),
+  new Position(6, 3),
+  new Position(6, 4)
 ]
 export const paths: { [key: string]: string } = {
   home: '/',

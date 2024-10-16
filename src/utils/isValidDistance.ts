@@ -1,9 +1,9 @@
-import { Vector2 } from '../types/Vector2'
+import Position from '../classes/Position'
 import getDistance from './getDistance'
 
 export default function isValidDistance (
-  pos1: Vector2,
-  pos2: Vector2,
+  pos1: Position,
+  pos2: Position,
   maxDistance: number
 ) {
   const distance = getDistance(pos1, pos2)

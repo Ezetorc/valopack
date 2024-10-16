@@ -1,7 +1,7 @@
+import Board from '../classes/Board'
 import Square from '../classes/Square'
 import { Action } from '../types/Action'
 import { Team } from '../types/Team'
-import Board from './Board'
 import Effect from './Effect'
 
 export default interface GameContextType {
