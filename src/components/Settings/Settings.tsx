@@ -70,7 +70,9 @@ export default function Settings () {
     })
   }
 
-  const getValue = () => options.find(option => option.value === language)
+  const getValue = () => {
+    return options.find(option => option.value === language)
+  }
 
   const handleClose = () => {
     setSettingsOpen(false)

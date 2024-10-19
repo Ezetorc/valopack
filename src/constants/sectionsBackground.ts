@@ -1,4 +1,4 @@
-export const sectionsBg: { [key: string]: string } = {
+export const sectionsBackgrounds: { [key: string]: string } = {
   shop: `linear-gradient(
     220deg,
     #65204c,

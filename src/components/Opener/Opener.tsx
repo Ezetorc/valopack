@@ -12,7 +12,10 @@ export default function Opener () {
   const [showCards, setShowCards] = useState<boolean>(false)
   if (!ownedProduct) return null
 
-  const handleAnimationEnd = () => setShowCards(true)
+  const handleAnimationEnd = () => {
+    setShowCards(true)
+  }
+  
   const handleClose = () => {
     setOwnedProduct(null)
     sounds.click.play()

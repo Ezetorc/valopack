@@ -1,9 +1,7 @@
 import Ability from '../../interfaces/Ability'
 
 export const stimBeacon: Ability = {
-  name: 'Stim Beacon',
-  description:
-    'Throw a stim beacon that increase speed by one of allies around it for two turns.',
+  identifier: 'stimBeacon',
   usesLeft: 1,
   range: [1, 10],
   boxTypes: ['empty'],

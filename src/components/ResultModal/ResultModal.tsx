@@ -14,7 +14,7 @@ export default function ResultModal ({ result }: ResultModalProps) {
   const { texts } = useSettings()
   const { addCredits, removeCredits } = useUser()
   if (!result) return
-  let creditsWinned = ''
+  let creditsWinned: string = ''
 
   if (result === 'ally') {
     addCredits(1000)

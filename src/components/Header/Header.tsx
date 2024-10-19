@@ -14,9 +14,15 @@ export default function Header () {
   const { credits } = useUser()
   const { texts, settingsOpen, setSettingsOpen } = useSettings()
 
-  const handleClick = () => sounds.click.play()
-  const handleMouseEnter = () => sounds.hover.play()
-  const handleOpen = () => {
+  const handleClick = (): void => {
+    sounds.click.play()
+  }
+  
+  const handleMouseEnter = (): void => {
+    sounds.hover.play()
+  }
+
+  const handleOpen = (): void => {
     setSettingsOpen(true)
     sounds.click.play()
   }

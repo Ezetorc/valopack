@@ -1,5 +1,6 @@
 import Box from '../../classes/Box'
 import Player from '../../classes/Player'
+import { Team } from '../../types/Team'
 import './BoxDisplay.css'
 
 interface BoxDisplayProps {
@@ -8,10 +9,10 @@ interface BoxDisplayProps {
 }
 
 export default function BoxDisplay ({ box, opacity }: BoxDisplayProps) {
-  const isPlayer = box.type === 'player'
-  const player = isPlayer ? (box as Player) : null
-  const flip = isPlayer ? (player?.team == 'ally' ? 1 : -1) : 1
-  const team = player ? player.team : ''
+  const isPlayer: boolean = box.type === 'player'
+  const player: Player | null = isPlayer ? (box as Player) : null
+  const flip: number = isPlayer ? (player?.team == 'ally' ? 1 : -1) : 1
+  const team: Team | '' = player ? player.team : ''
 
   return (
     <div

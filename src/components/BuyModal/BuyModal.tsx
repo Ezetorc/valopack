@@ -15,8 +15,14 @@ export default function BuyModal ({ canBuy }: BuyModalProps) {
   const { selectedProduct, setSelectedProduct, buy } = useShop()
   if (!selectedProduct) return
 
-  const handleClick = () => selectedProduct && buy(selectedProduct)
-  const handleLoad = () => sounds.purchase.play()
+  const handleClick = (): void => {
+    if (!selectedProduct) return
+    buy(selectedProduct)
+  }
+
+  const handleLoad = (): Promise<void> => {
+    return sounds.purchase.play()
+  }
 
   return (
     <Modal className='buy-modal' onLoad={handleLoad}>

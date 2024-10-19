@@ -13,7 +13,6 @@ import sentinelPackImage from '../assets/images/packs/sentinel_pack.webp'
 import mixedPackImage from '../assets/images/packs/mixed_pack.webp'
 import newPackImage from '../assets/images/packs/new_pack.webp'
 import useSettings from './useSettings'
-
 import { useMemo } from 'react'
 
 export default function useShop () {
@@ -121,7 +120,7 @@ export default function useShop () {
       }
     ],
     [texts]
-  ) // Se memoriza cuando texts cambia
+  ) 
 
   return { ...context, buy, getNewInventory, products }
 }

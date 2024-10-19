@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import { createContext, ReactNode, useState } from 'react'
 import { Team } from '../types/Team'
 import { Action } from '../types/Action'
 import Effect from '../interfaces/Effect'
@@ -16,8 +16,6 @@ export function GameContextProvider ({ children }: { children: ReactNode }) {
   const [action, setAction] = useState<Action | null>(null)
   const [board, setBoard] = useState<Board>(() => getRandomBoard())
   const [effects, setEffects] = useState<Effect[]>([])
-
-  useEffect(() => console.log(board), [board])
 
   return (
     <GameContext.Provider

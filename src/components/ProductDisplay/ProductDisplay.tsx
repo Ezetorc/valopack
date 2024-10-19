@@ -7,13 +7,18 @@ import './ProductDisplay.css'
 export function ProductDisplay ({ product, color, amount }: Product) {
   const { setSelectedProduct } = useShop()
   const { image, name, price } = product
-  const lightColor = getLightColor(color, 0.4)
-  const backgroundStyle = {
+  const lightColor: string = getLightColor(color, 0.4)
+  const backgroundStyle: { background: string } = {
     background: `linear-gradient(0deg, ${color} 0%, ${lightColor} 100%)`
   }
 
-  const handleMouseEnter = () => sounds.hover.play()
-  const handleClick = () => setSelectedProduct({ product, color, amount })
+  const handleMouseEnter = () => {
+    sounds.hover.play()
+  }
+
+  const handleClick = () => {
+    setSelectedProduct({ product, color, amount })
+  }
 
   return (
     <button

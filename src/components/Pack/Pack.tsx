@@ -12,8 +12,13 @@ export default function Pack ({ onAnimationEnd }: PackProps) {
   const packRef = useRef<HTMLElement | null>(null)
   const packImage = ownedProduct?.product.image ?? ''
 
-  const handleAnimationStart = () => sounds.opening.play()
-  const handleAnimationEnd = () => onAnimationEnd()
+  const handleAnimationStart = () => {
+    sounds.opening.play()
+  }
+  
+  const handleAnimationEnd = () => {
+    onAnimationEnd()
+  }
 
   return (
     <article

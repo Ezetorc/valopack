@@ -4,19 +4,21 @@ import useUser from '../../hooks/useUser'
 import useShop from '../../hooks/useShop'
 import Opener from '../Opener/Opener'
 import { ProductDisplay } from '../ProductDisplay/ProductDisplay'
-import { sectionsBg } from '../../constants/sectionsBg'
 import BuyModal from '../BuyModal/BuyModal'
+import { sectionsBackgrounds } from '../../constants/sectionsBackground'
 import './Shop.css'
 
 export default function Shop () {
   const { ownedProduct, selectedProduct, products } = useShop()
   const { credits } = useUser()
   const { texts, updateSection } = useSettings()
-  const canBuy = selectedProduct
+  const canBuy: boolean = selectedProduct
     ? credits >= selectedProduct.product.price
     : false
 
-  useEffect(() => updateSection(texts.shop, sectionsBg.shop, true))
+  useEffect(() => {
+    updateSection(texts.shop, sectionsBackgrounds.shop, true)
+  })
 
   return (
     <>

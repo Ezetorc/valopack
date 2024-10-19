@@ -6,8 +6,8 @@ import { useEffect } from 'react'
 import useSettings from '../../hooks/useSettings'
 import useUser from '../../hooks/useUser'
 import useShop from '../../hooks/useShop'
-import { sectionsBg } from '../../constants/sectionsBg'
 import { paths } from '../../constants/general'
+import { sectionsBackgrounds } from '../../constants/sectionsBackground'
 import './Home.css'
 
 export default function Home () {
@@ -19,7 +19,7 @@ export default function Home () {
     setAgentToChange(null)
     setOwnedProduct(null)
     setSelectedProduct(null)
-    updateSection(texts.home, sectionsBg.home, true)
+    updateSection(texts.home, sectionsBackgrounds.home, true)
   })
 
   return (

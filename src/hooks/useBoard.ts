@@ -8,18 +8,19 @@ import { Team } from '../types/Team'
 import getDistance from '../utils/getDistance'
 import Position from '../classes/Position'
 import getDamage from '../utils/getDamage'
+import GameContextType from '../interfaces/GameContextType'
 
 export default function useBoard () {
-  const context = useContext(GameContext)
+  const context: GameContextType | undefined = useContext(GameContext)
   if (!context) throw new Error("Context doesn't have a provider!")
 
   const { board, setBoard, setSquareFrom, setSquareTo, setAction } = context
 
   const movePlayer = (player: Player, square: Square) => {
     setBoard(prevBoard => {
-      const squareTo = prevBoard.getSquare(square.position)
-      const playerSquare = prevBoard.getSquare(player.position)
-      const movedPlayer = new Player({
+      const squareTo: Square = prevBoard.getSquare(square.position)
+      const playerSquare: Square = prevBoard.getSquare(player.position)
+      const movedPlayer: Player = new Player({
         ...player,
         position: new Position(square.position.x, square.position.y)
       })
@@ -33,11 +34,11 @@ export default function useBoard () {
 
   const attackPlayer = (attacker: Player, target: Player) => {
     setBoard(prevBoard => {
-      const damage = getDamage(attacker, target)
+      const damage: number = getDamage(attacker, target)
       target.setHealth(prevHealth => (prevHealth -= damage))
 
       if (target.isDead()) {
-        const targetSquare = prevBoard.getSquare(target.position)
+        const targetSquare: Square = prevBoard.getSquare(target.position)
         targetSquare.remove(target)
       }
 
@@ -47,7 +48,7 @@ export default function useBoard () {
 
   const killPlayer = (player: Player) => {
     setBoard(prevBoard => {
-      const playerSquare = prevBoard.getSquare(player.position)
+      const playerSquare: Square = prevBoard.getSquare(player.position)
       playerSquare.remove(player)
       return prevBoard
     })
@@ -59,7 +60,7 @@ export default function useBoard () {
     setSquareTo(null)
   }, [setAction, setSquareFrom, setSquareTo])
 
-  const getInRange = <T extends Box>(
+  const getBoxesInRange = <T extends Box>(
     boxTypes: BoxType[] | 'all',
     position: Position,
     range: number,
@@ -104,7 +105,7 @@ export default function useBoard () {
 
   return {
     ...context,
-    getInRange,
+    getBoxesInRange,
     movePlayer,
     attackPlayer,
     killPlayer,

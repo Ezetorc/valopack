@@ -70,6 +70,18 @@ export const dictionaries: Dictionaries = {
     loading: 'LOADING',
     language: 'Language',
     level: 'Level',
+    abilities: {
+      skySmoke: {
+        name: 'Sky Smoke',
+        description:
+          'Throw a 3x3 smoke that let pass your allies but no enemies'
+      },
+      stimBeacon: {
+        name: 'Stim Beacon',
+        description:
+          'Throw a stim beacon that increase speed by one of allies around it for two turns.'
+      }
+    },
     wannaBuy: (product: ProductType) => `Do you want to buy ${product.name}?`
   },
 
@@ -143,6 +155,18 @@ export const dictionaries: Dictionaries = {
     loading: 'CARGANDO',
     language: 'Idioma',
     level: 'Nivel',
+    abilities: {
+      skySmoke: {
+        name: 'Humo celestial',
+        description:
+          'Lanza un humo 3x3 que deje pasar a tus aliados pero no a tus enemigos'
+      },
+      stimBeacon: {
+        name: 'Baliza potenciadora',
+        description:
+          'Lanza una baliza de estímulo que aumenta la velocidad en uno de los aliados a su alrededor durante dos turnos.'
+      }
+    },
     wannaBuy: (product: ProductType) => `¿Quieres comprar ${product.name}?`
   }
 }

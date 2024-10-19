@@ -9,8 +9,13 @@ interface SectionLinkProps {
 }
 
 export default function SectionLink ({ to, text, image }: SectionLinkProps) {
-  const handleHover = () => sounds.hover.play()
-  const handleClick = () => sounds.click.play()
+  const handleHover = () => {
+    sounds.hover.play()
+  }
+  
+  const handleClick = () => {
+    sounds.click.play()
+  }
 
   return (
     <Link

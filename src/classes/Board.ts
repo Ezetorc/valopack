@@ -12,7 +12,7 @@ export default class Board {
   public colors: [Hexadecimal, Hexadecimal]
   public grid: BoardGrid
 
-  constructor (colors: [`#${string}`, `#${string}`], grid: BoardGrid) {
+  constructor (colors: [Hexadecimal, Hexadecimal], grid: BoardGrid) {
     this.colors = colors
     this.grid = grid
   }
@@ -21,7 +21,7 @@ export default class Board {
     return this.grid[position.y][position.x]
   }
 
-  getTotalPlayers () {
+  getTotalPlayers (): { allyPlayers: 0; enemyPlayers: 0 } {
     const grid = this.grid.flat()
     return grid.reduce(
       (accumulator, square) => {
@@ -48,7 +48,7 @@ export default class Board {
     }
   }
 
-  initialize (allyTeam: Agent[], enemyTeam: Agent[]): this {
+  getInitialized (allyTeam: Agent[], enemyTeam: Agent[]): this {
     const placePlayers = (
       agents: Agent[],
       positions: Position[],

@@ -6,6 +6,6 @@ export default function isValidDistance (
   pos2: Position,
   maxDistance: number
 ) {
-  const distance = getDistance(pos1, pos2)
+  const distance: number = getDistance(pos1, pos2)
   return distance <= maxDistance
 }

@@ -1,5 +1,10 @@
 import { ProductType } from '../types/ProductType'
 
+interface AbilityInfo {
+  name: string
+  description: string
+}
+
 export interface Dictionary {
   addCard: string
   buy: string
@@ -67,5 +72,9 @@ export interface Dictionary {
   loading: string
   language: string
   level: string
+  abilities: {
+    skySmoke: AbilityInfo
+    stimBeacon: AbilityInfo
+  }
   wannaBuy: (product: ProductType) => string
 }

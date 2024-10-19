@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import useUser from '../../hooks/useUser'
 import Selector from '../Selector/Selector'
-import { sectionsBg } from '../../constants/sectionsBg'
 import useSettings from '../../hooks/useSettings'
 import Agent from '../../interfaces/Agent'
 import Slot from '../Slot/Slot'
+import { sectionsBackgrounds } from '../../constants/sectionsBackground'
 import './Team.css'
 
 export default function Team () {
@@ -16,7 +16,7 @@ export default function Team () {
     agentToChange !== null && agentToChange !== undefined
 
   useEffect(
-    () => updateSection(texts.team, sectionsBg.team, true),
+    () => updateSection(texts.team, sectionsBackgrounds.team, true),
     [updateSection, texts.team]
   )
 

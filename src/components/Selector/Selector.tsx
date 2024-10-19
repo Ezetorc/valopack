@@ -31,7 +31,7 @@ export default function Selector () {
     [setTeam, agentToChange, setAgentToChange]
   )
 
-  const filteredInventory = inventory.filter(
+  const filteredInventory: Agent[] = inventory.filter(
     card => !team.some(agent => agent?.id === card.id)
   )
 

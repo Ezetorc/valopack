@@ -9,7 +9,7 @@ export default function getTeam (agentNames?: string[]): Agent[] {
 
   if (agentNames) {
     const agentsValues: Agent[] = Object.values(agents)
-    const uniqueAgentNames = new Set(agentNames)
+    const uniqueAgentNames: Set<string> = new Set(agentNames)
 
     agentsValues.forEach(agent => {
       if (uniqueAgentNames.has(agent.name) && team.length < 5) {

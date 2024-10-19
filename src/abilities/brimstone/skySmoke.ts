@@ -1,8 +1,7 @@
 import Ability from '../../interfaces/Ability'
 
 export const skySmoke: Ability = {
-  name: 'Sky Smoke',
-  description: 'Throw a 3x3 smoke that let pass your allies but no enemies',
+  identifier: "skySmoke",
   usesLeft: 1,
   range: [0, 10],
   boxTypes: ['empty', 'player', 'box', 'stimBeacon', 'skySmoke'],

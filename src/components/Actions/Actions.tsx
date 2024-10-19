@@ -16,11 +16,11 @@ export default function Actions ({ onOpenInfo }: ActionsProps) {
   if (!squareFrom) return
   const { team, agent } = squareFrom?.getFirstBox() as Player
   if (!agent) return
-  const borderColor = teamColors[team]
+  const borderColor: string = teamColors[team]
   const { icon, name, abilities } = agent
   const [ability0, ability1] = abilities
 
-  const isAvailable = (ability: Ability) => ability.usesLeft > 0
+  const isAvailable = (ability: Ability): boolean => ability.usesLeft > 0
 
   return (
     <footer className='game__actions'>
@@ -40,7 +40,7 @@ export default function Actions ({ onOpenInfo }: ActionsProps) {
               className={`available-${isAvailable(ability0)}`}
               onClick={() => setAction('ability0')}
             >
-              {ability0.name}
+              {texts.abilities[ability0.identifier].name}
             </Action>
           )}
 
@@ -49,7 +49,7 @@ export default function Actions ({ onOpenInfo }: ActionsProps) {
               className={`available-${isAvailable(ability1)}`}
               onClick={() => setAction('ability1')}
             >
-              {ability1.name}
+              {texts.abilities[ability1.identifier].name}
             </Action>
           )}
         </>
