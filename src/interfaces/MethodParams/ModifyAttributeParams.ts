@@ -9,6 +9,6 @@ export default interface ModifyAttributeParams {
     | 'defense'
     | 'precision'
     | 'critic'
-    | 'resistance'
+    | 'resistance';
   amount: number
 }

@@ -1,1 +1,1 @@
-export type GetBy = 'range' | 'targetBox' | 'selectedBox' | 'tag'
+export type GetBy = 'range' | 'squareTo' | 'squareFrom' | 'tag' | 'all'

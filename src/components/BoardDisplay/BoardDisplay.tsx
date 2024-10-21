@@ -6,6 +6,10 @@ import useBoard from '../../hooks/useBoard'
 import Player from '../../classes/Player'
 import isValidDistance from '../../utils/isValidDistance'
 import { Action } from '../../types/Action'
+import useAbility from '../../hooks/useAbility'
+import Ability from '../../interfaces/Ability'
+import isWithinRange from '../../utils/isWithinRange'
+import getDistance from '../../utils/getDistance'
 import './BoardDisplay.css'
 
 export default function BoardDisplay () {
@@ -17,9 +21,17 @@ export default function BoardDisplay () {
     movePlayer,
     squareFrom,
     resetActions,
-    attackPlayer
+    attackPlayer,
+    handleEffects,
+    toggleTurn
   } = useBoard()
+  const { handleAbility } = useAbility()
   const boardRef = useRef<HTMLDivElement>(null)
+
+  const changeTurn = useCallback(() => {
+    handleEffects()
+    toggleTurn()
+  }, [handleEffects, toggleTurn])
 
   const showInvalidMove = useCallback(() => {
     boardRef.current?.classList.add('invalid-move')
@@ -43,11 +55,20 @@ export default function BoardDisplay () {
       if (canMove) {
         movePlayer(player, squareToMove)
         resetActions()
+        changeTurn()
       } else {
         showInvalidMove()
+        setSquareTo(null)
       }
     },
-    [movePlayer, squareFrom, resetActions, showInvalidMove]
+    [
+      movePlayer,
+      squareFrom,
+      resetActions,
+      showInvalidMove,
+      setSquareTo,
+      changeTurn
+    ]
   )
 
   const handleAttackAction = useCallback(
@@ -64,12 +85,58 @@ export default function BoardDisplay () {
         const playerFrom: Player = squareFrom.get('player') as Player
         attackPlayer(playerFrom, playerTo)
         resetActions()
+        changeTurn()
       } else {
         showInvalidMove()
         setSquareTo(null)
       }
     },
-    [attackPlayer, resetActions, setSquareTo, squareFrom, showInvalidMove]
+    [
+      attackPlayer,
+      resetActions,
+      setSquareTo,
+      squareFrom,
+      showInvalidMove,
+      changeTurn
+    ]
+  )
+
+  const handleAbilityAction = useCallback(
+    (targetSquare: Square) => {
+      if (!squareFrom) return
+      const playerFrom = squareFrom.get('player') as Player
+      if (!playerFrom) return
+
+      const { abilities } = playerFrom.agent
+      const selectedAbility: Ability =
+        action === 'ability0' ? abilities[0] : abilities[1]
+
+      const distance: number = getDistance(
+        squareFrom.position,
+        targetSquare.position
+      )
+
+      const canUseAbility: boolean =
+        selectedAbility && isWithinRange(distance, selectedAbility.range)
+
+      if (canUseAbility) {
+        handleAbility(selectedAbility, targetSquare)
+        resetActions()
+        changeTurn()
+      } else {
+        showInvalidMove()
+        setSquareTo(null)
+      }
+    },
+    [
+      action,
+      handleAbility,
+      resetActions,
+      setSquareTo,
+      showInvalidMove,
+      squareFrom,
+      changeTurn
+    ]
   )
 
   const handleAction = useCallback(
@@ -77,25 +144,25 @@ export default function BoardDisplay () {
       const actions: { [key in Action]: (square: Square) => void } = {
         move: handleMoveAction,
         attack: handleAttackAction,
-        ability0: handleMoveAction,
-        ability1: handleMoveAction
+        ability0: handleAbilityAction,
+        ability1: handleAbilityAction
       }
 
       actions[action](square)
     },
-    [handleAttackAction, handleMoveAction]
+    [handleAttackAction, handleMoveAction, handleAbilityAction]
   )
 
   const handleClick = useCallback(
     (clickedSquare: Square) => {
-      if (action !== null) {
-        handleAction(action, clickedSquare)
-      } else {
+      if (action === null) {
         if (action) {
           setSquareTo(clickedSquare)
         } else {
           setSquareFrom(clickedSquare)
         }
+      } else {
+        handleAction(action, clickedSquare)
       }
     },
     [action, setSquareFrom, setSquareTo, handleAction]

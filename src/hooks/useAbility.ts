@@ -1,242 +1,132 @@
-// import { useContext } from "react";
-// import { GameContext } from "../contexts/GameContext";
-// import getDistance from "../utils/getDistance";
-// import getBoardCopy from "../utils/getBoardCopy";
-// import Ability from "../interfaces/Ability";
-// import Method from "../interfaces/Method";
-// import ReplaceParams from "../interfaces/MethodParams/ReplaceParams";
-// import GetParams from "../interfaces/MethodParams/GetParams";
-// import ModifyAttributeParams from "../interfaces/MethodParams/ModifyAttributeParams";
-// import WaitParams from "../interfaces/MethodParams/WaitParams";
-// import AddParams from "../interfaces/MethodParams/AddParams";
-// import RemoveParams from "../interfaces/MethodParams/RemoveParams";
-// import Box from "../classes/Box";
-// import Player from "../classes/Player";
-// import Square from "../classes/Square";
-// import { MethodParams } from "../types/MethodParams";
-// import useBoard from "./useBoard";
-// import TagParams from "../interfaces/MethodParams/TagParams";
-// import isWithinRange from "../utils/isWithinRange";
+import { useContext } from 'react'
+import GameContextType from '../interfaces/GameContextType'
+import { GameContext } from '../contexts/GameContext'
+import Ability from '../interfaces/Ability'
+import Method from '../interfaces/Method'
+import AddParams from '../interfaces/MethodParams/AddParams'
+import GetParams from '../interfaces/MethodParams/GetParams'
+import Square from '../classes/Square'
+import applyFilters from '../utils/applyFilters'
+import Box from '../classes/Box'
+import RemoveParams from '../interfaces/MethodParams/RemoveParams'
+import ModifyAttributeParams from '../interfaces/MethodParams/ModifyAttributeParams'
+import Player from '../classes/Player'
+import TagParams from '../interfaces/MethodParams/TagParams'
+import WaitParams from '../interfaces/MethodParams/WaitParams'
+import Board from '../classes/Board'
 
-// export default function useAbility() {
-//   const context = useContext(GameContext);
-//   if (!context) throw new Error("Context doesn't have a Provider");
+export default function useAbility () {
+  const context: GameContextType | undefined = useContext(GameContext)
+  if (!context) throw new Error("Context doesn't have a provider")
 
-//   const { setBoard, board, squareFrom, squareTo, setEffects } = context;
-//   const { getInRange } = useBoard();
+  const { squareFrom, board, setBoard, setEffects } = context
 
-//   const removeTags = (params: TagParams) => {
-//     const usesGetMethod = "get" in params;
-//     const hasCodes = params.tags;
-//     if (!usesGetMethod || !hasCodes) return;
+  const handleAbility = (ability: Ability, squareTo: Square): void => {
+    const { methods } = ability
 
-//     const boxes = handleGetMethod(params.get as GetParams);
+    methods.forEach(method => {
+      handleMethod(method, squareTo)
+    })
+  }
 
-//     boxes.forEach((box) => {
-//       box.tags = box.tags.filter((tag) => !params.tags.includes(tag));
-//     });
-//   };
+  const handleMethod = (method: Method, squareTo: Square): void => {
+    const { type, params } = method
 
-//   const handleGetMethod = (params: GetParams): Box[] => {
-//     const { getBy, tags, boxTypes, range, team } = params;
+    if (type == 'add') {
+      handleAddMethod(params as AddParams, squareTo)
+    } else if (type == 'remove') {
+      handleRemoveMethod(params as RemoveParams, squareTo)
+    } else if (type == 'modifyAttribute') {
+      handleModifyAttributeMethod(params as ModifyAttributeParams, squareTo)
+    } else if (type == 'tag') {
+      handleTagMethod(params as TagParams, squareTo)
+    } else if (type == 'wait') {
+      handleWaitMethod(params as WaitParams, squareTo)
+    }
+  }
 
-//     const filterByTeam = (box: Box) => {
-//       if (box.type !== "player") return false;
-//       const player = box as Player;
-//       return player.team === team;
-//     };
+  const handleGetMethod = (params: GetParams, squareTo: Square): Square[] => {
+    const { getBy, filters, range } = params
+    const squares: Square[] = []
 
-//     if (getBy === "squareTo" && squareTo) {
-//       console.log(squareTo);
-//       if (boxTypes?.includes(squareTo.type)) {
-//         return [squareTo];
-//       }
-//       console.log("No boxes selected");
-//       return [];
-//     }
+    if (getBy === 'squareFrom' && squareFrom) {
+      squares.push(squareFrom)
+    } else if (getBy === 'squareTo' && squareTo) {
+      squares.push(squareTo)
+    } else if (getBy === 'range') {
+      squares.push(...board.getSquaresInRange(squareTo.position, range ?? 1))
+    } else if (getBy === 'tag') {
+      squares.push(...board.grid.flat())
+    } else if (getBy === 'all') {
+      squares.push(...board.grid.flat())
+    }
 
-//     if (getBy === "squareFrom" && squareFrom) {
-//       if (
-//         boxTypes?.includes(squareFrom.type) &&
-//         (!team || filterByTeam(squareFrom))
-//       ) {
-//         return [squareFrom];
-//       }
-//       console.log("No boxes selected");
-//       return [];
-//     }
+    applyFilters(squares, filters)
 
-//     if (getBy === "tag") {
-//       const boxes: Box[] = [];
-//       board.grid.forEach((row) =>
-//         row.forEach((square) =>
-//           square.boxes.forEach((box) => {
-//             const hasTag = box.tags?.some((tag) => tags?.includes(tag));
-//             const correctTeam = team === "any" || filterByTeam(box);
+    return squares
+  }
 
-//             if (hasTag && correctTeam && box.type === "player") {
-//               boxes.push(box);
-//             }
-//           })
-//         )
-//       );
-//       return boxes;
-//     }
+  const handleAddMethod = (params: AddParams, squareTo: Square) => {
+    const squares: Square[] = handleGetMethod(params.get, squareTo)
+    const boxToAdd: Box = new Box({ type: params.boxType })
 
-//     if (getBy === "range" && squareTo && boxTypes && range) {
-//       return getInRange(boxTypes, squareTo.position, range, team);
-//     }
+    squares.forEach(square => {
+      square.add(boxToAdd)
+    })
+  }
 
-//     console.log("No boxes selected");
-//     return [];
-//   };
+  const handleRemoveMethod = (params: RemoveParams, squareTo: Square) => {
+    const squares: Square[] = handleGetMethod(params.get, squareTo)
 
-//   const handleAbility = (ability: Ability): boolean => {
-//     if (!squareFrom || !squareTo) return false;
-//     const distance = getDistance(squareFrom.position, squareTo.position);
-//     const isInRange: boolean = isWithinRange(distance, ability.range);
-//     const isValidBoxType = ability.boxTypes.includes(squareTo.type);
-//     if (!isInRange || !isValidBoxType) return false;
+    squares.forEach(square =>
+      params.boxTypes.forEach(boxType => {
+        square.remove(boxType)
+      })
+    )
+  }
 
-//     let abilitySuccess = false;
+  const handleModifyAttributeMethod = (
+    params: ModifyAttributeParams,
+    squareTo: Square
+  ) => {
+    const squares: Square[] = handleGetMethod(params.get, squareTo)
 
-//     ability.methods.forEach((method) => {
-//       const methodSuccess = handleMethod(method);
-//       if (methodSuccess) abilitySuccess = true;
-//     });
+    squares.forEach(square => {
+      const player = square.get('player')
+      if (player) {
+        ;(player as Player).attributes[params.attribute] += params.amount
+      }
+    })
+  }
 
-//     return abilitySuccess;
-//   };
+  const handleTagMethod = (params: TagParams, squareTo: Square) => {
+    const squares: Square[] = handleGetMethod(params.get, squareTo)
 
-//   const handleMethod = (method: Method): boolean => {
-//     if (!squareFrom || !squareTo) return false;
+    squares.forEach(square =>
+      square.boxes.forEach(box => {
+        box.tags.push(...params.tags)
+      })
+    )
+  }
 
-//     const newBoard = getBoardCopy(board);
-//     const { params, type } = method;
-//     let success = false;
-//     removeTags(params as TagParams);
+  const handleWaitMethod = (params: WaitParams, squareTo: Square) => {
+    if (params.type == 'miliseconds') {
+      setTimeout(() => {
+        params.methods.forEach(method => handleMethod(method, squareTo))
 
-//     const handler = methodHandlers[type];
-//     if (handler) success = handler(params);
-//     if (success) setBoard(newBoard);
+        setBoard(prevBoard => new Board(prevBoard.colors, [...prevBoard.grid]))
+      }, params.time)
+    } else {
+      setEffects(prevEffects => [
+        ...prevEffects,
+        {
+          methods: params.methods,
+          turnsLeft: params.time + 1,
+          square: squareTo
+        }
+      ])
+    }
+  }
 
-//     return success;
-//   };
-
-//   const methodHandlers: Record<string, (params: MethodParams) => boolean> = {
-//     replace: (params: MethodParams) =>
-//       handleReplaceMethod(params as ReplaceParams),
-//     modifyAttribute: (params: MethodParams) =>
-//       handleModifyAttributeMethod(params as ModifyAttributeParams),
-//     wait: (params: MethodParams) => handleWaitMethod(params as WaitParams),
-//     tag: (params: MethodParams) => handleTagMethod(params as TagParams),
-//     add: (params: MethodParams) => handleAddMethod(params as AddParams),
-//     remove: (params: MethodParams) =>
-//       handleRemoveMethod(params as RemoveParams),
-//   };
-
-//   const handleTagMethod = (params: TagParams) => {
-//     const boxes = handleGetMethod(params.get);
-//     let success = false;
-
-//     boxes.forEach((box) => {
-//       box.tags.push(...params.tags);
-//       success = true;
-//     });
-
-//     return success;
-//   };
-
-//   const handleWaitMethod = (params: WaitParams) => {
-//     if (params.type == "miliseconds") {
-//       setTimeout(() => {
-//         params.methods.forEach((method) => handleMethod(method));
-//       }, params.time);
-//     } else if (params.type == "turns") {
-//       setEffects((prevEffects) => {
-//         return [
-//           ...prevEffects,
-//           {
-//             methods: params.methods,
-//             turnsLeft: params.time,
-//           },
-//         ];
-//       });
-//     }
-
-//     return true;
-//   };
-
-//   const handleReplaceMethod = (params: ReplaceParams): boolean => {
-//     const boxes = handleGetMethod(params.get);
-//     let success = false;
-
-//     boxes.forEach((box) => {
-//       const square = board.grid[box.position.y][box.position.x];
-//       const boxIndex = square.boxes.indexOf(box);
-
-//       square.boxes[boxIndex].type = params.to;
-//       success = true;
-//     });
-
-//     return success;
-//   };
-
-//   const handleAddMethod = (params: AddParams): boolean => {
-//     const boxes = handleGetMethod(params.get);
-//     let success = false;
-//     console.log(`AddMethodBoxes =>`);
-//     console.log(boxes);
-
-//     boxes.forEach((box) => {
-//       const square: Square = board.grid[box.position.y][box.position.x];
-//       const allyInSquare: Box | undefined = square.boxes.find(
-//         (box) => box.type == "player" && (box as Player).team == "ally"
-//       );
-
-//       const newBox = new Box({
-//         position: square.position,
-//         type: params.boxType,
-//       });
-//       if (allyInSquare) {
-//         square.boxes.unshift(newBox);
-//       } else {
-//         square.boxes.push(newBox);
-//       }
-//       success = true;
-//     });
-
-//     return success;
-//   };
-
-//   const handleRemoveMethod = (params: RemoveParams): boolean => {
-//     const boxes = handleGetMethod(params.get);
-//     let success = false;
-
-//     boxes.forEach((box) => {
-//       const square = board.grid[box.position.y][box.position.x];
-//       square.boxes = square.boxes.filter((b) => b !== box);
-//       success = true;
-//     });
-
-//     return success;
-//   };
-
-//   const handleModifyAttributeMethod = (params: ModifyAttributeParams) => {
-//     const players = handleGetMethod(params.get) as Player[];
-//     let success = false;
-
-//     players.forEach((player) => {
-//       player.attributes[params.attribute] += params.amount;
-//       success = true;
-//     });
-
-//     return success;
-//   };
-
-//   return {
-//     handleAbility,
-//     handleMethod,
-//     ...context,
-//   };
-// }
+  return { ...context, handleAbility, handleMethod }
+}

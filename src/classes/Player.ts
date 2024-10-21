@@ -13,7 +13,7 @@ export default class Player extends Box {
   constructor ({
     agent,
     team = 'ally',
-    attributes = defaultAttributes,
+    attributes = { ...defaultAttributes },
     position = new Position(0, 0),
     free = false,
     tags = [],

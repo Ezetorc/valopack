@@ -12,12 +12,12 @@ import BoardDisplay from '../BoardDisplay/BoardDisplay'
 import './Play.css'
 
 export default function Play () {
-  const { squareFrom, setBoard, board } = useBoard()
-  const { team } = useUser()
-  const { texts, updateSection } = useSettings()
-  const [showInfo, setShowInfo] = useState<boolean>(false)
-  const [result, setResult] = useState<Result>(undefined)
+  const { squareFrom, setBoard, board  } = useBoard()
+  const [infoVisible, setInfoVisible] = useState<boolean>(false)
   const [matchStarted, setMatchStarted] = useState(false)
+  const [result, setResult] = useState<Result>(undefined)
+  const { texts, updateSection } = useSettings()
+  const { team } = useUser()
 
   useEffect(() => {
     if (!matchStarted) {
@@ -43,12 +43,12 @@ export default function Play () {
   return (
     <>
       {result && <ResultModal result={result} />}
-      {showInfo && <PlayerInfo onClose={() => setShowInfo(false)} />}
+      {infoVisible && <PlayerInfo onClose={() => setInfoVisible(false)} />}
 
       <section className='game'>
         <BoardDisplay />
         {squareFrom?.has('player') && (
-          <Actions onOpenInfo={() => setShowInfo(true)} />
+          <Actions onOpenInfo={() => setInfoVisible(true)} />
         )}
       </section>
     </>

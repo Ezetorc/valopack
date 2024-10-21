@@ -13,8 +13,6 @@ const LazyPlay = React.lazy(() => import('./components/Play/Play'))
 export default function App () {
   const { headerVisible } = useSettings()
 
-  // 3 Las habilidades tienen que poder ser usadas por la IA también [PERSONALIZAR TEAM EN FUNCIONES USANDO TURN]
-
   return (
     <Suspense fallback={<Loading />}>
       {headerVisible && <Header />}

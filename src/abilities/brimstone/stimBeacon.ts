@@ -10,26 +10,39 @@ export const stimBeacon: Ability = {
       type: 'add',
       params: {
         get: {
-          getBy: 'targetBox',
-          boxTypes: ['empty'],
-          range: 1,
-          team: 'any',
-          tags: []
+          getBy: 'squareTo'
         },
         boxType: 'stimBeacon'
       }
     },
     {
-      // Este método, el get, se ejecuta 3 veces en caso de detectar 3 agentes.
-      // Esto es lo que provoca que se sume 3 a la speed en vez de 1.
-      // ¿Tienes idea de por qué pasa esto?
+      type: 'wait',
+      params: {
+        type: 'miliseconds',
+        time: 2000,
+        methods: [
+          {
+            type: 'remove',
+            params: {
+              get: {
+                getBy: 'squareTo'
+              },
+              boxTypes: ['stimBeacon']
+            }
+          }
+        ]
+      }
+    },
+    {
       type: 'modifyAttribute',
       params: {
         get: {
           getBy: 'range',
-          boxTypes: ['player'],
-          team: 'ally',
-          range: 1
+          range: 1,
+          filters: {
+            boxTypes: ['player'],
+            team: 'ally'
+          }
         },
         attribute: 'speed',
         amount: +1
@@ -40,9 +53,11 @@ export const stimBeacon: Ability = {
       params: {
         get: {
           getBy: 'range',
-          boxTypes: ['player'],
-          team: 'ally',
-          range: 1
+          range: 1,
+          filters: {
+            boxTypes: ['player'],
+            team: 'ally'
+          }
         },
         tags: ['stimBeacon']
       }
@@ -50,39 +65,17 @@ export const stimBeacon: Ability = {
     {
       type: 'wait',
       params: {
-        type: 'miliseconds',
-        time: 1000,
-        methods: [
-          {
-            type: 'remove',
-            params: {
-              get: {
-                getBy: 'targetBox',
-                boxTypes: ['stimBeacon'],
-                range: 1,
-                team: 'any',
-                tags: []
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      type: 'wait',
-      params: {
         type: 'turns',
-        time: 3,
+        time: 2,
         methods: [
           {
             type: 'modifyAttribute',
             params: {
               get: {
                 getBy: 'tag',
-                tags: ['stimBeacon'],
-                range: 1,
-                team: 'ally',
-                boxTypes: []
+                filters: {
+                  tags: ['stimBeacon']
+                }
               },
               attribute: 'speed',
               amount: -1

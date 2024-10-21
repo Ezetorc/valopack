@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 import { Team } from '../types/Team'
 import { Action } from '../types/Action'
 import Effect from '../interfaces/Effect'
@@ -10,12 +10,14 @@ import getRandomBoard from '../utils/getRandomBoard'
 export const GameContext = createContext<GameContextType | undefined>(undefined)
 
 export function GameContextProvider ({ children }: { children: ReactNode }) {
-  const [turn, setTurn] = useState<Team>('ally')
   const [squareFrom, setSquareFrom] = useState<Square | null>(null)
   const [squareTo, setSquareTo] = useState<Square | null>(null)
+  const [effects, setEffects] = useState<Effect[]>([])
   const [action, setAction] = useState<Action | null>(null)
   const [board, setBoard] = useState<Board>(() => getRandomBoard())
-  const [effects, setEffects] = useState<Effect[]>([])
+  const [turn, setTurn] = useState<Team>('ally')
+
+  useEffect(() => console.log(turn), [turn])
 
   return (
     <GameContext.Provider

@@ -22,6 +22,9 @@ export default class Box {
     this.type = type
   }
 
+  has (tags: string[]): boolean {
+    return tags.every(tag => this.tags.includes(tag))
+  }
 
   getOpacity (square: Square): number {
     const smokeInSquare: boolean = square.boxes.some(

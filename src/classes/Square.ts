@@ -35,8 +35,12 @@ export default class Square {
     this.boxes.unshift(box)
   }
 
-  remove (box: Box): void {
-    this.boxes = this.boxes.filter(boxInBoxes => boxInBoxes !== box)
+  remove (box: Box | BoxType): void {
+    if (box instanceof Box) {
+      this.boxes = this.boxes.filter(boxInBoxes => boxInBoxes !== box)
+    } else {
+      this.boxes = this.boxes.filter(boxInBoxes => boxInBoxes.type !== box)
+    }
   }
 
   getColor (colors: Hexadecimal[]): Hexadecimal {
