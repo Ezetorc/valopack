@@ -50,8 +50,8 @@ export default function useBoard () {
         position: new Position(square.position.x, square.position.y)
       })
 
-      squareTo.add(movedPlayer)
-      playerSquare.remove(player)
+      squareTo.addBox(movedPlayer)
+      playerSquare.removeBox(player)
 
       return prevBoard
     })
@@ -64,7 +64,7 @@ export default function useBoard () {
 
       if (target.isDead()) {
         const targetSquare: Square = prevBoard.getSquare(target.position)
-        targetSquare.remove(target)
+        targetSquare.removeBox(target)
       }
 
       return prevBoard
@@ -74,7 +74,7 @@ export default function useBoard () {
   const killPlayer = (player: Player) => {
     setBoard(prevBoard => {
       const playerSquare: Square = prevBoard.getSquare(player.position)
-      playerSquare.remove(player)
+      playerSquare.removeBox(player)
       return prevBoard
     })
   }

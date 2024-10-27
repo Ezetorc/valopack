@@ -17,7 +17,8 @@ export function GameContextProvider ({ children }: { children: ReactNode }) {
   const [board, setBoard] = useState<Board>(() => getRandomBoard())
   const [turn, setTurn] = useState<Team>('ally')
 
-  useEffect(() => console.log(turn), [turn])
+  useEffect(() => console.log('turn: ', turn), [turn])
+  useEffect(() => console.log(effects), [effects])
 
   return (
     <GameContext.Provider

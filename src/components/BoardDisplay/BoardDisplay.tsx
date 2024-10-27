@@ -41,7 +41,7 @@ export default function BoardDisplay () {
   const handleMoveAction = useCallback(
     (squareToMove: Square) => {
       if (!squareFrom) return
-      const player: Player = squareFrom.get('player') as Player
+      const player: Player = squareFrom.getBox('player') as Player
       if (!player) return
 
       const validDistance: boolean = isValidDistance(
@@ -75,14 +75,14 @@ export default function BoardDisplay () {
     (squareToAttack: Square) => {
       if (!squareFrom) return
 
-      const playerTo: Player = squareToAttack.get('player') as Player
+      const playerTo: Player = squareToAttack.getBox('player') as Player
       const canAttack: boolean =
         playerTo &&
         playerTo.team == 'enemy' &&
         isValidDistance(squareFrom.position, squareToAttack.position, 1)
 
       if (canAttack) {
-        const playerFrom: Player = squareFrom.get('player') as Player
+        const playerFrom: Player = squareFrom.getBox('player') as Player
         attackPlayer(playerFrom, playerTo)
         resetActions()
         changeTurn()
@@ -104,7 +104,7 @@ export default function BoardDisplay () {
   const handleAbilityAction = useCallback(
     (targetSquare: Square) => {
       if (!squareFrom) return
-      const playerFrom = squareFrom.get('player') as Player
+      const playerFrom = squareFrom.getBox('player') as Player
       if (!playerFrom) return
 
       const { abilities } = playerFrom.agent
@@ -117,7 +117,10 @@ export default function BoardDisplay () {
       )
 
       const canUseAbility: boolean =
-        selectedAbility && isWithinRange(distance, selectedAbility.range)
+        isWithinRange(distance, selectedAbility.useRange) &&
+        targetSquare
+          .getBoxesTypes()
+          .every(boxType => selectedAbility.validBoxTypes.includes(boxType))
 
       if (canUseAbility) {
         handleAbility(selectedAbility, targetSquare)
@@ -174,6 +177,8 @@ export default function BoardDisplay () {
         <SquareDisplay
           onClick={() => handleClick(square)}
           color={square.getColor(board.colors)}
+          style={square.style}
+          classes={square.classes}
           key={`square-${squareIndex}`}
         >
           {square.boxes.map((box, boxIndex) => (

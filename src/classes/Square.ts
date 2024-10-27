@@ -6,24 +6,30 @@ import Position from './Position'
 export default class Square {
   public boxes: Box[]
   public position: Position
+  public style: { [key: string]: string }
+  public classes: Set<string>
 
   constructor ({
     position = new Position(0, 0),
-    boxes = []
+    boxes = [],
+    style = {},
+    classes = new Set<string>()
   }: Partial<Square> = {}) {
     this.position = position
     this.boxes = boxes
+    this.style = style
+    this.classes = classes
   }
 
   getFirstBox (): Box {
     return this.boxes[0]
   }
 
-  has (boxType: BoxType): boolean {
+  hasBox (boxType: BoxType): boolean {
     return this.boxes.some(box => box.type == boxType)
   }
 
-  get (boxType: BoxType): Box | undefined {
+  getBox (boxType: BoxType): Box | undefined {
     return this.boxes.find(box => box.type == boxType)
   }
 
@@ -31,16 +37,36 @@ export default class Square {
     return this.boxes.every(box => box.free === true)
   }
 
-  add (box: Box): void {
+  addBox (box: Box): void {
     this.boxes.unshift(box)
   }
 
-  remove (box: Box | BoxType): void {
+  addClass (className: string): void {
+    this.classes.add(className)
+  }
+
+  removeClass (className: string): void {
+    this.classes.delete(className)
+  }
+
+  addStyleProperty (propertyName: string, propertyValue: string): void {
+    this.style[propertyName] = propertyValue
+  }
+
+  removeStyleProperty (propertyName: string): void {
+    delete this.style[propertyName]
+  }
+
+  removeBox (box: Box | BoxType): void {
     if (box instanceof Box) {
       this.boxes = this.boxes.filter(boxInBoxes => boxInBoxes !== box)
     } else {
       this.boxes = this.boxes.filter(boxInBoxes => boxInBoxes.type !== box)
     }
+  }
+
+  getBoxesTypes (): BoxType[] {
+    return this.boxes.map(box => box.type)
   }
 
   getColor (colors: Hexadecimal[]): Hexadecimal {

@@ -1,5 +1,6 @@
 import { allyPositions, enemyPositions } from '../constants/general'
 import Agent from '../interfaces/Agent'
+import Tag from '../interfaces/Tag'
 import { BoardGrid } from '../types/BoardGrid'
 import { Hexadecimal } from '../types/Hexadecimal'
 import { Result } from '../types/Result'
@@ -100,5 +101,15 @@ export default class Board {
     placePlayers(enemyTeam, enemyPositions, 'enemy')
 
     return this
+  }
+
+  getByTags (tags: Tag[]): Square[] {
+    return this.grid.flat().filter(square => {
+      return square.boxes.some(box => {
+        return tags.every(tag =>
+          box.tags.some(boxTag => boxTag.text === tag.text)
+        )
+      })
+    })
   }
 }

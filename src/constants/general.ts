@@ -3,16 +3,18 @@ import Agent from '../interfaces/Agent'
 import Attributes from '../interfaces/Attributes'
 import { Language } from '../types/Language'
 import { Role } from '../types/Role'
+import { Team } from '../types/Team'
 import getTeam from '../utils/getTeam'
 
 export const appName: string = 'VALOPACK'
 export const levelMultiplier: number = 1
 export const defaultLanguage: Language = 'en'
 export const creditsPerGameWinned: number = 1000
-export const teamColors = {
+export const teamColors: { [key in Team]: string } = {
   ally: '#348ac7',
   enemy: '#b83231'
 }
+
 export const allyPositions: Position[] = [
   new Position(5, 0),
   new Position(0, 1),

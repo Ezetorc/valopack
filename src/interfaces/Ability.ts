@@ -5,7 +5,7 @@ import Method from './Method'
 export default interface Ability {
   identifier: AbilityIdentifier
   usesLeft: number
-  boxTypes: BoxType[]
-  range: [number, number]
+  validBoxTypes: BoxType[]
+  useRange: [number, number]
   methods: Method[]
 }

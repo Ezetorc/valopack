@@ -1,10 +1,10 @@
 import Ability from '../../interfaces/Ability'
 
 export const skySmoke: Ability = {
-  identifier: "skySmoke",
+  identifier: 'skySmoke',
   usesLeft: 1,
-  range: [0, 10],
-  boxTypes: ['empty', 'player', 'box', 'stimBeacon', 'skySmoke'],
+  useRange: [0, 10],
+  validBoxTypes: ['empty', 'player', 'box', 'stimBeacon', 'skySmoke'],
   methods: [
     // {
     //   type: 'add',

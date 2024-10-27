@@ -13,3 +13,35 @@
   cursor: pointer;
   border-color: #fff;
 }
+
+.fade {
+  animation: fade var(--fade-duration);
+}
+
+.scale-up {
+  animation: scale-up 0.2s;
+}
+
+@keyframes fade {
+  0% {
+    background-color: transparent;
+  }
+
+  50% {
+    background-color: var(--fade-color);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes scale-up {
+  from {
+    transform: scale(5);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}

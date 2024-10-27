@@ -13,7 +13,7 @@ export default function PlayerInfo ({ onClose }: PlayerInfoProps) {
   const { texts } = useSettings()
   const { squareFrom } = useBoard()
   if (!squareFrom) return
-  const player: Player = squareFrom.get('player') as Player
+  const player: Player = squareFrom.getBox('player') as Player
   const { name, portrait } = player.agent
   const { team } = player
   const { attack, health, defense, speed, precision, critic, resistance } =

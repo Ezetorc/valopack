@@ -6,7 +6,6 @@ import Method from '../interfaces/Method'
 import AddParams from '../interfaces/MethodParams/AddParams'
 import GetParams from '../interfaces/MethodParams/GetParams'
 import Square from '../classes/Square'
-import applyFilters from '../utils/applyFilters'
 import Box from '../classes/Box'
 import RemoveParams from '../interfaces/MethodParams/RemoveParams'
 import ModifyAttributeParams from '../interfaces/MethodParams/ModifyAttributeParams'
@@ -14,12 +13,60 @@ import Player from '../classes/Player'
 import TagParams from '../interfaces/MethodParams/TagParams'
 import WaitParams from '../interfaces/MethodParams/WaitParams'
 import Board from '../classes/Board'
+import FadeParams from '../interfaces/MethodParams/FadeParams'
+import { teamColors } from '../constants/general'
+import ModifyClassParams from '../interfaces/MethodParams/ModifyClassParams'
+import { Team } from '../types/Team'
+import Tag from '../interfaces/Tag'
+import getParsedTeamOption from '../utils/getParsedTeamOption'
 
 export default function useAbility () {
   const context: GameContextType | undefined = useContext(GameContext)
   if (!context) throw new Error("Context doesn't have a provider")
 
-  const { squareFrom, board, setBoard, setEffects } = context
+  const { squareFrom, board, setBoard, setEffects, turn } = context
+
+  const applyFilters = (
+    squares: Square[],
+    filters: GetParams['filters']
+  ): void => {
+    if (!filters) return
+    for (let i = squares.length - 1; i >= 0; i--) {
+      const square = squares[i]
+      const player: Player = square.getBox('player') as Player
+
+      if (filters.boxTypes) {
+        const hasAllBoxTypes = filters.boxTypes.every(boxType =>
+          square.boxes.some(box => box.type === boxType)
+        )
+
+        if (!hasAllBoxTypes) {
+          squares.splice(i, 1)
+          continue
+        }
+      }
+
+      if (filters.team && player) {
+        const parsedTeam: Team = getParsedTeamOption(filters.team, turn)
+
+        if (player.team !== parsedTeam) {
+          squares.splice(i, 1)
+          continue
+        }
+      }
+
+      if (filters.tags) {
+        const hasTags: boolean = square.boxes.some(box =>
+          box.has(filters.tags as Tag[])
+        )
+
+        if (!hasTags) {
+          squares.splice(i, 1)
+          continue
+        }
+      }
+    }
+  }
 
   const handleAbility = (ability: Ability, squareTo: Square): void => {
     const { methods } = ability
@@ -42,6 +89,10 @@ export default function useAbility () {
       handleTagMethod(params as TagParams, squareTo)
     } else if (type == 'wait') {
       handleWaitMethod(params as WaitParams, squareTo)
+    } else if (type == 'fade') {
+      handleFadeMethod(params as FadeParams, squareTo)
+    } else if (type == 'modifyClass') {
+      handleModifyClassMethod(params as ModifyClassParams, squareTo)
     }
   }
 
@@ -71,7 +122,7 @@ export default function useAbility () {
     const boxToAdd: Box = new Box({ type: params.boxType })
 
     squares.forEach(square => {
-      square.add(boxToAdd)
+      square.addBox(boxToAdd)
     })
   }
 
@@ -80,7 +131,7 @@ export default function useAbility () {
 
     squares.forEach(square =>
       params.boxTypes.forEach(boxType => {
-        square.remove(boxType)
+        square.removeBox(boxType)
       })
     )
   }
@@ -92,7 +143,7 @@ export default function useAbility () {
     const squares: Square[] = handleGetMethod(params.get, squareTo)
 
     squares.forEach(square => {
-      const player = square.get('player')
+      const player = square.getBox('player')
       if (player) {
         ;(player as Player).attributes[params.attribute] += params.amount
       }
@@ -126,6 +177,42 @@ export default function useAbility () {
         }
       ])
     }
+  }
+
+  const handleFadeMethod = (params: FadeParams, squareTo: Square) => {
+    const squares: Square[] = handleGetMethod(params.get, squareTo)
+    let color: string = params.color
+
+    if (params.color == 'currentTeamColor') {
+      color = teamColors[turn]
+    } else {
+      color = turn == 'ally' ? teamColors['enemy'] : teamColors['ally']
+    }
+
+    squares.forEach(square => {
+      square.addStyleProperty('--fade-color', color)
+      square.addStyleProperty('--fade-duration', `${params.duration}s`)
+      square.addClass('fade')
+
+      setTimeout(() => {
+        square.removeClass('fade')
+      }, params.duration * 1000)
+    })
+  }
+
+  const handleModifyClassMethod = (
+    params: ModifyClassParams,
+    squareTo: Square
+  ) => {
+    const squares: Square[] = handleGetMethod(params.get, squareTo)
+
+    squares.forEach(square => {
+      const methodName: 'addClass' | 'removeClass' = `${params.method}Class`
+
+      params.classNames.forEach(className => {
+        square[methodName](className)
+      })
+    })
   }
 
   return { ...context, handleAbility, handleMethod }

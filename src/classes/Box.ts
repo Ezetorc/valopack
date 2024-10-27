@@ -1,3 +1,4 @@
+import Tag from '../interfaces/Tag'
 import { BoxType } from '../types/BoxType'
 import { Team } from '../types/Team'
 import Player from './Player'
@@ -6,7 +7,7 @@ import Square from './Square'
 
 export default class Box {
   public free: boolean
-  public tags: string[]
+  public tags: Tag[]
   public type: BoxType
   public position: Position
 
@@ -22,7 +23,7 @@ export default class Box {
     this.type = type
   }
 
-  has (tags: string[]): boolean {
+  has (tags: Tag[]): boolean {
     return tags.every(tag => this.tags.includes(tag))
   }
 

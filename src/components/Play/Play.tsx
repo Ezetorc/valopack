@@ -47,7 +47,7 @@ export default function Play () {
 
       <section className='game'>
         <BoardDisplay />
-        {squareFrom?.has('player') && (
+        {squareFrom?.hasBox('player') && (
           <Actions onOpenInfo={() => setInfoVisible(true)} />
         )}
       </section>

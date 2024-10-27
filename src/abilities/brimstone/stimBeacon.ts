@@ -3,8 +3,8 @@ import Ability from '../../interfaces/Ability'
 export const stimBeacon: Ability = {
   identifier: 'stimBeacon',
   usesLeft: 1,
-  range: [1, 10],
-  boxTypes: ['empty'],
+  useRange: [1, 10],
+  validBoxTypes: ['empty'],
   methods: [
     {
       type: 'add',
@@ -13,6 +13,35 @@ export const stimBeacon: Ability = {
           getBy: 'squareTo'
         },
         boxType: 'stimBeacon'
+      }
+    },
+    {
+      type: 'modifyClass',
+      params: {
+        get: {
+          getBy: 'squareTo'
+        },
+        method: 'add',
+        classNames: ['scale-up']
+      }
+    },
+    {
+      type: 'wait',
+      params: {
+        type: 'miliseconds',
+        time: 500,
+        methods: [
+          {
+            type: 'modifyClass',
+            params: {
+              get: {
+                getBy: 'squareTo'
+              },
+              method: 'remove',
+              classNames: ['scale-up']
+            }
+          }
+        ]
       }
     },
     {
@@ -41,7 +70,7 @@ export const stimBeacon: Ability = {
           range: 1,
           filters: {
             boxTypes: ['player'],
-            team: 'ally'
+            team: 'currentTeam'
           }
         },
         attribute: 'speed',
@@ -56,10 +85,15 @@ export const stimBeacon: Ability = {
           range: 1,
           filters: {
             boxTypes: ['player'],
-            team: 'ally'
+            team: 'currentTeam'
           }
         },
-        tags: ['stimBeacon']
+        tags: [
+          {
+            text: 'stimBeacon',
+            useID: true
+          }
+        ]
       }
     },
     {
@@ -73,15 +107,33 @@ export const stimBeacon: Ability = {
             params: {
               get: {
                 getBy: 'tag',
-                filters: {
-                  tags: ['stimBeacon']
-                }
+                tags: [
+                  {
+                    text: 'stimBeacon',
+                    useID: true
+                  }
+                ]
               },
               attribute: 'speed',
               amount: -1
             }
           }
         ]
+      }
+    },
+    {
+      type: 'fade',
+      params: {
+        get: {
+          getBy: 'range',
+          range: 1,
+          filters: {
+            boxTypes: ['player'],
+            team: 'currentTeam'
+          }
+        },
+        color: 'currentTeamColor',
+        duration: 1
       }
     }
   ]
