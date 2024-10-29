@@ -3,22 +3,24 @@ import GameContextType from '../interfaces/GameContextType'
 import { GameContext } from '../contexts/GameContext'
 import Ability from '../interfaces/Ability'
 import Method from '../interfaces/Method'
-import AddParams from '../interfaces/MethodParams/AddParams'
+import AddParams from '../interfaces/MethodParams/AddBoxParams'
 import GetParams from '../interfaces/MethodParams/GetParams'
 import Square from '../classes/Square'
 import Box from '../classes/Box'
-import RemoveParams from '../interfaces/MethodParams/RemoveParams'
+import RemoveParams from '../interfaces/MethodParams/RemoveBoxParams'
 import ModifyAttributeParams from '../interfaces/MethodParams/ModifyAttributeParams'
 import Player from '../classes/Player'
-import TagParams from '../interfaces/MethodParams/TagParams'
+import TagParams from '../interfaces/MethodParams/AddTagParams'
 import WaitParams from '../interfaces/MethodParams/WaitParams'
 import Board from '../classes/Board'
-import FadeParams from '../interfaces/MethodParams/FadeParams'
+import FadeParams from '../interfaces/MethodParams/ShowFadeParams'
 import { teamColors } from '../constants/general'
-import ModifyClassParams from '../interfaces/MethodParams/ModifyClassParams'
 import { Team } from '../types/Team'
 import Tag from '../interfaces/Tag'
 import getParsedTeamOption from '../utils/getParsedTeamOption'
+import RemoveTagParams from '../interfaces/MethodParams/RemoveTagParams'
+import AddClassParams from '../interfaces/MethodParams/AddClassParams'
+import RemoveClassParams from '../interfaces/MethodParams/RemoveClassParams'
 
 export default function useAbility () {
   const context: GameContextType | undefined = useContext(GameContext)
@@ -79,21 +81,29 @@ export default function useAbility () {
   const handleMethod = (method: Method, squareTo: Square): void => {
     const { type, params } = method
 
-    if (type == 'add') {
-      handleAddMethod(params as AddParams, squareTo)
-    } else if (type == 'remove') {
-      handleRemoveMethod(params as RemoveParams, squareTo)
-    } else if (type == 'modifyAttribute') {
+    if (type == 'add-box') {
+      handleAddBoxMethod(params as AddParams, squareTo)
+    } else if (type == 'remove-box') {
+      handleRemoveBoxMethod(params as RemoveParams, squareTo)
+    } else if (type == 'modify-attribute') {
       handleModifyAttributeMethod(params as ModifyAttributeParams, squareTo)
-    } else if (type == 'tag') {
-      handleTagMethod(params as TagParams, squareTo)
+    } else if (type == 'add-tag') {
+      handleAddTagMethod(params as TagParams, squareTo)
     } else if (type == 'wait') {
       handleWaitMethod(params as WaitParams, squareTo)
-    } else if (type == 'fade') {
-      handleFadeMethod(params as FadeParams, squareTo)
-    } else if (type == 'modifyClass') {
-      handleModifyClassMethod(params as ModifyClassParams, squareTo)
+    } else if (type == 'show-fade') {
+      handleShowFadeMethod(params as FadeParams, squareTo)
+    } else if (type == 'add-class') {
+      handleAddClassMethod(params as AddClassParams, squareTo)
+    } else if (type == 'remove-tag') {
+      handleRemoveTagMethod(params as RemoveTagParams, squareTo)
+    } else if (type == 'remove-class') {
+      handleRemoveClassMethod(params as RemoveClassParams, squareTo)
     }
+  }
+
+  const handleRemoveTagMethod = (params: RemoveTagParams, squareTo: Square) => {
+    console.log(params, squareTo)
   }
 
   const handleGetMethod = (params: GetParams, squareTo: Square): Square[] => {
@@ -117,7 +127,7 @@ export default function useAbility () {
     return squares
   }
 
-  const handleAddMethod = (params: AddParams, squareTo: Square) => {
+  const handleAddBoxMethod = (params: AddParams, squareTo: Square) => {
     const squares: Square[] = handleGetMethod(params.get, squareTo)
     const boxToAdd: Box = new Box({ type: params.boxType })
 
@@ -126,7 +136,7 @@ export default function useAbility () {
     })
   }
 
-  const handleRemoveMethod = (params: RemoveParams, squareTo: Square) => {
+  const handleRemoveBoxMethod = (params: RemoveParams, squareTo: Square) => {
     const squares: Square[] = handleGetMethod(params.get, squareTo)
 
     squares.forEach(square =>
@@ -150,7 +160,7 @@ export default function useAbility () {
     })
   }
 
-  const handleTagMethod = (params: TagParams, squareTo: Square) => {
+  const handleAddTagMethod = (params: TagParams, squareTo: Square) => {
     const squares: Square[] = handleGetMethod(params.get, squareTo)
 
     squares.forEach(square =>
@@ -179,11 +189,11 @@ export default function useAbility () {
     }
   }
 
-  const handleFadeMethod = (params: FadeParams, squareTo: Square) => {
+  const handleShowFadeMethod = (params: FadeParams, squareTo: Square) => {
     const squares: Square[] = handleGetMethod(params.get, squareTo)
     let color: string = params.color
 
-    if (params.color == 'currentTeamColor') {
+    if (params.color == 'current-team-color') {
       color = teamColors[turn]
     } else {
       color = turn == 'ally' ? teamColors['enemy'] : teamColors['ally']
@@ -200,17 +210,25 @@ export default function useAbility () {
     })
   }
 
-  const handleModifyClassMethod = (
-    params: ModifyClassParams,
+  const handleAddClassMethod = (params: AddClassParams, squareTo: Square) => {
+    const squares: Square[] = handleGetMethod(params.get, squareTo)
+
+    squares.forEach(square => {
+      params.classNames.forEach(className => {
+        square.addClass(className)
+      })
+    })
+  }
+
+  const handleRemoveClassMethod = (
+    params: RemoveClassParams,
     squareTo: Square
   ) => {
     const squares: Square[] = handleGetMethod(params.get, squareTo)
 
     squares.forEach(square => {
-      const methodName: 'addClass' | 'removeClass' = `${params.method}Class`
-
       params.classNames.forEach(className => {
-        square[methodName](className)
+        square.removeClass(className)
       })
     })
   }

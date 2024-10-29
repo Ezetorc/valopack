@@ -7,7 +7,7 @@ export const stimBeacon: Ability = {
   validBoxTypes: ['empty'],
   methods: [
     {
-      type: 'add',
+      type: 'add-box',
       params: {
         get: {
           getBy: 'squareTo'
@@ -16,12 +16,11 @@ export const stimBeacon: Ability = {
       }
     },
     {
-      type: 'modifyClass',
+      type: 'add-class',
       params: {
         get: {
           getBy: 'squareTo'
         },
-        method: 'add',
         classNames: ['scale-up']
       }
     },
@@ -32,12 +31,11 @@ export const stimBeacon: Ability = {
         time: 500,
         methods: [
           {
-            type: 'modifyClass',
+            type: 'remove-class',
             params: {
               get: {
                 getBy: 'squareTo'
               },
-              method: 'remove',
               classNames: ['scale-up']
             }
           }
@@ -51,7 +49,7 @@ export const stimBeacon: Ability = {
         time: 2000,
         methods: [
           {
-            type: 'remove',
+            type: 'remove-box',
             params: {
               get: {
                 getBy: 'squareTo'
@@ -63,7 +61,7 @@ export const stimBeacon: Ability = {
       }
     },
     {
-      type: 'modifyAttribute',
+      type: 'modify-attribute',
       params: {
         get: {
           getBy: 'range',
@@ -78,7 +76,7 @@ export const stimBeacon: Ability = {
       }
     },
     {
-      type: 'tag',
+      type: 'add-tag',
       params: {
         get: {
           getBy: 'range',
@@ -103,7 +101,7 @@ export const stimBeacon: Ability = {
         time: 2,
         methods: [
           {
-            type: 'modifyAttribute',
+            type: 'modify-attribute',
             params: {
               get: {
                 getBy: 'tag',
@@ -122,7 +120,7 @@ export const stimBeacon: Ability = {
       }
     },
     {
-      type: 'fade',
+      type: 'show-fade',
       params: {
         get: {
           getBy: 'range',
@@ -132,7 +130,7 @@ export const stimBeacon: Ability = {
             team: 'currentTeam'
           }
         },
-        color: 'currentTeamColor',
+        color: 'current-team-color',
         duration: 1
       }
     }

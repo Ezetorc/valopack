@@ -1,7 +1,6 @@
 import GetParams from './GetParams'
 
-export default interface ModifyClassParams {
+export default interface RemoveClassParams {
   get: GetParams
-  method: 'add' | 'remove'
   classNames: string[]
 }

@@ -1,26 +1,32 @@
-import AddParams from './MethodParams/AddParams'
-import FadeParams from './MethodParams/FadeParams'
 import ModifyAttributeParams from './MethodParams/ModifyAttributeParams'
-import ModifyClassParams from './MethodParams/ModifyClassParams'
-import RemoveParams from './MethodParams/RemoveParams'
-import TagParams from './MethodParams/TagParams'
 import WaitParams from './MethodParams/WaitParams'
+import AddTagParams from './MethodParams/AddTagParams'
+import AddBoxParams from './MethodParams/AddBoxParams'
+import RemoveBoxParams from './MethodParams/RemoveBoxParams'
+import RemoveTagParams from './MethodParams/RemoveTagParams'
+import ShowFadeParams from './MethodParams/ShowFadeParams'
+import AddClassParams from './MethodParams/AddClassParams'
+import RemoveClassParams from './MethodParams/RemoveClassParams'
 
 export default interface Method {
   type:
-    | 'modifyAttribute'
+    | 'modify-attribute'
     | 'wait'
-    | 'tag'
-    | 'add'
-    | 'remove'
-    | 'fade'
-    | 'modifyClass';
+    | 'add-tag'
+    | 'remove-tag'
+    | 'add-box'
+    | 'remove-box'
+    | 'show-fade'
+    | 'add-class'
+    | 'remove-class'
   params:
     | ModifyAttributeParams
     | WaitParams
-    | TagParams
-    | AddParams
-    | RemoveParams
-    | FadeParams
-    | ModifyClassParams
+    | AddTagParams
+    | AddBoxParams
+    | RemoveBoxParams
+    | RemoveTagParams
+    | ShowFadeParams
+    | AddClassParams
+    | RemoveClassParams
 }
