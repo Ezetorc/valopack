@@ -22,11 +22,12 @@ export default function BoardDisplay () {
     squareFrom,
     resetActions,
     attackPlayer,
-    handleEffects,
     toggleTurn
   } = useBoard()
-  const { handleAbility } = useAbility()
+  const { handleAbility, handleEffects } = useAbility()
   const boardRef = useRef<HTMLDivElement>(null)
+
+  // turn siempre es "ally" en el parseo
 
   const changeTurn = useCallback(() => {
     handleEffects()

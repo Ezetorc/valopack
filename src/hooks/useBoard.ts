@@ -5,39 +5,16 @@ import Square from '../classes/Square'
 import Position from '../classes/Position'
 import getDamage from '../utils/getDamage'
 import GameContextType from '../interfaces/GameContextType'
-import useAbility from './useAbility'
 
 export default function useBoard () {
   const context: GameContextType | undefined = useContext(GameContext)
   if (!context) throw new Error("Context doesn't have a provider!")
 
-  const {
-    setBoard,
-    setSquareFrom,
-    setSquareTo,
-    setAction,
-    setTurn,
-    setEffects
-  } = context
-  const { handleMethod } = useAbility()
+  const { setBoard, setSquareFrom, setSquareTo, setAction, setTurn } = context
 
   const toggleTurn = (): void => {
     setTurn(prevTurn => {
       return prevTurn === 'ally' ? 'enemy' : 'ally'
-    })
-  }
-
-  const handleEffects = (): void => {
-    setEffects(prevEffects => {
-      prevEffects.forEach(effect => {
-        effect.turnsLeft -= 1
-
-        if (effect.turnsLeft <= 0) {
-          effect.methods.forEach(method => handleMethod(method, effect.square))
-        }
-      })
-
-      return prevEffects.filter(effect => effect.turnsLeft > 0)
     })
   }
 
@@ -91,7 +68,6 @@ export default function useBoard () {
     attackPlayer,
     killPlayer,
     resetActions,
-    toggleTurn,
-    handleEffects
+    toggleTurn
   }
 }

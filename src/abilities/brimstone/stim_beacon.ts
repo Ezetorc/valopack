@@ -1,6 +1,6 @@
 import Ability from '../../interfaces/Ability'
 
-export const stimBeacon: Ability = {
+export const stim_beacon: Ability = {
   identifier: 'stimBeacon',
   usesLeft: 1,
   useRange: [1, 10],
@@ -68,7 +68,7 @@ export const stimBeacon: Ability = {
           range: 1,
           filters: {
             boxTypes: ['player'],
-            team: 'currentTeam'
+            team: 'current-team'
           }
         },
         attribute: 'speed',
@@ -83,13 +83,13 @@ export const stimBeacon: Ability = {
           range: 1,
           filters: {
             boxTypes: ['player'],
-            team: 'currentTeam'
+            team: 'current-team'
           }
         },
         tags: [
           {
             text: 'stimBeacon',
-            useID: true
+            team: 'current-team'
           }
         ]
       }
@@ -108,12 +108,26 @@ export const stimBeacon: Ability = {
                 tags: [
                   {
                     text: 'stimBeacon',
-                    useID: true
+                    team: 'current-team'
                   }
                 ]
               },
               attribute: 'speed',
               amount: -1
+            }
+          },
+          {
+            type: 'remove-tag',
+            params: {
+              get: {
+                getBy: 'range',
+                range: 1,
+                filters: {
+                  boxTypes: ['player'],
+                  team: 'current-team'
+                }
+              },
+              tags: [{ text: 'stimBeacon', team: 'current-team' }]
             }
           }
         ]
@@ -127,7 +141,7 @@ export const stimBeacon: Ability = {
           range: 1,
           filters: {
             boxTypes: ['player'],
-            team: 'currentTeam'
+            team: 'current-team'
           }
         },
         color: 'current-team-color',

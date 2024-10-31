@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import GameContextType from '../interfaces/GameContextType'
 import { GameContext } from '../contexts/GameContext'
 import Ability from '../interfaces/Ability'
@@ -21,12 +21,61 @@ import getParsedTeamOption from '../utils/getParsedTeamOption'
 import RemoveTagParams from '../interfaces/MethodParams/RemoveTagParams'
 import AddClassParams from '../interfaces/MethodParams/AddClassParams'
 import RemoveClassParams from '../interfaces/MethodParams/RemoveClassParams'
+import getParsedTags from '../utils/getParsedTags'
 
 export default function useAbility () {
   const context: GameContextType | undefined = useContext(GameContext)
   if (!context) throw new Error("Context doesn't have a provider")
 
   const { squareFrom, board, setBoard, setEffects, turn } = context
+
+  useEffect(() => console.log('turn => ', turn), [turn])
+
+  const handleEffects = (): void => {
+    setEffects(prevEffects => {
+      prevEffects.forEach(effect => {
+        effect.turnsLeft -= 1
+
+        if (effect.turnsLeft <= 0) {
+          effect.methods.forEach(method => handleMethod(method, effect.square))
+        }
+      })
+
+      return prevEffects.filter(effect => effect.turnsLeft > 0)
+    })
+  }
+
+  const getParsedMethod = (method: Method): Method => {
+    const { type, params } = method
+
+    if (type == 'add-tag' || type == 'remove-tag') {
+      if ('tags' in params) {
+        params['tags'] = getParsedTags(params['tags'], turn)
+      }
+    }
+
+    if ('get' in params) {
+      const getParams: GetParams = params['get']
+
+      if (getParams.tags) {
+        getParams.tags = getParsedTags(getParams.tags, turn)
+      }
+
+      if (getParams.filters?.tags) {
+        getParams.filters.tags = getParsedTags(getParams.filters.tags, turn)
+      }
+
+      if (getParams.filters?.team) {
+        console.log('antes de getParsedTeamOption turn: ', turn)
+        getParams.filters.team = getParsedTeamOption(
+          getParams.filters.team,
+          turn
+        )
+      }
+    }
+
+    return method
+  }
 
   const applyFilters = (
     squares: Square[],
@@ -49,6 +98,7 @@ export default function useAbility () {
       }
 
       if (filters.team && player) {
+        console.log('antes de getParsedTeamOption turn: ', turn)
         const parsedTeam: Team = getParsedTeamOption(filters.team, turn)
 
         if (player.team !== parsedTeam) {
@@ -103,7 +153,16 @@ export default function useAbility () {
   }
 
   const handleRemoveTagMethod = (params: RemoveTagParams, squareTo: Square) => {
-    console.log(params, squareTo)
+    const squares: Square[] = handleGetMethod(params.get, squareTo)
+    const parsedTags: Tag[] = getParsedTags(params.tags, turn)
+
+    squares.forEach(square => {
+      square.boxes.forEach(box => {
+        box.tags = box.tags.filter(
+          tag => !parsedTags.some(parsedTag => parsedTag == tag)
+        )
+      })
+    })
   }
 
   const handleGetMethod = (params: GetParams, squareTo: Square): Square[] => {
@@ -116,10 +175,20 @@ export default function useAbility () {
       squares.push(squareTo)
     } else if (getBy === 'range') {
       squares.push(...board.getSquaresInRange(squareTo.position, range ?? 1))
-    } else if (getBy === 'tag') {
+    } else if (getBy === 'tag' || getBy === 'all') {
       squares.push(...board.grid.flat())
-    } else if (getBy === 'all') {
-      squares.push(...board.grid.flat())
+
+      if (params.tags) {
+        const parsedTags: Tag[] = getParsedTags(params.tags, turn)
+
+        squares.forEach(square => {
+          const hasTags = square.boxes.some(box => box.has(parsedTags as Tag[]))
+          if (!hasTags) {
+            const index = squares.indexOf(square)
+            if (index > -1) squares.splice(index, 1)
+          }
+        })
+      }
     }
 
     applyFilters(squares, filters)
@@ -162,10 +231,11 @@ export default function useAbility () {
 
   const handleAddTagMethod = (params: TagParams, squareTo: Square) => {
     const squares: Square[] = handleGetMethod(params.get, squareTo)
+    const parsedTags: Tag[] = getParsedTags(params.tags, turn)
 
     squares.forEach(square =>
       square.boxes.forEach(box => {
-        box.tags.push(...params.tags)
+        box.tags.push(...parsedTags)
       })
     )
   }
@@ -181,7 +251,7 @@ export default function useAbility () {
       setEffects(prevEffects => [
         ...prevEffects,
         {
-          methods: params.methods,
+          methods: params.methods.map(method => getParsedMethod(method)),
           turnsLeft: params.time + 1,
           square: squareTo
         }
@@ -233,5 +303,5 @@ export default function useAbility () {
     })
   }
 
-  return { ...context, handleAbility, handleMethod }
+  return { ...context, handleAbility, handleMethod, handleEffects }
 }

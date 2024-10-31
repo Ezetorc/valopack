@@ -1,6 +1,6 @@
 import Ability from '../../interfaces/Ability'
 
-export const skySmoke: Ability = {
+export const sky_smoke: Ability = {
   identifier: 'skySmoke',
   usesLeft: 1,
   useRange: [0, 10],
