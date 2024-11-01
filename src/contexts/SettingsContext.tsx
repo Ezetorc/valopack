@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from 'react'
-import { Language } from '../types/Language'
-import SettingsContextType from '../interfaces/SettingsContextType'
+import { Language } from '../models/Language'
+import SettingsContextType from '../models/SettingsContextType'
 import { defaultLanguage } from '../constants/general'
 
 export const SettingsContext = createContext<SettingsContextType | undefined>(

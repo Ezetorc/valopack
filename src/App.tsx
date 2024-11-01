@@ -1,14 +1,14 @@
-import Header from './components/Header/Header'
+import {Header} from './components/Header'
 import { Route, Routes } from 'react-router-dom'
 import React, { Suspense } from 'react'
-import { paths } from './constants/general'
-import useSettings from './hooks/useSettings'
-import Loading from './components/Loading/Loading'
+import {useSettings} from './hooks/useSettings'
+import Loading from './components/Loading'
+import { paths } from './constants/paths'
 
-const LazyHome = React.lazy(() => import('./components/Home/Home'))
-const LazyShop = React.lazy(() => import('./components/Shop/Shop'))
-const LazyTeam = React.lazy(() => import('./components/Team/Team'))
-const LazyPlay = React.lazy(() => import('./components/Play/Play'))
+const LazyHome = React.lazy(() => import('./pages/Home/components/Home'))
+const LazyShop = React.lazy(() => import('./pages/Shop/components/Shop'))
+const LazyTeam = React.lazy(() => import('./pages/Team/components/Team'))
+const LazyPlay = React.lazy(() => import('./pages/Play/components/Play'))
 
 export default function App () {
   const { headerVisible } = useSettings()

@@ -1,11 +1,11 @@
 import { useContext } from 'react'
 import { SettingsContext } from '../contexts/SettingsContext'
-import SettingsContextType from '../interfaces/SettingsContextType'
-import { Dictionary } from '../interfaces/Dictionary'
+import SettingsContextType from '../models/SettingsContextType'
+import { Dictionary } from '../models/Dictionary'
 import { appName } from '../constants/general'
 import { dictionaries } from '../constants/dictionaries'
 
-export default function useSettings () {
+export function useSettings () {
   const context: SettingsContextType | undefined = useContext(SettingsContext)
   if (!context) throw new Error("Context doesn't have a Provider")
 

@@ -1,0 +1,39 @@
+.box-display {
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff24;
+  border: 5px solid transparent;
+  font-size: clamp(30px, 3vw, 40px);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  background-color: transparent;
+}
+
+.box-display img {
+  width: 100%;
+}
+
+.box-display.ally img {
+  border-bottom: 5px solid var(--ally-color);
+}
+
+.box-display.enemy img {
+  border-bottom: 5px solid var(--enemy-color);
+}
+
+.box {
+  background-image: url('src/pages/Play/assets/images/box.webp');
+}
+
+.stimBeacon {
+  background-image: url('src/pages/Play/assets/images/stim_beacon.webp');
+}
+
+.skySmoke {
+  background: var(--blue-gradient);
+}

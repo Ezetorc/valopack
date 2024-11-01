@@ -1,12 +1,14 @@
-import { Dictionaries } from '../types/Dictionaries'
-import { ProductType } from '../types/ProductType'
+import { Dictionary } from '../models/Dictionary'
+import Pack from '../models/Pack'
 
-export const dictionaries: Dictionaries = {
+export const dictionaries: {
+  [key: string]: Dictionary
+} = {
   en: {
     addCard: 'Add Card',
     buy: 'Buy',
-    cantBuy: (product: ProductType, credits: number) =>
-      `You need $${product.price - credits} more to buy ${product.name}`,
+    cantBuy: (pack: Pack, credits: number) =>
+      `You need $${pack.price - credits} more to buy ${pack.name}`,
     chooseCard: 'Choose a card',
     controllerPack: 'Controller Pack',
     duelistPack: 'Duelist Pack',
@@ -82,14 +84,14 @@ export const dictionaries: Dictionaries = {
           'Throw a stim beacon that increase speed by one of allies around it for two turns.'
       }
     },
-    wannaBuy: (product: ProductType) => `Do you want to buy ${product.name}?`
+    wannaBuy: (pack: Pack) => `Do you want to buy ${pack.name}?`
   },
 
   es: {
     addCard: 'Añadir Carta',
     buy: 'Comprar',
-    cantBuy: (product: ProductType, credits: number) =>
-      `Necesitas $${product.price - credits} más para comprar ${product.name}`,
+    cantBuy: (pack: Pack, credits: number) =>
+      `Necesitas $${pack.price - credits} más para comprar ${pack.name}`,
     chooseCard: 'Elige una carta',
     close: 'Cerrar',
     controller: 'Controlador',
@@ -167,6 +169,6 @@ export const dictionaries: Dictionaries = {
           'Lanza una baliza de estímulo que aumenta la velocidad en uno de los aliados a su alrededor durante dos turnos.'
       }
     },
-    wannaBuy: (product: ProductType) => `¿Quieres comprar ${product.name}?`
+    wannaBuy: (pack: Pack) => `¿Quieres comprar ${pack.name}?`
   }
 }
