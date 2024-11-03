@@ -1,16 +1,14 @@
 import { useCallback, useRef } from 'react'
-import {Square} from '../models/Square'
-import {useBoard} from '../hooks/useBoard'
-import {Player} from '../models/Player'
-import {isValidDistance} from '../utilities/isValidDistance'
+import { Square } from '../models/Square'
+import { useBoard } from '../hooks/useBoard'
+import { Player } from '../models/Player'
 import { Action } from '../models/Action'
-import {useAbility} from '../hooks/useAbility'
-import {Ability} from '../models/Ability'
-import {isWithinRange} from '../utilities/isWithinRange'
-import {getDistance} from '../utilities/getDistance'
-import {BoxDisplay} from './BoxDisplay'
-import {SquareDisplay} from './SquareDisplay'
+import { useAbility } from '../hooks/useAbility'
+import { Ability } from '../models/Ability'
+import { BoxDisplay } from './BoxDisplay'
+import { SquareDisplay } from './SquareDisplay'
 import './BoardDisplay.css'
+import { Distance } from '../services/Distance.service'
 
 export function BoardDisplay () {
   const {
@@ -45,7 +43,7 @@ export function BoardDisplay () {
       const player: Player = squareFrom.getBox('player') as Player
       if (!player) return
 
-      const validDistance: boolean = isValidDistance(
+      const validDistance: boolean = Distance.isValid(
         player.position,
         squareToMove.position,
         player.attributes.speed
@@ -80,7 +78,7 @@ export function BoardDisplay () {
       const canAttack: boolean =
         playerTo &&
         playerTo.team == 'enemy' &&
-        isValidDistance(squareFrom.position, squareToAttack.position, 1)
+        Distance.isValid(squareFrom.position, squareToAttack.position, 1)
 
       if (canAttack) {
         const playerFrom: Player = squareFrom.getBox('player') as Player
@@ -112,13 +110,13 @@ export function BoardDisplay () {
       const selectedAbility: Ability =
         action === 'ability0' ? abilities[0] : abilities[1]
 
-      const distance: number = getDistance(
+      const distance: number = Distance.get(
         squareFrom.position,
         targetSquare.position
       )
 
       const canUseAbility: boolean =
-        isWithinRange(distance, selectedAbility.useRange) &&
+        Distance.isWithinRange(distance, selectedAbility.useRange) &&
         targetSquare
           .getBoxesTypes()
           .every(boxType => selectedAbility.validBoxTypes.includes(boxType))

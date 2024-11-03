@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import sounds from '../../../constants/sounds'
-import useShop from '../hooks/useShop'
+import {useShop} from '../hooks/useShop'
 import './Pack.css'
 
 interface PackProps {

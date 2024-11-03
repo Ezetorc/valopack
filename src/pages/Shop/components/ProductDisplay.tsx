@@ -1,23 +1,26 @@
-import useShop from '../hooks/useShop'
-import {getLightColor} from '../../../utilities/getLightColor'
-import {Product} from '../../../models/Product'
+import { useShop } from '../hooks/useShop'
+import { getLightColor } from '../../../utilities/getLightColor'
+import { Product } from '../../../models/Product'
 import sounds from '../../../constants/sounds'
 import './ProductDisplay.css'
+import { useSettings } from '../../../hooks/useSettings'
 
-export function ProductDisplay ({ pack, color, amount }: Product) {
+export function ProductDisplay (product: Product) {
   const { setSelectedProduct } = useShop()
-  const { image, name, price } = pack
+  const { texts } = useSettings()
+  const { color, identifier, amount, price, pack } = product
   const lightColor: string = getLightColor(color, 0.4)
   const backgroundStyle: { background: string } = {
     background: `linear-gradient(0deg, ${color} 0%, ${lightColor} 100%)`
   }
+  const name: string = texts.packs[identifier]
 
   const handleMouseEnter = () => {
     sounds.hover.play()
   }
 
   const handleClick = () => {
-    setSelectedProduct({ pack, color, amount })
+    setSelectedProduct({ pack, color, amount, price, identifier })
   }
 
   return (
@@ -26,7 +29,7 @@ export function ProductDisplay ({ pack, color, amount }: Product) {
       className='product'
       onClick={handleClick}
     >
-      <img src={image} title={name} alt={`${name} image`} />
+      <img src={pack.image} title={name} alt={`${name} image`} />
       <div className='product__subcontainer' style={backgroundStyle}>
         <span>{name}</span>
         <span>{`$${price}`}</span>

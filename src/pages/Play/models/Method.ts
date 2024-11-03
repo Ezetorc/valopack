@@ -1,12 +1,12 @@
-import {AddTagParams} from './Params/AddTagParams'
-import {AddBoxParams} from './Params/AddBoxParams'
-import {RemoveBoxParams} from './Params/RemoveBoxParams'
-import {ShowFadeParams} from './Params/ShowFadeParams'
-import {AddClassParams} from './Params/AddClassParams'
-import {ModifyAttributeParams} from './Params/ModifyAttributeParams'
-import {RemoveClassParams} from './Params/RemoveClassParams'
-import {RemoveTagParams} from './Params/RemoveTagParams'
-import {WaitParams} from './Params/WaitParams'
+import { AddTagParams } from './params/AddTagParams'
+import { AddBoxParams } from './params/AddBoxParams'
+import { RemoveBoxParams } from './params/RemoveBoxParams'
+import { ShowFadeParams } from './params/ShowFadeParams'
+import { AddClassParams } from './params/AddClassParams'
+import { ModifyAttributeParams } from './params/ModifyAttributeParams'
+import { RemoveClassParams } from './params/RemoveClassParams'
+import { RemoveTagParams } from './params/RemoveTagParams'
+import { WaitParams } from './params/WaitParams'
 
 export interface Method {
   type:

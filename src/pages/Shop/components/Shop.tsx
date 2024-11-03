@@ -1,23 +1,24 @@
 import { useEffect } from 'react'
-import {useSettings} from '../../../hooks/useSettings'
-import {useUser} from '../../../hooks/useUser'
-import useShop from '../hooks/useShop'
-import {Opener} from './Opener'
+import { useSettings } from '../../../hooks/useSettings'
+import { useUser } from '../../../hooks/useUser'
+import { useShop } from '../hooks/useShop'
+import { Opener } from './Opener'
 import { ProductDisplay } from './ProductDisplay'
-import {BuyModal} from './BuyModal'
-import { sectionsBackgrounds } from '../../../constants/sectionsBackground'
+import { BuyModal } from './BuyModal'
+import { backgrounds } from '../../../valopack.config'
 import './Shop.css'
+import { products } from '../constants/products'
 
 export default function Shop () {
-  const { ownedProduct, selectedProduct, products } = useShop()
+  const { ownedProduct, selectedProduct } = useShop()
   const { credits } = useUser()
   const { texts, updateSection } = useSettings()
   const canBuy: boolean = selectedProduct
-    ? credits >= selectedProduct.pack.price
+    ? credits >= selectedProduct.price
     : false
 
   useEffect(() => {
-    updateSection(texts.shop, sectionsBackgrounds.shop, true)
+    updateSection(texts.shop, backgrounds.shop, true)
   })
 
   return (
@@ -32,6 +33,8 @@ export default function Shop () {
               pack={product.pack}
               color={product.color}
               amount={product.amount}
+              price={product.price}
+              identifier={product.identifier}
             />
           ))}
         </section>

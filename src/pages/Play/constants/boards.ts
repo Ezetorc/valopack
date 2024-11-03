@@ -1,7 +1,7 @@
-import {Board} from '../models/Board'
-import {Box} from '../models/Box'
-import {Position} from '../models/Position'
-import {Square} from '../models/Square'
+import { Board } from '../models/Board'
+import { Box } from '../models/Box'
+import { Position } from '../models/Position'
+import { Square } from '../models/Square'
 
 export const boards: { [key: string]: Board } = {
   bind: new Board(

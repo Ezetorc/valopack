@@ -1,4 +1,4 @@
-import {Agent} from '../models/Agent'
+import { Agent } from '../models/Agent'
 import { stimBeacon } from '../pages/Play/abilities/stimBeacon'
 
 export const agents: Agent[] = [

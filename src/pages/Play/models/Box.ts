@@ -1,9 +1,9 @@
-import {Tag} from './Tag'
+import { Tag } from './Tag'
 import { BoxType } from './BoxType'
 import { Team } from '../../../models/Team'
-import {Player} from './Player'
-import {Position} from './Position'
-import {Square} from './Square'
+import { Player } from './Player'
+import { Position } from './Position'
+import { Square } from './Square'
 
 export class Box {
   public free: boolean
@@ -15,7 +15,7 @@ export class Box {
     position = new Position(0, 0),
     free = true,
     tags = [],
-    type = 'empty'
+    type = 'box'
   }: Partial<Box> = {}) {
     this.position = position
     this.free = free

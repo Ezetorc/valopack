@@ -1,9 +1,9 @@
-import {Header} from './components/Header'
+import { Header } from './components/Header'
 import { Route, Routes } from 'react-router-dom'
 import React, { Suspense } from 'react'
-import {useSettings} from './hooks/useSettings'
+import { useSettings } from './hooks/useSettings'
 import Loading from './components/Loading'
-import { paths } from './constants/paths'
+import { paths } from './valopack.config'
 
 const LazyHome = React.lazy(() => import('./pages/Home/components/Home'))
 const LazyShop = React.lazy(() => import('./pages/Shop/components/Shop'))

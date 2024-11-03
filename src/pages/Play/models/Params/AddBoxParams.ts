@@ -1,5 +1,5 @@
 import { BoxType } from '../BoxType'
-import {GetParams} from './GetParams'
+import { GetParams } from './GetParams'
 
 export interface AddBoxParams {
   get: GetParams

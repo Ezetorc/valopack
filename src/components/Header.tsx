@@ -1,13 +1,12 @@
 import { Suspense, lazy } from 'react'
 import { Link } from 'react-router-dom'
 import creditsKingdomImage from '../assets/images/kingdom_credits.webp'
-import {useSettings} from '../hooks/useSettings'
-import {useUser} from '../hooks/useUser'
+import { useSettings } from '../hooks/useSettings'
+import { useUser } from '../hooks/useUser'
 import sounds from '../constants/sounds'
 import Loading from './Loading'
-import { appName } from '../constants/general'
-import { paths } from '../constants/paths'
 import './Header.css'
+import { paths, appName } from '../valopack.config'
 
 const LazySettings = lazy(() => import('./Settings'))
 

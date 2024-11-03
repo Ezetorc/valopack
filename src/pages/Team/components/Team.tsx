@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import {useUser} from '../../../hooks/useUser'
-import {useSettings} from '../../../hooks/useSettings'
-import {Agent} from '../../../models/Agent'
-import { sectionsBackgrounds } from '../../../constants/sectionsBackground'
+import { useUser } from '../../../hooks/useUser'
+import { useSettings } from '../../../hooks/useSettings'
+import { Agent } from '../../../models/Agent'
 import './Team.css'
-import {Slot} from './Slot'
-import {Selector} from './Selector'
+import { Slot } from './Slot'
+import { Selector } from './Selector'
+import { backgrounds } from '../../../valopack.config'
 
 export default function Team () {
   const { team, agentToChange } = useUser()
@@ -16,7 +16,7 @@ export default function Team () {
     agentToChange !== null && agentToChange !== undefined
 
   useEffect(
-    () => updateSection(texts.team, sectionsBackgrounds.team, true),
+    () => updateSection(texts.team, backgrounds.team, true),
     [updateSection, texts.team]
   )
 

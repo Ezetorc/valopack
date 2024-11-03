@@ -1,7 +1,7 @@
-import {Modal} from '../../../components/Modal'
-import useShop from '../hooks/useShop'
-import {useSettings} from '../../../hooks/useSettings'
-import {useUser} from '../../../hooks/useUser'
+import { Modal } from '../../../components/Modal'
+import { useShop } from '../hooks/useShop'
+import { useSettings } from '../../../hooks/useSettings'
+import { useUser } from '../../../hooks/useUser'
 import sounds from '../../../constants/sounds'
 import './BuyModal.css'
 
@@ -28,7 +28,7 @@ export function BuyModal ({ canBuy }: BuyModalProps) {
     <Modal className='buy-modal' onLoad={handleLoad}>
       {canBuy ? (
         <>
-          <span>{texts.wannaBuy(selectedProduct.pack)}</span>
+          <span>{texts.wannaBuy(texts.packs[selectedProduct.identifier])}</span>
           <button onClick={() => setSelectedProduct(null)}>
             {texts.close}
           </button>
@@ -36,7 +36,13 @@ export function BuyModal ({ canBuy }: BuyModalProps) {
         </>
       ) : (
         <>
-          <span>{texts.cantBuy(selectedProduct.pack, credits)}</span>
+          <span>
+            {texts.cantBuy(
+              selectedProduct,
+              texts.packs[selectedProduct.identifier],
+              credits
+            )}
+          </span>
           <button onClick={() => setSelectedProduct(null)}>
             {texts.close}
           </button>

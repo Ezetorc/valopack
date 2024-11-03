@@ -2,8 +2,8 @@ import { useContext } from 'react'
 import { SettingsContext } from '../contexts/SettingsContext'
 import SettingsContextType from '../models/SettingsContextType'
 import { Dictionary } from '../models/Dictionary'
-import { appName } from '../constants/general'
 import { dictionaries } from '../constants/dictionaries'
+import { appName } from '../valopack.config'
 
 export function useSettings () {
   const context: SettingsContextType | undefined = useContext(SettingsContext)

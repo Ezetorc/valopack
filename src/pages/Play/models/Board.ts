@@ -1,14 +1,14 @@
-import {Agent} from '../../../models/Agent'
-import {Tag} from './Tag'
+import { Agent } from '../../../models/Agent'
+import { Tag } from './Tag'
 import { BoardGrid } from './BoardGrid'
 import { Hexadecimal } from '../../../models/Hexadecimal'
 import { Result } from './Result'
 import { Team } from '../../../models/Team'
-import {getDistance} from '../utilities/getDistance'
-import {Player} from './Player'
-import {Position} from './Position'
-import {Square} from './Square'
+import { Player } from './Player'
+import { Position } from './Position'
+import { Square } from './Square'
 import { allyPositions, enemyPositions } from '../constants/positions'
+import { Distance } from '../services/Distance.service'
 
 export class Board {
   public colors: [Hexadecimal, Hexadecimal]
@@ -59,7 +59,7 @@ export class Board {
         const neighborX: number = x + i
         const neighborY: number = y + j
         const neighborPosition: Position = new Position(neighborX, neighborY)
-        const distance: number = getDistance(fromPosition, neighborPosition)
+        const distance: number = Distance.get(fromPosition, neighborPosition)
 
         if (
           distance <= range &&

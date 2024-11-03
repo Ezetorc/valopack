@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
-import {useSettings} from '../../../hooks/useSettings'
-import {useUser} from '../../../hooks/useUser'
-import {useBoard} from '../hooks/useBoard'
+import { useSettings } from '../../../hooks/useSettings'
+import { useUser } from '../../../hooks/useUser'
+import { useBoard } from '../hooks/useBoard'
 import { Result } from '../models/Result'
-import { sectionsBackgrounds } from '../../../constants/sectionsBackground'
-import {Actions} from './Actions'
-import {BoardDisplay} from './BoardDisplay'
-import {PlayerInfo} from './PlayerInfo'
-import {ResultModal} from './ResultModal'
+import { Actions } from './Actions'
+import { BoardDisplay } from './BoardDisplay'
+import { PlayerInfo } from './PlayerInfo'
+import { ResultModal } from './ResultModal'
 import './Play.css'
-import { AgentsService } from '../../../services/AgentsService'
+import { Agents } from '../../../services/Agents.service'
+import { backgrounds } from '../../../valopack.config'
 
 export default function Play () {
   const { squareFrom, setBoard, board } = useBoard()
@@ -25,7 +25,7 @@ export default function Play () {
         const { allyPlayers, enemyPlayers } = board.getTotalPlayers()
 
         if (allyPlayers !== 0 && enemyPlayers !== 0) return
-        const enemyTeam = await AgentsService.getTeam()
+        const enemyTeam = await Agents.getTeam()
         setBoard(board.getInitialized(team, enemyTeam))
         setMatchStarted(true)
       }
@@ -41,7 +41,7 @@ export default function Play () {
   }, [board, matchStarted])
 
   useEffect(
-    () => updateSection(texts.play, sectionsBackgrounds.play, false),
+    () => updateSection(texts.play, backgrounds.play, false),
     [texts.play, updateSection]
   )
 

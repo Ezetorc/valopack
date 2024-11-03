@@ -1,5 +1,5 @@
 import { Hexadecimal } from '../../../../models/Hexadecimal'
-import {GetParams} from './GetParams'
+import { GetParams } from './GetParams'
 
 export interface ShowFadeParams {
   get: GetParams

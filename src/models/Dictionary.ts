@@ -1,4 +1,4 @@
-import { ProductType } from './ProductType'
+import { Product } from './Product'
 
 interface AbilityInfo {
   name: string
@@ -8,16 +8,18 @@ interface AbilityInfo {
 export interface Dictionary {
   addCard: string
   buy: string
-  cantBuy: (product: ProductType, credits: number) => string
+  cantBuy: (product: Product, name: string, credits: number) => string
   chooseCard: string
   close: string
   controller: string
-  controllerPack: string
-  duelistPack: string
-  initiatorPack: string
-  sentinelPack: string
-  mixedPack: string
-  newPack: string
+  packs: {
+    controller: string
+    duelist: string
+    initiator: string
+    sentinel: string
+    mixed: string
+    new: string
+  }
   credits: string
   duelist: string
   home: string
@@ -76,5 +78,5 @@ export interface Dictionary {
     skySmoke: AbilityInfo
     stimBeacon: AbilityInfo
   }
-  wannaBuy: (product: ProductType) => string
+  wannaBuy: (name: string) => string
 }

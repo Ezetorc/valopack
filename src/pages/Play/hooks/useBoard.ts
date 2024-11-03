@@ -1,8 +1,8 @@
 import { useCallback, useContext } from 'react'
-import {Player} from '../models/Player'
-import {Square} from '../models/Square'
-import {Position} from '../models/Position'
-import {getDamage} from '../utilities/getDamage'
+import { Player } from '../models/Player'
+import { Square } from '../models/Square'
+import { Position } from '../models/Position'
+import { getDamage } from '../utilities/getDamage'
 import GameContextType from '../../../models/GameContextType'
 import { GameContext } from '../contexts/GameContext'
 

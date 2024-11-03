@@ -1,5 +1,5 @@
 import { Dictionary } from '../models/Dictionary'
-import Pack from '../models/Pack'
+import { Product } from '../models/Product'
 
 export const dictionaries: {
   [key: string]: Dictionary
@@ -7,15 +7,17 @@ export const dictionaries: {
   en: {
     addCard: 'Add Card',
     buy: 'Buy',
-    cantBuy: (pack: Pack, credits: number) =>
-      `You need $${pack.price - credits} more to buy ${pack.name}`,
+    cantBuy: (product: Product, name: string, credits: number) =>
+      `You need $${product.price - credits} more to buy ${name}`,
     chooseCard: 'Choose a card',
-    controllerPack: 'Controller Pack',
-    duelistPack: 'Duelist Pack',
-    initiatorPack: 'Initiator Pack',
-    sentinelPack: 'Sentinel Pack',
-    newPack: 'New Pack',
-    mixedPack: 'Mixed Pack',
+    packs: {
+      controller: 'Controller Pack',
+      duelist: 'Duelist Pack',
+      initiator: 'Initiator Pack',
+      sentinel: 'Sentinel Pack',
+      new: 'New Pack',
+      mixed: 'Mixed Pack'
+    },
     close: 'Close',
     controller: 'Controller',
     credits: 'Credits',
@@ -84,30 +86,32 @@ export const dictionaries: {
           'Throw a stim beacon that increase speed by one of allies around it for two turns.'
       }
     },
-    wannaBuy: (pack: Pack) => `Do you want to buy ${pack.name}?`
+    wannaBuy: (name: string) => `Do you want to buy ${name}?`
   },
 
   es: {
     addCard: 'Añadir Carta',
     buy: 'Comprar',
-    cantBuy: (pack: Pack, credits: number) =>
-      `Necesitas $${pack.price - credits} más para comprar ${pack.name}`,
+    cantBuy: (product: Product, name: string, credits: number) =>
+      `Necesitas $${product.price - credits} más para comprar ${name}`,
     chooseCard: 'Elige una carta',
     close: 'Cerrar',
     controller: 'Controlador',
     credits: 'Créditos',
     duelist: 'Duelista',
     home: 'Inicio',
-    controllerPack: 'Pack Controlador',
-    duelistPack: 'Pack Duelista',
     initiator: 'Iniciador',
-    initiatorPack: 'Pack Iniciador',
-    mixedPack: 'Pack Mixto',
-    newPack: 'Pack Nuevo',
+    packs: {
+      controller: 'Paquete controlador',
+      duelist: 'Paquete duelista',
+      initiator: 'Paquete iniciador',
+      sentinel: 'Paquete centinela',
+      new: 'Paquete nuevo',
+      mixed: 'Paquete mixto'
+    },
     noCards: 'No tienes cartas para cambiar...',
     play: 'Jugar',
     sentinel: 'Centinela',
-    sentinelPack: 'Pack Centinela',
     settings: 'Opciones',
     shop: 'Tienda',
     start: 'Empezar',
@@ -169,6 +173,6 @@ export const dictionaries: {
           'Lanza una baliza de estímulo que aumenta la velocidad en uno de los aliados a su alrededor durante dos turnos.'
       }
     },
-    wannaBuy: (pack: Pack) => `¿Quieres comprar ${pack.name}?`
+    wannaBuy: (name: string) => `¿Quieres comprar ${name}?`
   }
 }

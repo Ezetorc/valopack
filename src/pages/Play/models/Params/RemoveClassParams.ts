@@ -1,4 +1,4 @@
-import {GetParams} from './GetParams'
+import { GetParams } from "./GetParams"
 
 export interface RemoveClassParams {
   get: GetParams

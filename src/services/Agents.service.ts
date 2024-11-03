@@ -1,11 +1,11 @@
 import { agents } from '../constants/agents'
-import { levelMultiplier } from '../constants/general'
-import {Agent} from '../models/Agent'
-import {Pack} from '../models/Pack'
-import {Product} from '../models/Product'
+import { Agent } from '../models/Agent'
+import { Pack } from '../models/Pack'
+import { Product } from '../models/Product'
 import { Role } from '../models/Role'
+import { levelMultiplier } from '../valopack.config'
 
-export class AgentsService {
+export class Agents {
   static async getAll (): Promise<Agent[]> {
     console.log('getAll')
     return [...agents]

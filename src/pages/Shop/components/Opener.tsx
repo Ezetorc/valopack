@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import useShop from '../hooks/useShop'
+import {useShop} from '../hooks/useShop'
 import {useSettings} from '../../../hooks/useSettings'
 import sounds from '../../../constants/sounds'
 import './Opener.css'

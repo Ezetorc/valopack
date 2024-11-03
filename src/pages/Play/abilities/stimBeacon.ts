@@ -1,10 +1,10 @@
-import {Ability} from "../models/Ability";
+import { Ability } from '../models/Ability'
 
 export const stimBeacon: Ability = {
   identifier: 'stimBeacon',
   usesLeft: 1,
   useRange: [1, 10],
-  validBoxTypes: ['empty'],
+  validBoxTypes: [],
   methods: [
     {
       type: 'add-box',

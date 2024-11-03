@@ -1,14 +1,13 @@
-import {SectionLink} from './SectionLink'
+import { SectionLink } from './SectionLink'
 import vyzeImage from '../assets/images/vyse.webp'
 import vandalImage from '../assets/images/vandal.webp'
 import omenImage from '../assets/images/omen.webp'
 import { useEffect } from 'react'
-import {useSettings} from '../../../hooks/useSettings'
-import {useUser} from '../../../hooks/useUser'
-import useShop from '../../Shop/hooks/useShop'
-import { sectionsBackgrounds } from '../../../constants/sectionsBackground'
-import { paths } from '../../../constants/paths'
+import { useSettings } from '../../../hooks/useSettings'
+import { useUser } from '../../../hooks/useUser'
+import { useShop } from '../../Shop/hooks/useShop'
 import './Home.css'
+import { backgrounds, paths } from '../../../valopack.config'
 
 export default function Home () {
   const { texts, updateSection } = useSettings()
@@ -19,7 +18,7 @@ export default function Home () {
     setAgentToChange(null)
     setOwnedProduct(null)
     setSelectedProduct(null)
-    updateSection(texts.home, sectionsBackgrounds.home, true)
+    updateSection(texts.home, backgrounds.home, true)
   })
 
   return (

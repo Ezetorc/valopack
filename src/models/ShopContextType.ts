@@ -1,5 +1,5 @@
-import {Agent} from './Agent'
-import {Product} from './Product'
+import { Agent } from './Agent'
+import { Product } from './Product'
 
 export default interface ShopContextType {
   ownedProduct: Product | null

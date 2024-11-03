@@ -1,5 +1,5 @@
 import {Tag} from '../Tag'
-import {GetParams} from './GetParams'
+import { GetParams } from './GetParams'
 
 export interface AddTagParams {
   get: GetParams

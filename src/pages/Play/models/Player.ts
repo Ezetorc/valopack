@@ -3,7 +3,7 @@ import { Box } from './Box'
 import { Team } from '../../../models/Team'
 import { Attributes } from '../../../models/Attributes'
 import { Position } from './Position'
-import { defaultAttributes } from '../constants/defaultAttributes'
+import { initialAttributes } from '../../../valopack.config'
 
 export class Player extends Box {
   public agent: Agent
@@ -13,7 +13,7 @@ export class Player extends Box {
   constructor ({
     agent,
     team = 'ally',
-    attributes = { ...defaultAttributes },
+    attributes = { ...initialAttributes },
     position = new Position(0, 0),
     free = false,
     tags = [],

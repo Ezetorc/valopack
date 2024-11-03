@@ -4,7 +4,7 @@ import {Modal} from '../../../components/Modal'
 import {useUser} from '../../../hooks/useUser'
 import { Result } from '../models/Result'
 import './ResultModal.css'
-import { paths } from '../../../constants/paths'
+import { paths } from '../../../valopack.config'
 
 interface ResultModalProps {
   result: Result
