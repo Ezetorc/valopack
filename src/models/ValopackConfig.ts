@@ -12,6 +12,12 @@ export interface ValopackConfig {
   paths: { [key in Section]: string }
   teamColors: { [key in Team]: string }
   backgrounds: { [key in Section]: string }
-  initialAgentsNames: Agent['name'][]
+  initialAgentsNames: [
+    Agent['name'],
+    Agent['name'],
+    Agent['name'],
+    Agent['name'],
+    Agent['name']
+  ]
   initialAttributes: Attributes
 }
