@@ -1,14 +1,14 @@
 import { Suspense, lazy } from 'react'
 import { Link } from 'react-router-dom'
 import creditsKingdomImage from '../assets/images/kingdom_credits.webp'
-import { useSettings } from '../hooks/useSettings'
-import { useUser } from '../hooks/useUser'
-import sounds from '../constants/sounds'
-import Loading from './Loading'
+import { useSettings } from '../hooks/useSettings.ts'
+import { useUser } from '../hooks/useUser.ts'
+import {sounds} from '../constants/sounds.ts'
+import Loading from './Loading.tsx'
 import './Header.css'
-import { paths, appName } from '../valopack.config'
+import { paths, appName } from '../valopack.config.ts'
 
-const LazySettings = lazy(() => import('./Settings'))
+const LazySettings = lazy(() => import('./Settings.tsx'))
 
 export function Header () {
   const { credits } = useUser()

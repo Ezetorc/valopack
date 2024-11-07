@@ -1,7 +1,7 @@
-import { BoxType } from './BoxType'
-import { Hexadecimal } from '../../../models/Hexadecimal'
-import {Box} from './Box'
-import {Position} from './Position'
+import { BoxType } from './BoxType.ts'
+import { Hexadecimal } from '../../../models/Hexadecimal.ts'
+import { Box } from './Box.ts'
+import { Position } from './Position.ts'
 
 export class Square {
   public boxes: Box[]

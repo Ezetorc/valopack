@@ -1,18 +1,34 @@
-import { useContext, useEffect } from "react"
-import GameContextType from "../../../models/GameContextType"
-import { Team } from "../../../models/Team"
-import { teamColors } from "../../../valopack.config"
-import { GameContext } from "../contexts/GameContext"
-import { Method, GetParams, Square, Player, Tag, Ability, AddBoxParams, RemoveBoxParams, ModifyAttributeParams, AddTagParams, WaitParams, ShowFadeParams, AddClassParams, RemoveTagParams, RemoveClassParams, Box, Board } from "../models"
-import { Parser } from "../services/Parser.service"
+import { useContext } from 'react'
+import GameContextType from '../../../models/GameContextType.ts'
+import { Team } from '../../../models/Team.ts'
+import { teamColors } from '../../../valopack.config.ts'
+import { GameContext } from '../contexts/GameContext.tsx'
+import { Parser } from '../services/Parser.service.ts'
+import { Ability } from '../models/Ability.ts'
+import { Board } from '../models/Board.ts'
+import { Box } from '../models/Box.ts'
+import {
+  GetParams,
+  AddBoxParams,
+  RemoveBoxParams,
+  ModifyAttributeParams,
+  AddTagParams,
+  WaitParams,
+  ShowFadeParams,
+  AddClassParams,
+  RemoveTagParams,
+  RemoveClassParams
+} from '../models/index.ts'
+import { Method } from '../models/Method.ts'
+import { Player } from '../models/Player.ts'
+import { Square } from '../models/Square.ts'
+import { Tag } from '../models/Tag.ts'
 
 export function useAbility () {
   const context: GameContextType | undefined = useContext(GameContext)
   if (!context) throw new Error("Context doesn't have a provider")
 
   const { squareFrom, board, setBoard, setEffects, turn } = context
-
-  useEffect(() => console.log('turn => ', turn), [turn])
 
   const handleEffects = (): void => {
     setEffects(prevEffects => {
@@ -52,7 +68,6 @@ export function useAbility () {
       }
 
       if (getParams.filters?.team) {
-        console.log('antes de getParsedTeamOption turn: ', turn)
         getParams.filters.team = Parser.getParsedTeamOption(
           getParams.filters.team,
           turn
@@ -84,7 +99,6 @@ export function useAbility () {
       }
 
       if (filters.team && player) {
-        console.log('antes de getParsedTeamOption turn: ', turn)
         const parsedTeam: Team = Parser.getParsedTeamOption(filters.team, turn)
 
         if (player.team !== parsedTeam) {

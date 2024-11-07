@@ -1,6 +1,6 @@
 import { useRef } from 'react'
-import sounds from '../../../constants/sounds'
-import {useShop} from '../hooks/useShop'
+import { sounds } from '../../../constants/sounds.ts'
+import { useShop } from '../hooks/useShop.ts'
 import './Pack.css'
 
 interface PackProps {
@@ -15,7 +15,7 @@ export function Pack ({ onAnimationEnd }: PackProps) {
   const handleAnimationStart = () => {
     sounds.opening.play()
   }
-  
+
   const handleAnimationEnd = () => {
     onAnimationEnd()
   }

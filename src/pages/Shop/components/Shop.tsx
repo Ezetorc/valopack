@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
-import { useSettings } from '../../../hooks/useSettings'
-import { useUser } from '../../../hooks/useUser'
-import { useShop } from '../hooks/useShop'
-import { Opener } from './Opener'
-import { ProductDisplay } from './ProductDisplay'
-import { BuyModal } from './BuyModal'
-import { backgrounds } from '../../../valopack.config'
+import { useSettings } from '../../../hooks/useSettings.ts'
+import { useUser } from '../../../hooks/useUser.ts'
+import { useShop } from '../hooks/useShop.ts'
+import { Opener } from './Opener.tsx'
+import { ProductDisplay } from './ProductDisplay.tsx'
+import { BuyModal } from './BuyModal.tsx'
+import { backgrounds } from '../../../valopack.config.ts'
 import './Shop.css'
-import { products } from '../constants/products'
+import { products } from '../constants/products.ts'
 
 export default function Shop () {
   const { ownedProduct, selectedProduct } = useShop()

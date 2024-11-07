@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useUser } from '../../../hooks/useUser'
-import { useSettings } from '../../../hooks/useSettings'
-import { Agent } from '../../../models/Agent'
+import { useUser } from '../../../hooks/useUser.ts'
+import { useSettings } from '../../../hooks/useSettings.ts'
+import { Agent } from '../../../models/Agent.ts'
 import './Team.css'
-import { Slot } from './Slot'
-import { Selector } from './Selector'
-import { backgrounds } from '../../../valopack.config'
+import { Slot } from './Slot.tsx'
+import { Selector } from './Selector.tsx'
+import { backgrounds } from '../../../valopack.config.ts'
 
 export default function Team () {
   const { team, agentToChange } = useUser()

@@ -1,9 +1,9 @@
-import {Player} from '../models/Player'
-import {useBoard} from '../hooks/useBoard'
-import {useSettings} from '../../../hooks/useSettings'
-import {Modal} from '../../../components/Modal'
+import { Player } from '../models/Player.ts'
+import { useBoard } from '../hooks/useBoard.ts'
+import { useSettings } from '../../../hooks/useSettings.ts'
+import { Modal } from '../../../components/Modal.tsx'
 import './PlayerInfo.css'
-import {Attribute} from './Attribute'
+import { Attribute } from './Attribute.tsx'
 
 interface PlayerInfoProps {
   onClose: () => void

@@ -1,6 +1,6 @@
 import React from 'react'
-import {useSettings} from '../../../hooks/useSettings'
-import { Role } from '../../../models/Role'
+import {useSettings} from '../../../hooks/useSettings.ts'
+import { Role } from '../../../models/Role.ts'
 import './Card.css'
 
 interface CardProps {

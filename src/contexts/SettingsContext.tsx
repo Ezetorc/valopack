@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState } from 'react'
-import { Language } from '../models/Language'
-import SettingsContextType from '../models/SettingsContextType'
-import { defaultLanguage } from '../valopack.config'
+import { Language } from '../models/Language.ts'
+import SettingsContextType from '../models/SettingsContextType.ts'
+import { defaultLanguage } from '../valopack.config.ts'
 
 export const SettingsContext = createContext<SettingsContextType | undefined>(
   undefined

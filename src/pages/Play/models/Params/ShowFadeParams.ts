@@ -1,5 +1,5 @@
-import { Hexadecimal } from '../../../../models/Hexadecimal'
-import { GetParams } from './GetParams'
+import { Hexadecimal } from '../../../../models/Hexadecimal.ts'
+import { GetParams } from './GetParams.ts'
 
 export interface ShowFadeParams {
   get: GetParams

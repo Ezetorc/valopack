@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import {useSettings} from '../../../hooks/useSettings'
-import {Modal} from '../../../components/Modal'
-import {useUser} from '../../../hooks/useUser'
-import { Result } from '../models/Result'
+import { useSettings } from '../../../hooks/useSettings.ts'
+import { Modal } from '../../../components/Modal.tsx'
+import { useUser } from '../../../hooks/useUser.ts'
+import { Result } from '../models/Result.ts'
 import './ResultModal.css'
-import { paths } from '../../../valopack.config'
+import { paths } from '../../../valopack.config.ts'
 
 interface ResultModalProps {
   result: Result

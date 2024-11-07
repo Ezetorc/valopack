@@ -1,13 +1,12 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { Agent } from '../models/Agent'
-import UserContextType from '../models/UserContextType'
-import { Agents } from '../services/Agents.service'
-import { initialAgentsNames } from '../valopack.config'
+import { Agent } from '../models/Agent.ts'
+import { UserContextType } from '../models/UserContextType.ts'
+import { Agents } from '../services/Agents.service.ts'
+import { initialAgentsNames } from '../valopack.config.ts'
 
 export const UserContext = createContext<UserContextType | undefined>(undefined)
 
 export function UserContextProvider ({ children }: { children: ReactNode }) {
-  console.log('USERCONTEXT')
   const [credits, setCredits] = useState<number>(10000)
   const [inventory, setInventory] = useState<Agent[]>([])
   const [agentToChange, setAgentToChange] = useState<number | null>(null)
@@ -15,9 +14,7 @@ export function UserContextProvider ({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const setTeamAndInventory = async () => {
-      const initialAgents: Agent[] = await Agents.getTeam(
-        initialAgentsNames
-      )
+      const initialAgents: Agent[] = await Agents.getByName(initialAgentsNames)
       setTeam(initialAgents)
       setInventory(initialAgents)
     }

@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState } from 'react'
-import {Product} from '../../../models/Product'
-import {Agent} from '../../../models/Agent'
-import ShopContextType from '../../../models/ShopContextType'
+import { Product } from '../../../models/Product.ts'
+import { Agent } from '../../../models/Agent.ts'
+import { ShopContextType } from '../../../models/ShopContextType.ts'
 
 export const ShopContext = createContext<ShopContextType | undefined>(undefined)
 

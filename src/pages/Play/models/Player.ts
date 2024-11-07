@@ -1,9 +1,9 @@
-import { Agent } from '../../../models/Agent'
-import { Box } from './Box'
-import { Team } from '../../../models/Team'
-import { Attributes } from '../../../models/Attributes'
-import { Position } from './Position'
-import { initialAttributes } from '../../../valopack.config'
+import { Agent } from '../../../models/Agent.ts'
+import { Box } from './Box.ts'
+import { Team } from '../../../models/Team.ts'
+import { Attributes } from '../../../models/Attributes.ts'
+import { Position } from './Position.ts'
+import { initialAttributes } from '../../../valopack.config.ts'
 
 export class Player extends Box {
   public agent: Agent

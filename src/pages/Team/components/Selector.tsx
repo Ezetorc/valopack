@@ -1,10 +1,10 @@
 import { useCallback } from 'react'
-import {useUser} from '../../../hooks/useUser'
-import {useSettings} from '../../../hooks/useSettings'
-import {Agent} from '../../../models/Agent'
-import Card from '../../Shop/components/Card'
+import { useUser } from '../../../hooks/useUser.ts'
+import { useSettings } from '../../../hooks/useSettings.ts'
+import { Agent } from '../../../models/Agent.ts'
+import Card from '../../Shop/components/Card.tsx'
 import './Selector.css'
-import sounds from '../../../constants/sounds'
+import { sounds } from '../../../constants/sounds.ts'
 
 export function Selector () {
   const { inventory, team, setTeam, agentToChange, setAgentToChange } =

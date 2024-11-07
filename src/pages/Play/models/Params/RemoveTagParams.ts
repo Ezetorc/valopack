@@ -1,5 +1,5 @@
-import {Tag} from '../Tag'
-import { GetParams } from './GetParams'
+import {Tag} from '../Tag.ts'
+import { GetParams } from './GetParams.ts'
 
 export interface RemoveTagParams {
   get: GetParams

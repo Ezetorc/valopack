@@ -1,11 +1,11 @@
 import { useContext } from 'react'
-import { useUser } from '../../../hooks/useUser'
-import { Product } from '../../../models/Product'
-import { Agent } from '../../../models/Agent'
-import ShopContextType from '../../../models/ShopContextType'
-import { ShopContext } from '../contexts/ShopContext'
-import { Agents } from '../../../services/Agents.service'
-import { levelMultiplier } from '../../../valopack.config'
+import { useUser } from '../../../hooks/useUser.ts'
+import { Product } from '../../../models/Product.ts'
+import { Agent } from '../../../models/Agent.ts'
+import { ShopContextType } from '../../../models/ShopContextType.ts'
+import { ShopContext } from '../contexts/ShopContext.tsx'
+import { Agents } from '../../../services/Agents.service.ts'
+import { levelMultiplier } from '../../../valopack.config.ts'
 
 export function useShop () {
   const context: ShopContextType | undefined = useContext(ShopContext)

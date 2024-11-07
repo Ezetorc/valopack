@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { UserContext } from '../contexts/UserContext'
-import UserContextType from '../models/UserContextType'
+import { UserContext } from '../contexts/UserContext.tsx'
+import { UserContextType } from '../models/UserContextType.ts'
 
 export function useUser () {
   const context: UserContextType | undefined = useContext(UserContext)

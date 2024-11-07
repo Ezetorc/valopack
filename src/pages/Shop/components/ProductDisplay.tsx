@@ -1,9 +1,9 @@
-import { useShop } from '../hooks/useShop'
-import { getLightColor } from '../../../utilities/getLightColor'
-import { Product } from '../../../models/Product'
-import sounds from '../../../constants/sounds'
+import { useShop } from '../hooks/useShop.ts'
+import { getLightColor } from '../../../utilities/getLightColor.ts'
+import { Product } from '../../../models/Product.ts'
+import { sounds } from '../../../constants/sounds.ts'
 import './ProductDisplay.css'
-import { useSettings } from '../../../hooks/useSettings'
+import { useSettings } from '../../../hooks/useSettings.ts'
 
 export function ProductDisplay (product: Product) {
   const { setSelectedProduct } = useShop()

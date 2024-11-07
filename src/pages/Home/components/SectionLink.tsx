@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import sounds from '../../../constants/sounds'
+import { sounds } from '../../../constants/sounds.ts'
 import './SectionLink.css'
 
 interface SectionLinkProps {
@@ -12,7 +12,7 @@ export function SectionLink ({ to, text, image }: SectionLinkProps) {
   const handleHover = () => {
     sounds.hover.play()
   }
-  
+
   const handleClick = () => {
     sounds.click.play()
   }

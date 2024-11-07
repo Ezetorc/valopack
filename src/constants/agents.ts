@@ -1,5 +1,5 @@
-import { Agent } from '../models/Agent'
-import { stimBeacon } from '../pages/Play/abilities/stimBeacon'
+import { Agent } from '../models/Agent.ts'
+import { stimBeacon } from '../pages/Play/abilities/stimBeacon.ts'
 
 export const agents: Agent[] = [
   {

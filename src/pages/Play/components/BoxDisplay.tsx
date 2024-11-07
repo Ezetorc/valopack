@@ -1,6 +1,6 @@
-import {Box} from '../models/Box'
-import {Player} from '../models/Player'
-import { Team } from '../../../models/Team'
+import { Box } from '../models/Box.ts'
+import { Player } from '../models/Player.ts'
+import { Team } from '../../../models/Team.ts'
 import './BoxDisplay.css'
 
 interface BoxDisplayProps {

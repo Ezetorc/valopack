@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import {useShop} from '../hooks/useShop'
-import {useSettings} from '../../../hooks/useSettings'
-import sounds from '../../../constants/sounds'
+import { useShop } from '../hooks/useShop.ts'
+import { useSettings } from '../../../hooks/useSettings.ts'
+import { sounds } from '../../../constants/sounds.ts'
 import './Opener.css'
-import Card from './Card'
-import {Pack} from './Pack'
+import Card from './Card.tsx'
+import { Pack } from './Pack.tsx'
 
 export function Opener () {
   const { ownedProduct, ownedAgents, setOwnedProduct } = useShop()
@@ -15,7 +15,7 @@ export function Opener () {
   const handleAnimationEnd = () => {
     setShowCards(true)
   }
-  
+
   const handleClose = () => {
     setOwnedProduct(null)
     sounds.click.play()

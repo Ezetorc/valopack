@@ -1,7 +1,8 @@
-import { getRandomElements } from "../../../utilities/getRandomElements";
-import { boards } from "../constants/boards";
-import { Board } from "../models/Board";
+import { shuffle } from 'lodash'
+import { boards } from '../constants/boards.ts'
+import { Board } from '../models/Board.ts'
 
 export function getRandomBoard (): Board {
-  return getRandomElements(Object.values(boards))[0]
+  const boardsCopy: Board[] = [...Object.values(boards)]
+  return shuffle(boardsCopy)[0]
 }

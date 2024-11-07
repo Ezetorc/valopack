@@ -1,10 +1,9 @@
-import { Team } from "../../../models/Team"
-import { Tag } from "../models/Tag"
-import { TeamOption } from "../models/TeamOption"
+import { Team } from '../../../models/Team.ts'
+import { Tag } from '../models/Tag.ts'
+import { TeamOption } from '../models/TeamOption.ts'
 
 export class Parser {
   static getParsedTeamOption (teamOption: TeamOption, turn: Team): Team {
-
     if (teamOption == 'opposite-team') {
       return turn == 'ally' ? 'enemy' : 'ally'
     } else if (teamOption == 'current-team') {

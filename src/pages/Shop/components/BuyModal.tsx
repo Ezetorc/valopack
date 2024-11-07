@@ -1,8 +1,8 @@
-import { Modal } from '../../../components/Modal'
-import { useShop } from '../hooks/useShop'
-import { useSettings } from '../../../hooks/useSettings'
-import { useUser } from '../../../hooks/useUser'
-import sounds from '../../../constants/sounds'
+import { Modal } from '../../../components/Modal.tsx'
+import { useShop } from '../hooks/useShop.ts'
+import { useSettings } from '../../../hooks/useSettings.ts'
+import { useUser } from '../../../hooks/useUser.ts'
+import { sounds } from '../../../constants/sounds.ts'
 import './BuyModal.css'
 
 interface BuyModalProps {

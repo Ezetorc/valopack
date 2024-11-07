@@ -1,10 +1,10 @@
-import { Player } from '../models/Player'
-import { useBoard } from '../hooks/useBoard'
-import { useSettings } from '../../../hooks/useSettings'
-import { Ability } from '../models/Ability'
-import { Action } from './Action'
+import { Player } from '../models/Player.ts'
+import { useBoard } from '../hooks/useBoard.ts'
+import { useSettings } from '../../../hooks/useSettings.ts'
+import { Ability } from '../models/Ability.ts'
+import { Action } from './Action.tsx'
 import './Actions.css'
-import { teamColors } from '../../../valopack.config'
+import { teamColors } from '../../../valopack.config.ts'
 
 interface ActionsProps {
   onOpenInfo: () => void

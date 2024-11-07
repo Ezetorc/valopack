@@ -1,4 +1,4 @@
-import { Position } from '../models/Position'
+import { Position } from '../models/Position.ts'
 
 export class Distance {
   static get (positionA: Position, positionB: Position): number {

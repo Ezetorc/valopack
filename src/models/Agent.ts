@@ -1,5 +1,5 @@
-import { Role } from './Role'
-import {Ability} from '../pages/Play/models/Ability'
+import { Role } from './Role.ts'
+import { Ability } from '../pages/Play/models/Ability.ts'
 
 export interface Agent {
   name: string

@@ -1,6 +1,6 @@
-import { Agent } from './Agent'
+import { Agent } from './Agent.ts'
 
-export default interface UserContextType {
+export interface UserContextType {
   credits: number
   setCredits: React.Dispatch<React.SetStateAction<number>>
   inventory: Agent[]

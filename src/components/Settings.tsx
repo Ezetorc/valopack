@@ -1,8 +1,8 @@
-import { useSettings } from '../hooks/useSettings'
-import { Language } from '../models/Language'
-import sounds from '../constants/sounds'
+import { useSettings } from '../hooks/useSettings.ts'
+import { Language } from '../models/Language.ts'
+import {sounds} from '../constants/sounds.ts'
 import Select, { SingleValue, StylesConfig } from 'react-select'
-import { Modal } from './Modal'
+import { Modal } from './Modal.tsx'
 import './Settings.css'
 
 interface Option {

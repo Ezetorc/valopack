@@ -1,7 +1,7 @@
-import { BoxType } from '../BoxType'
-import { GetBy } from '../GetBy'
-import { TeamOption } from '../TeamOption'
-import {Tag} from '../Tag'
+import { BoxType } from '../BoxType.ts'
+import { GetBy } from '../GetBy.ts'
+import { TeamOption } from '../TeamOption.ts'
+import {Tag} from '../Tag.ts'
 
 export interface GetParams {
   getBy: GetBy

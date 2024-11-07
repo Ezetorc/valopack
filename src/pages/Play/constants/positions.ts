@@ -1,4 +1,4 @@
-import { Position } from '../models/Position'
+import { Position } from '../models/Position.ts'
 
 export const allyPositions: Position[] = [
   new Position(5, 0),

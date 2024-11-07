@@ -1,4 +1,4 @@
-import { TeamOption } from "./TeamOption"
+import { TeamOption } from "./TeamOption.ts"
 
 export interface Tag {
   text: string

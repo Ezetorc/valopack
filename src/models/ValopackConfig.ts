@@ -1,8 +1,8 @@
-import { Agent } from './Agent'
-import { Attributes } from './Attributes'
-import { Language } from './Language'
-import { Section } from './Section'
-import { Team } from './Team'
+import { Agent } from './Agent.ts'
+import { Attributes } from './Attributes.ts'
+import { Language } from './Language.ts'
+import { Section } from './Section.ts'
+import { Team } from './Team.ts'
 
 export interface ValopackConfig {
   appName: string

@@ -1,4 +1,4 @@
-import { Language } from './Language'
+import { Language } from './Language.ts'
 
 export default interface SettingsContextType {
   language: Language

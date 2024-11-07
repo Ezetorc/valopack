@@ -1,13 +1,13 @@
-import { SectionLink } from './SectionLink'
+import { SectionLink } from './SectionLink.tsx'
 import vyzeImage from '../assets/images/vyse.webp'
 import vandalImage from '../assets/images/vandal.webp'
 import omenImage from '../assets/images/omen.webp'
 import { useEffect } from 'react'
-import { useSettings } from '../../../hooks/useSettings'
-import { useUser } from '../../../hooks/useUser'
-import { useShop } from '../../Shop/hooks/useShop'
+import { useSettings } from '../../../hooks/useSettings.ts'
+import { useUser } from '../../../hooks/useUser.ts'
+import { useShop } from '../../Shop/hooks/useShop.ts'
 import './Home.css'
-import { backgrounds, paths } from '../../../valopack.config'
+import { backgrounds, paths } from '../../../valopack.config.ts'
 
 export default function Home () {
   const { texts, updateSection } = useSettings()

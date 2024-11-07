@@ -1,11 +1,11 @@
 import { createContext, ReactNode, useState } from 'react'
-import GameContextType from '../../../models/GameContextType'
-import { Team } from '../../../models/Team'
-import { Action } from '../models/Action'
-import { Board } from '../models/Board'
-import { Effect } from '../models/Effect'
-import { Square } from '../models/Square'
-import { getRandomBoard } from '../utilities/getRandomBoard'
+import GameContextType from '../../../models/GameContextType.ts'
+import { Team } from '../../../models/Team.ts'
+import { Action } from '../models/Action.ts'
+import { Board } from '../models/Board.ts'
+import { Effect } from '../models/Effect.ts'
+import { Square } from '../models/Square.ts'
+import { getRandomBoard } from '../utilities/getRandomBoard.ts'
 
 export const GameContext = createContext<GameContextType | undefined>(undefined)
 

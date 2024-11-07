@@ -1,7 +1,7 @@
-import { Agent } from './Agent'
-import { Product } from './Product'
+import { Agent } from './Agent.ts'
+import { Product } from './Product.ts'
 
-export default interface ShopContextType {
+export interface ShopContextType {
   ownedProduct: Product | null
   setOwnedProduct: React.Dispatch<React.SetStateAction<Product | null>>
   selectedProduct: Product | null

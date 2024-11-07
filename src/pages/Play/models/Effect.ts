@@ -1,5 +1,5 @@
-import {Square} from './Square'
-import {Method} from './Method'
+import {Square} from './Square.ts'
+import {Method} from './Method.ts'
 
 export interface Effect {
   turnsLeft: number

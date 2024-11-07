@@ -1,14 +1,14 @@
 import { useCallback, useRef } from 'react'
-import { Square } from '../models/Square'
-import { useBoard } from '../hooks/useBoard'
-import { Player } from '../models/Player'
-import { Action } from '../models/Action'
-import { useAbility } from '../hooks/useAbility'
-import { Ability } from '../models/Ability'
-import { BoxDisplay } from './BoxDisplay'
-import { SquareDisplay } from './SquareDisplay'
+import { Square } from '../models/Square.ts'
+import { useBoard } from '../hooks/useBoard.ts'
+import { Player } from '../models/Player.ts'
+import { Action } from '../models/Action.ts'
+import { useAbility } from '../hooks/useAbility.ts'
+import { Ability } from '../models/Ability.ts'
+import { BoxDisplay } from './BoxDisplay.tsx'
+import { SquareDisplay } from './SquareDisplay.tsx'
 import './BoardDisplay.css'
-import { Distance } from '../services/Distance.service'
+import { Distance } from '../services/Distance.service.ts'
 
 export function BoardDisplay () {
   const {
@@ -24,8 +24,6 @@ export function BoardDisplay () {
   } = useBoard()
   const { handleAbility, handleEffects } = useAbility()
   const boardRef = useRef<HTMLDivElement>(null)
-
-  // turn siempre es "ally" en el parseo
 
   const changeTurn = useCallback(() => {
     handleEffects()

@@ -1,8 +1,8 @@
-import sounds from '../../../constants/sounds'
-import {useSettings} from '../../../hooks/useSettings'
-import {useUser} from '../../../hooks/useUser'
-import {Agent} from '../../../models/Agent'
-import Card from '../../Shop/components/Card'
+import { sounds } from '../../../constants/sounds.ts'
+import { useSettings } from '../../../hooks/useSettings.ts'
+import { useUser } from '../../../hooks/useUser.ts'
+import { Agent } from '../../../models/Agent.ts'
+import Card from '../../Shop/components/Card.tsx'
 import './Slot.css'
 
 interface SlotProps {

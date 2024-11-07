@@ -1,10 +1,10 @@
 import { useCallback, useContext } from 'react'
-import { Player } from '../models/Player'
-import { Square } from '../models/Square'
-import { Position } from '../models/Position'
-import { getDamage } from '../utilities/getDamage'
-import GameContextType from '../../../models/GameContextType'
-import { GameContext } from '../contexts/GameContext'
+import { Player } from '../models/Player.ts'
+import { Square } from '../models/Square.ts'
+import { Position } from '../models/Position.ts'
+import { getDamage } from '../utilities/getDamage.ts'
+import GameContextType from '../../../models/GameContextType.ts'
+import { GameContext } from '../contexts/GameContext.tsx'
 
 export function useBoard () {
   const context: GameContextType | undefined = useContext(GameContext)

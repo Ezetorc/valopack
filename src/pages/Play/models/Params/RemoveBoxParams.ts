@@ -1,5 +1,5 @@
-import { BoxType } from '../BoxType'
-import { GetParams } from './GetParams'
+import { BoxType } from '../BoxType.ts'
+import { GetParams } from './GetParams.ts'
 
 export interface RemoveBoxParams {
   get: GetParams

@@ -1,4 +1,4 @@
-import { ValopackConfig } from './models/ValopackConfig'
+import { ValopackConfig } from './models/ValopackConfig.ts'
 
 export const valopackConfig: ValopackConfig = {
   appName: 'VALOPACK',

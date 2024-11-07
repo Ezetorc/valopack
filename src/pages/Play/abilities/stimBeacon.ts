@@ -1,4 +1,4 @@
-import { Ability } from '../models/Ability'
+import { Ability } from '../models/Ability.ts'
 
 export const stimBeacon: Ability = {
   identifier: 'stimBeacon',

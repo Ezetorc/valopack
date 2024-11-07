@@ -1,4 +1,4 @@
-import {Method} from '../Method'
+import { Method } from '../Method.ts'
 
 export interface WaitParams {
   type: 'turns' | 'miliseconds'

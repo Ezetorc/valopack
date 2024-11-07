@@ -1,8 +1,8 @@
-import { Board } from '../pages/Play/models/Board'
-import { Square } from '../pages/Play/models/Square'
-import { Action } from '../pages/Play/models/Action'
-import { Team } from './Team'
-import { Effect } from '../pages/Play/models/Effect'
+import { Board } from '../pages/Play/models/Board.ts'
+import { Square } from '../pages/Play/models/Square.ts'
+import { Action } from '../pages/Play/models/Action.ts'
+import { Team } from './Team.ts'
+import { Effect } from '../pages/Play/models/Effect.ts'
 
 export default interface GameContextType {
   board: Board
