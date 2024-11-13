@@ -1,5 +1,5 @@
 import { Agent } from '../models/Agent.ts'
-import { stimBeacon } from '../pages/Play/abilities/stimBeacon.ts'
+import { stimBeacon } from './abilities/stimBeacon.ts'
 
 export const agents: Agent[] = [
   {
@@ -10,7 +10,7 @@ export const agents: Agent[] = [
     icon: 'https://media.valorant-api.com/agents/9f0d8ba9-4140-b941-57d3-a7ad57c6b417/displayiconsmall.png',
     level: 1,
     id: 0,
-    abilities: [stimBeacon]
+    abilities: [stimBeacon, stimBeacon] // Está pasando algo raro con el modifyAttribute porque algunos agentes tienen 0, 1 o 2 de speed al ejecutar dos veces un stimbeacon y moverse. Esr arisimoo. Parece que handleGetMethod está haciend ocosas raras
   },
   {
     name: 'Phoenix',

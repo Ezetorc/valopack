@@ -26,8 +26,8 @@ export function BoardDisplay () {
   const boardRef = useRef<HTMLDivElement>(null)
 
   const changeTurn = useCallback(() => {
-    handleEffects()
     toggleTurn()
+    handleEffects()
   }, [handleEffects, toggleTurn])
 
   const showInvalidMove = useCallback(() => {
@@ -38,15 +38,13 @@ export function BoardDisplay () {
   const handleMoveAction = useCallback(
     (squareToMove: Square) => {
       if (!squareFrom) return
-      const player: Player = squareFrom.getBox('player') as Player
-      if (!player) return
 
+      const player: Player = squareFrom.getBox('player') as Player
       const validDistance: boolean = Distance.isValid(
         player.position,
         squareToMove.position,
         player.attributes.speed
       )
-
       const canMove: boolean = validDistance && squareToMove.isFree()
 
       if (canMove) {
@@ -101,18 +99,15 @@ export function BoardDisplay () {
   const handleAbilityAction = useCallback(
     (targetSquare: Square) => {
       if (!squareFrom) return
-      const playerFrom = squareFrom.getBox('player') as Player
-      if (!playerFrom) return
 
-      const { abilities } = playerFrom.agent
+      const player: Player = squareFrom.getBox('player') as Player
+      const { abilities } = player.agent
       const selectedAbility: Ability =
         action === 'ability0' ? abilities[0] : abilities[1]
-
       const distance: number = Distance.get(
         squareFrom.position,
         targetSquare.position
       )
-
       const canUseAbility: boolean =
         Distance.isWithinRange(distance, selectedAbility.useRange) &&
         targetSquare
@@ -174,8 +169,7 @@ export function BoardDisplay () {
         <SquareDisplay
           onClick={() => handleClick(square)}
           color={square.getColor(board.colors)}
-          style={square.style}
-          classes={square.classes}
+          square={square}
           key={`square-${squareIndex}`}
         >
           {square.boxes.map((box, boxIndex) => (

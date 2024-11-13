@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useState } from 'react'
-import GameContextType from '../../../models/GameContextType.ts'
+import { createContext, ReactNode, useEffect, useState } from 'react'
+import { GameContextType } from '../../../models/GameContextType.ts'
 import { Team } from '../../../models/Team.ts'
 import { Action } from '../models/Action.ts'
 import { Board } from '../models/Board.ts'
@@ -16,6 +16,8 @@ export function GameContextProvider ({ children }: { children: ReactNode }) {
   const [action, setAction] = useState<Action | null>(null)
   const [board, setBoard] = useState<Board>(() => getRandomBoard())
   const [turn, setTurn] = useState<Team>('ally')
+
+  useEffect(() => console.log(effects), [effects])
 
   return (
     <GameContext.Provider

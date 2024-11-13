@@ -1,4 +1,4 @@
-import { Ability } from '../models/Ability.ts'
+import { Ability } from "../../pages/Play/models/Ability";
 
 export const stimBeacon: Ability = {
   identifier: 'stimBeacon',

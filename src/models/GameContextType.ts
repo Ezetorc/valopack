@@ -4,7 +4,7 @@ import { Action } from '../pages/Play/models/Action.ts'
 import { Team } from './Team.ts'
 import { Effect } from '../pages/Play/models/Effect.ts'
 
-export default interface GameContextType {
+export interface GameContextType {
   board: Board
   setBoard: React.Dispatch<React.SetStateAction<Board>>
   squareFrom: Square | null

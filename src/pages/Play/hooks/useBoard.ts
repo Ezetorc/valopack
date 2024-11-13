@@ -3,7 +3,7 @@ import { Player } from '../models/Player.ts'
 import { Square } from '../models/Square.ts'
 import { Position } from '../models/Position.ts'
 import { getDamage } from '../utilities/getDamage.ts'
-import GameContextType from '../../../models/GameContextType.ts'
+import {GameContextType} from '../../../models/GameContextType.ts'
 import { GameContext } from '../contexts/GameContext.tsx'
 
 export function useBoard () {

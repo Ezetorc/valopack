@@ -1,28 +1,27 @@
 import { ReactNode } from 'react'
+import { Square } from '../models'
 import './SquareDisplay.css'
 
 interface SquareDisplayProps {
   children: ReactNode
   color: string
-  style: { [key: string]: string } 
-  classes: Set<string>
+  square: Square
   onClick: () => void
 }
 
 export function SquareDisplay ({
   children,
   color,
-  style,
-  classes,
-  onClick
+  onClick,
+  square
 }: SquareDisplayProps) {
-  const classNames = `square ${Array.from(classes).join(' ')}`
+  const className: string = `square ${Array.from(square.classes).join(' ')}`
 
   return (
     <button
-      className={classNames}
+      className={className}
       onClick={onClick}
-      style={{ backgroundColor: color, ...style }}
+      style={{ ...square.style, backgroundColor: color }}
     >
       {children}
     </button>

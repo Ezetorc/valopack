@@ -7,9 +7,9 @@ import { Actions } from './Actions.tsx'
 import { BoardDisplay } from './BoardDisplay.tsx'
 import { PlayerInfo } from './PlayerInfo.tsx'
 import { ResultModal } from './ResultModal.tsx'
-import './Play.css'
 import { Agents } from '../../../services/Agents.service.ts'
 import { backgrounds } from '../../../valopack.config.ts'
+import './Play.css'
 
 export default function Play () {
   const { squareFrom, setBoard, board } = useBoard()

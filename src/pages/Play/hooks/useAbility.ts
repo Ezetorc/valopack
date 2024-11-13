@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import GameContextType from '../../../models/GameContextType.ts'
+import { GameContextType } from '../../../models/GameContextType.ts'
 import { Team } from '../../../models/Team.ts'
 import { teamColors } from '../../../valopack.config.ts'
 import { GameContext } from '../contexts/GameContext.tsx'
@@ -182,7 +182,9 @@ export function useAbility () {
         const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
 
         squares.forEach(square => {
-          const hasTags = square.boxes.some(box => box.has(parsedTags as Tag[]))
+          const hasTags: boolean = square.boxes.some(box =>
+            box.has(parsedTags as Tag[])
+          )
           if (!hasTags) {
             const index = squares.indexOf(square)
             if (index > -1) squares.splice(index, 1)
@@ -222,7 +224,7 @@ export function useAbility () {
     const squares: Square[] = handleGetMethod(params.get, squareTo)
 
     squares.forEach(square => {
-      const player = square.getBox('player')
+      const player: Box | undefined = square.getBox('player')
       if (player) {
         ;(player as Player).attributes[params.attribute] += params.amount
       }
