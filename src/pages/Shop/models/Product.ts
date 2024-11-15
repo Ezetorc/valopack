@@ -5,7 +5,7 @@ import { Pack } from '../../../models/Pack.ts'
 export interface Product {
   pack: Pack
   color: Hexadecimal
-  amount: number
+  cardsAmount: number
   price: number
   identifier: keyof Dictionary['packs']
 }

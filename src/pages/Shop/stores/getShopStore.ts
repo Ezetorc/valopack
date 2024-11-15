@@ -9,6 +9,6 @@ export const getShopStore = create<ShopStore>(set => ({
   setSelectedProduct: newSelectedProduct =>
     set({ selectedProduct: newSelectedProduct }),
 
-  ownedAgents: [],
-  setOwnedAgents: newOwnedAgents => set({ ownedAgents: newOwnedAgents })
+  ownedCards: [],
+  setOwnedCards: newOwnedCards => set({ ownedCards: newOwnedCards })
 }))

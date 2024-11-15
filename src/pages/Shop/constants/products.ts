@@ -13,7 +13,7 @@ export const products: Product[] = [
       image: duelistPackImage
     },
     color: '#833d25',
-    amount: 1,
+    cardsAmount: 1,
     price: 2000,
     identifier: 'duelist'
   },
@@ -23,7 +23,7 @@ export const products: Product[] = [
       image: controllerPackImage
     },
     color: '#234950',
-    amount: 1,
+    cardsAmount: 1,
     price: 2000,
     identifier: 'controller'
   },
@@ -33,7 +33,7 @@ export const products: Product[] = [
       image: initiatorPackImage
     },
     color: '#1f4531',
-    amount: 1,
+    cardsAmount: 1,
     price: 2000,
     identifier: 'initiator'
   },
@@ -43,7 +43,7 @@ export const products: Product[] = [
       image: sentinelPackImage
     },
     color: '#4a4a4a',
-    amount: 1,
+    cardsAmount: 1,
     price: 2000,
     identifier: 'sentinel'
   },
@@ -53,7 +53,7 @@ export const products: Product[] = [
       image: newPackImage
     },
     color: '#7b0707',
-    amount: 1,
+    cardsAmount: 1,
     price: 5000,
     identifier: 'new'
   },
@@ -63,7 +63,7 @@ export const products: Product[] = [
       image: mixedPackImage
     },
     color: '#70226d',
-    amount: 1,
+    cardsAmount: 1,
     price: 3000,
     identifier: 'mixed'
   }

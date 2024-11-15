@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { useShop } from '../hooks/useShop.ts'
 import { useSettings } from '../../../hooks/useSettings.ts'
 import { sounds } from '../../../constants/sounds.ts'
+import { PackDisplay } from './PackDisplay.tsx'
 import './Opener.css'
-import Card from './Card.tsx'
-import { Pack } from './Pack.tsx'
+import CardDisplay from '../../../components/CardDisplay.tsx'
 
 export function Opener () {
-  const { ownedProduct, ownedAgents, setOwnedProduct } = useShop()
+  const { ownedProduct, ownedCards, setOwnedProduct } = useShop()
   const { texts } = useSettings()
   const [showCards, setShowCards] = useState<boolean>(false)
   if (!ownedProduct) return null
@@ -26,25 +26,18 @@ export function Opener () {
       {showCards ? (
         <div className='opener__cards'>
           <div>
-            {ownedAgents ? (
-              ownedAgents.map((card, index) => (
-                <Card
-                  key={index}
-                  image={card.portrait}
-                  role={card.role}
-                  name={card.name}
-                  level={card.level}
-                />
-              ))
-            ) : (
-              <span>{`${texts.loading}...`}</span>
-            )}
+            {ownedCards.map((card, index) => (
+              <CardDisplay key={index} card={card} />
+            ))}
           </div>
 
           <button onClick={handleClose}>{texts.close}</button>
         </div>
       ) : (
-        <Pack onAnimationEnd={handleAnimationEnd} />
+        <PackDisplay
+          pack={ownedProduct.pack}
+          onAnimationEnd={handleAnimationEnd}
+        />
       )}
     </section>
   )

@@ -6,7 +6,7 @@ export interface Agent {
   id: number
   portrait: string
   icon: string
-  level: number
   role: Role
+  level: number
   abilities: Ability[]
 }

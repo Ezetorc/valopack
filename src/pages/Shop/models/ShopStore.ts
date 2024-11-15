@@ -1,4 +1,4 @@
-import { Agent } from "../../../models/Agent"
+import { Card } from "../../../models/Card"
 import { Product } from "./Product"
 
 export interface ShopStore {
@@ -6,6 +6,6 @@ export interface ShopStore {
   setOwnedProduct: (newProduct: Product | null) => void
   selectedProduct: Product | null
   setSelectedProduct: (newProduct: Product | null) => void
-  ownedAgents: Agent[]
-  setOwnedAgents: (newAgents: Agent[]) => void
+  ownedCards: Card[]
+  setOwnedCards: (newCards: Card[]) => void
 }

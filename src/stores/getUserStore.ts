@@ -1,13 +1,14 @@
 import { create } from 'zustand'
-import { Agent } from '../models/Agent'
 import { initialCredits, initialAgentsNames } from '../valopack.config'
 import { Agents } from '../services/Agents.service'
 import { UserStore } from '../models/UserStore'
+import { Inventory } from '../models/Inventory'
 
-export const getUserStore = create<UserStore>(set => {
+export const getUserStore = create<UserStore>()(set => {
   const initializeAgents = async () => {
-    const initialAgents: Agent[] = await Agents.getByName(initialAgentsNames)
-    set({ team: initialAgents, inventory: initialAgents })
+    const initialAgents = await Agents.getByName(initialAgentsNames)
+    const initialInventory = new Inventory(initialAgents)
+    set({ team: initialAgents, inventory: initialInventory })
   }
 
   initializeAgents()
@@ -16,7 +17,7 @@ export const getUserStore = create<UserStore>(set => {
     credits: initialCredits,
     setCredits: newCredits => set({ credits: newCredits }),
 
-    inventory: [],
+    inventory: new Inventory(),
     setInventory: newInventory => set({ inventory: newInventory }),
 
     team: [],

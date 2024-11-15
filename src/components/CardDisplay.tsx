@@ -1,17 +1,11 @@
 import React from 'react'
-import {useSettings} from '../../../hooks/useSettings.ts'
-import { Role } from '../../../models/Role.ts'
-import './Card.css'
+import { useSettings } from '../hooks/useSettings'
+import { Card } from '../models/Card'
+import './CardDisplay.css'
 
-interface CardProps {
-  name: string
-  role: Role
-  image: string
-  level: number
-}
-
-function Card ({ name, role, image, level }: CardProps) {
+function CardDisplay ({ card }: { card: Card }) {
   const { texts } = useSettings()
+  const { image, name, role, level } = card
 
   return (
     <div className='card'>
@@ -26,4 +20,4 @@ function Card ({ name, role, image, level }: CardProps) {
   )
 }
 
-export default React.memo(Card)
+export default React.memo(CardDisplay)

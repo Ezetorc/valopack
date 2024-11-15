@@ -8,7 +8,7 @@ import './ProductDisplay.css'
 export function ProductDisplay ({ product }: { product: Product }) {
   const { setSelectedProduct } = useShop()
   const { texts } = useSettings()
-  const { color, identifier, amount, price, pack } = product
+  const { color, identifier, cardsAmount, price, pack } = product
   const lightColor: string = getLightColor(color, 0.4)
   const name: string = texts.packs[identifier]
   const backgroundStyle: { background: string } = {
@@ -20,7 +20,7 @@ export function ProductDisplay ({ product }: { product: Product }) {
   }
 
   const handleClick = () => {
-    setSelectedProduct({ pack, color, amount, price, identifier })
+    setSelectedProduct({ pack, color, cardsAmount, price, identifier })
   }
 
   return (

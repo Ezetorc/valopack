@@ -1,5 +1,5 @@
-import { Agent } from './Agent.ts'
 import { Attributes } from './Attributes.ts'
+import { FiveOrLessArray } from './FiveOrLessArray.ts'
 import { Language } from './Language.ts'
 import { Section } from './Section.ts'
 import { Team } from './Team.ts'
@@ -13,12 +13,6 @@ export interface ValopackConfig {
   paths: { [key in Section]: string }
   teamColors: { [key in Team]: string }
   backgrounds: { [key in Section]: string }
-  initialAgentsNames: [
-    Agent['name'],
-    Agent['name'],
-    Agent['name'],
-    Agent['name'],
-    Agent['name']
-  ]
+  initialAgentsNames: FiveOrLessArray<string>
   initialAttributes: Attributes
 }

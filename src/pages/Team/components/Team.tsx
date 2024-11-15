@@ -2,18 +2,16 @@ import { useEffect, useState } from 'react'
 import { useUser } from '../../../hooks/useUser.ts'
 import { useSettings } from '../../../hooks/useSettings.ts'
 import { Agent } from '../../../models/Agent.ts'
-import './Team.css'
-import { Slot } from './Slot.tsx'
+import { CardSlot } from './CardSlot.tsx'
 import { Selector } from './Selector.tsx'
 import { backgrounds } from '../../../valopack.config.ts'
+import { Agents } from '../../../services/Agents.service.ts'
+import './Team.css'
 
 export default function Team () {
   const { team, agentToChange } = useUser()
   const { texts, updateSection } = useSettings()
   const [agents, setAgents] = useState<(Agent | null)[]>([])
-
-  const isAgentToChangeTrue: boolean =
-    agentToChange !== null && agentToChange !== undefined
 
   useEffect(
     () => updateSection(texts.team, backgrounds.team, true),
@@ -21,16 +19,30 @@ export default function Team () {
   )
 
   useEffect(() => {
-    const newAgents: (Agent | null)[] = getNewAgents(team)
+    const newAgents = []
+
+    for (let i = 0; i < 5; i++) {
+      const agent = team[i]
+      if (agent) {
+        newAgents.push(agent)
+      } else {
+        newAgents.push(null)
+      }
+    }
+    
     setAgents(newAgents)
   }, [setAgents, team])
 
   return (
     <>
-      {!isAgentToChangeTrue ? (
+      {!agentToChange ? (
         <section className='team'>
           {agents.map((agent, index) => (
-            <Slot key={index} index={index} agent={agent} />
+            <CardSlot
+              key={index}
+              index={index}
+              card={agent ? Agents.getCardsFromAgents([agent])[0] : null}
+            />
           ))}
         </section>
       ) : (
@@ -38,19 +50,4 @@ export default function Team () {
       )}
     </>
   )
-}
-
-function getNewAgents (team: (Agent | null)[]) {
-  const newAgents: (Agent | null)[] = []
-  for (let i = 0; i < 5; i++) {
-    const agent = team[i]
-
-    if (agent) {
-      newAgents.push(agent)
-    } else {
-      newAgents.push(null)
-    }
-  }
-
-  return newAgents
 }

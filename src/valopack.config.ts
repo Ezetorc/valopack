@@ -50,7 +50,7 @@ export const valopackConfig: ValopackConfig = {
       #15103E 100%
     )`
   },
-  initialAgentsNames: ['Sage', 'Brimstone', 'Phoenix', 'Jett', 'Sova'],
+  initialAgentsNames: ['Sage', 'Brimstone', 'Phoenix', 'Jett'],
   initialAttributes: {
     attack: 50,
     health: 100,
