@@ -6,6 +6,7 @@ import { Team } from './Team.ts'
 
 export interface ValopackConfig {
   appName: string
+  initialCredits: number
   levelMultiplier: number
   defaultLanguage: Language
   creditsWinned: number

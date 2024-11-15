@@ -16,8 +16,9 @@ export function BuyModal ({ canBuy }: BuyModalProps) {
   if (!selectedProduct) return
 
   const handleClick = (): void => {
-    if (!selectedProduct) return
-    buy(selectedProduct)
+    if (selectedProduct) {
+      buy(selectedProduct)
+    }
   }
 
   const handleLoad = (): Promise<void> => {

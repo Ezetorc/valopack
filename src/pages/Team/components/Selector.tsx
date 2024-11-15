@@ -22,13 +22,11 @@ export function Selector () {
 
       sounds.click.play()
       setAgentToChange(null)
-      setTeam(prevTeam => {
-        const newTeam = [...prevTeam]
-        newTeam[agentToChange] = agent
-        return newTeam
-      })
+      const newTeam = [...team]
+      newTeam[agentToChange] = agent
+      setTeam(newTeam)
     },
-    [setTeam, agentToChange, setAgentToChange]
+    [setTeam, agentToChange, setAgentToChange, team]
   )
 
   const filteredInventory: Agent[] = inventory.filter(

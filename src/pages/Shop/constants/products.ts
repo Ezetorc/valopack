@@ -1,4 +1,4 @@
-import { Product } from '../../../models/Product.ts'
+import { Product } from '../models/Product.ts'
 import duelistPackImage from '../assets/images/duelist_pack.webp'
 import controllerPackImage from '../assets/images/controller_pack.webp'
 import initiatorPackImage from '../assets/images/initiator_pack.webp'

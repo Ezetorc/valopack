@@ -1,18 +1,15 @@
-import { useContext } from 'react'
 import { useUser } from '../../../hooks/useUser.ts'
-import { Product } from '../../../models/Product.ts'
+import { Product } from '../models/Product.ts'
 import { Agent } from '../../../models/Agent.ts'
-import { ShopContextType } from '../../../models/ShopContextType.ts'
-import { ShopContext } from '../contexts/ShopContext.tsx'
 import { Agents } from '../../../services/Agents.service.ts'
 import { levelMultiplier } from '../../../valopack.config.ts'
+import { ShopStore } from '../models/ShopStore.ts'
+import { getShopStore } from '../stores/getShopStore.ts'
 
 export function useShop () {
-  const context: ShopContextType | undefined = useContext(ShopContext)
-  if (!context) throw new Error('Context must be used with a Provider')
-
-  const { setOwnedAgents, setOwnedProduct, setSelectedProduct } = context
-  const { setCredits, setInventory, inventory } = useUser()
+  const shopStore: ShopStore = getShopStore()
+  const { setOwnedAgents, setOwnedProduct, setSelectedProduct } = shopStore
+  const { setCredits, setInventory, inventory, credits } = useUser()
 
   const buy = async (product: Product): Promise<void> => {
     try {
@@ -22,7 +19,7 @@ export function useShop () {
       )
       setOwnedProduct(product)
       setSelectedProduct(null)
-      setCredits(prevCredits => prevCredits - product.price)
+      setCredits(credits - product.price)
       setOwnedAgents(newAgents)
       setInventory(newInventory)
     } catch (error) {
@@ -48,5 +45,5 @@ export function useShop () {
     return newInventory
   }
 
-  return { ...context, buy, getNewInventory }
+  return { ...shopStore, buy, getNewInventory }
 }

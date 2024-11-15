@@ -1,12 +1,9 @@
-import { useContext } from 'react'
-import { UserContext } from '../contexts/UserContext.tsx'
-import { UserContextType } from '../models/UserContextType.ts'
+import { UserStore } from '../models/UserStore'
+import { getUserStore } from '../stores/getUserStore'
 
 export function useUser () {
-  const context: UserContextType | undefined = useContext(UserContext)
-  if (!context) throw new Error("Context doesn't have a Provider")
-
-  const { credits, setCredits } = context
+  const userStore: UserStore = getUserStore()
+  const { credits, setCredits } = userStore
 
   const addCredits = (creditsToAdd: number): void => {
     const newCredits: number = Math.min(credits + creditsToAdd, 10000)
@@ -18,5 +15,5 @@ export function useUser () {
     setCredits(newCredits)
   }
 
-  return { ...context, addCredits, removeCredits }
+  return { ...userStore, addCredits, removeCredits }
 }

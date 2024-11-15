@@ -1,4 +1,4 @@
-import { Filter } from '../pages/Shop/models/Filter.ts'
+import { Filter } from './Filter.ts'
 
 export interface Pack {
   type: Filter

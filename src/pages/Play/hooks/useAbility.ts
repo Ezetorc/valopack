@@ -1,8 +1,5 @@
-import { useContext } from 'react'
-import { GameContextType } from '../../../models/GameContextType.ts'
 import { Team } from '../../../models/Team.ts'
 import { teamColors } from '../../../valopack.config.ts'
-import { GameContext } from '../contexts/GameContext.tsx'
 import { Parser } from '../services/Parser.service.ts'
 import { Ability } from '../models/Ability.ts'
 import { Board } from '../models/Board.ts'
@@ -17,31 +14,30 @@ import {
   ShowFadeParams,
   AddClassParams,
   RemoveTagParams,
-  RemoveClassParams
+  RemoveClassParams,
+  Effect
 } from '../models/index.ts'
 import { Method } from '../models/Method.ts'
 import { Player } from '../models/Player.ts'
 import { Square } from '../models/Square.ts'
 import { Tag } from '../models/Tag.ts'
+import { GameStore } from '../models/GameStore.ts'
+import { getGameStore } from '../stores/getGameStore.ts'
 
 export function useAbility () {
-  const context: GameContextType | undefined = useContext(GameContext)
-  if (!context) throw new Error("Context doesn't have a provider")
-
-  const { squareFrom, board, setBoard, setEffects, turn } = context
+  const gameStore: GameStore = getGameStore()
+  const { squareFrom, board, setBoard, setEffects, turn, effects } = gameStore
 
   const handleEffects = (): void => {
-    setEffects(prevEffects => {
-      prevEffects.forEach(effect => {
-        effect.turnsLeft -= 1
+    effects.forEach(effect => {
+      effect.turnsLeft -= 1
 
-        if (effect.turnsLeft <= 0) {
-          effect.methods.forEach(method => handleMethod(method, effect.square))
-        }
-      })
-
-      return prevEffects.filter(effect => effect.turnsLeft > 0)
+      if (effect.turnsLeft <= 0) {
+        effect.methods.forEach(method => handleMethod(method, effect.square))
+      }
     })
+
+    setEffects(effects.filter(effect => effect.turnsLeft > 0))
   }
 
   const getParsedMethod = (method: Method): Method => {
@@ -247,17 +243,19 @@ export function useAbility () {
       setTimeout(() => {
         params.methods.forEach(method => handleMethod(method, squareTo))
 
-        setBoard(prevBoard => new Board(prevBoard.colors, [...prevBoard.grid]))
+        const newBoard: Board = new Board(board.colors, [...board.grid])
+        setBoard(newBoard)
       }, params.time)
     } else {
-      setEffects(prevEffects => [
-        ...prevEffects,
+      const newEffects: Effect[] = [
+        ...effects,
         {
           methods: params.methods.map(method => getParsedMethod(method)),
           turnsLeft: params.time + 1,
           square: squareTo
         }
-      ])
+      ]
+      setEffects(newEffects)
     }
   }
 
@@ -305,5 +303,5 @@ export function useAbility () {
     })
   }
 
-  return { ...context, handleAbility, handleMethod, handleEffects }
+  return { ...gameStore, handleAbility, handleMethod, handleEffects }
 }

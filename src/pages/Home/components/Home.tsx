@@ -19,7 +19,8 @@ export default function Home () {
     setOwnedProduct(null)
     setSelectedProduct(null)
     updateSection(texts.home, backgrounds.home, true)
-  })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <section className='home'>

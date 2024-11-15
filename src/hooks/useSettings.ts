@@ -1,15 +1,12 @@
-import { useContext } from 'react'
-import { SettingsContext } from '../contexts/SettingsContext.tsx'
-import SettingsContextType from '../models/SettingsContextType.ts'
 import { Dictionary } from '../models/Dictionary.ts'
 import { dictionaries } from '../constants/dictionaries.ts'
 import { appName } from '../valopack.config.ts'
+import { SettingsStore } from '../models/SettingsStore.ts'
+import { getSettingsStore } from '../stores/getSettingsStore.ts'
 
 export function useSettings () {
-  const context: SettingsContextType | undefined = useContext(SettingsContext)
-  if (!context) throw new Error("Context doesn't have a Provider")
-
-  const { language, headerVisible, setHeaderVisible } = context
+  const settingsStore: SettingsStore = getSettingsStore()
+  const { language, headerVisible, setHeaderVisible } = settingsStore
   const texts: Dictionary = dictionaries[language]
 
   const updateSection = (
@@ -23,11 +20,11 @@ export function useSettings () {
       setHeaderVisible(newHeaderVisible)
     }
 
-    const htmlElement = document.documentElement
-    if (htmlElement) {
-      htmlElement.style.background = background
+    const HTMLElement: HTMLElement = document.documentElement
+    if (HTMLElement) {
+      HTMLElement.style.background = background
     }
   }
 
-  return { ...context, texts, updateSection }
+  return { ...settingsStore, texts, updateSection }
 }

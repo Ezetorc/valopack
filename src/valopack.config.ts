@@ -3,6 +3,7 @@ import { ValopackConfig } from './models/ValopackConfig.ts'
 export const valopackConfig: ValopackConfig = {
   appName: 'VALOPACK',
   levelMultiplier: 1,
+  initialCredits: 10000,
   defaultLanguage: 'en',
   creditsWinned: 1000,
   paths: {
@@ -70,5 +71,6 @@ export const {
   teamColors,
   backgrounds,
   initialAgentsNames,
-  initialAttributes
+  initialAttributes,
+  initialCredits
 } = valopackConfig

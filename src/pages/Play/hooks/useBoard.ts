@@ -1,59 +1,47 @@
-import { useCallback, useContext } from 'react'
+import { useCallback } from 'react'
 import { Player } from '../models/Player.ts'
 import { Square } from '../models/Square.ts'
 import { Position } from '../models/Position.ts'
 import { getDamage } from '../utilities/getDamage.ts'
-import {GameContextType} from '../../../models/GameContextType.ts'
-import { GameContext } from '../contexts/GameContext.tsx'
+import { GameStore } from '../models/GameStore.ts'
+import { getGameStore } from '../stores/getGameStore.ts'
+import { Team } from '../../../models/Team.ts'
 
 export function useBoard () {
-  const context: GameContextType | undefined = useContext(GameContext)
-  if (!context) throw new Error("Context doesn't have a provider!")
-
-  const { setBoard, setSquareFrom, setSquareTo, setAction, setTurn } = context
+  const gameStore: GameStore = getGameStore()
+  const { setSquareFrom, setSquareTo, setAction, setTurn, turn, board } =
+    gameStore
 
   const toggleTurn = (): void => {
-    setTurn(prevTurn => {
-      return prevTurn === 'ally' ? 'enemy' : 'ally'
-    })
+    const newTurn: Team = turn === 'ally' ? 'enemy' : 'ally'
+    setTurn(newTurn)
   }
 
   const movePlayer = (player: Player, square: Square) => {
-    setBoard(prevBoard => {
-      const squareTo: Square = prevBoard.getSquare(square.position)
-      const playerSquare: Square = prevBoard.getSquare(player.position)
-      const movedPlayer: Player = new Player({
-        ...player,
-        position: new Position(square.position.x, square.position.y)
-      })
-
-      squareTo.addBox(movedPlayer)
-      playerSquare.removeBox(player)
-
-      return prevBoard
+    const squareTo: Square = board.getSquare(square.position)
+    const playerSquare: Square = board.getSquare(player.position)
+    const movedPlayer: Player = new Player({
+      ...player,
+      position: new Position(square.position.x, square.position.y)
     })
+
+    squareTo.addBox(movedPlayer)
+    playerSquare.removeBox(player)
   }
 
   const attackPlayer = (attacker: Player, target: Player) => {
-    setBoard(prevBoard => {
-      const damage: number = getDamage(attacker, target)
-      target.setHealth(prevHealth => (prevHealth -= damage))
+    const damage: number = getDamage(attacker, target)
+    target.setHealth(prevHealth => (prevHealth -= damage))
 
-      if (target.isDead()) {
-        const targetSquare: Square = prevBoard.getSquare(target.position)
-        targetSquare.removeBox(target)
-      }
-
-      return prevBoard
-    })
+    if (target.isDead()) {
+      const targetSquare: Square = board.getSquare(target.position)
+      targetSquare.removeBox(target)
+    }
   }
 
   const killPlayer = (player: Player) => {
-    setBoard(prevBoard => {
-      const playerSquare: Square = prevBoard.getSquare(player.position)
-      playerSquare.removeBox(player)
-      return prevBoard
-    })
+    const playerSquare: Square = board.getSquare(player.position)
+    playerSquare.removeBox(player)
   }
 
   const resetActions = useCallback(() => {
@@ -63,7 +51,7 @@ export function useBoard () {
   }, [setAction, setSquareFrom, setSquareTo])
 
   return {
-    ...context,
+    ...gameStore,
     movePlayer,
     attackPlayer,
     killPlayer,

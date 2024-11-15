@@ -1,19 +1,19 @@
 import { useShop } from '../hooks/useShop.ts'
 import { getLightColor } from '../../../utilities/getLightColor.ts'
-import { Product } from '../../../models/Product.ts'
+import { Product } from '../models/Product.ts'
 import { sounds } from '../../../constants/sounds.ts'
-import './ProductDisplay.css'
 import { useSettings } from '../../../hooks/useSettings.ts'
+import './ProductDisplay.css'
 
-export function ProductDisplay (product: Product) {
+export function ProductDisplay ({ product }: { product: Product }) {
   const { setSelectedProduct } = useShop()
   const { texts } = useSettings()
   const { color, identifier, amount, price, pack } = product
   const lightColor: string = getLightColor(color, 0.4)
+  const name: string = texts.packs[identifier]
   const backgroundStyle: { background: string } = {
     background: `linear-gradient(0deg, ${color} 0%, ${lightColor} 100%)`
   }
-  const name: string = texts.packs[identifier]
 
   const handleMouseEnter = () => {
     sounds.hover.play()

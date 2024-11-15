@@ -1,4 +1,4 @@
-import { Product } from './Product.ts'
+import { Product } from '../pages/Shop/models/Product.ts'
 
 interface AbilityInfo {
   name: string

@@ -1,5 +1,5 @@
 import { Dictionary } from '../models/Dictionary.ts'
-import { Product } from '../models/Product.ts'
+import { Product } from '../pages/Shop/models/Product.ts'
 
 export const dictionaries: {
   [key: string]: Dictionary
