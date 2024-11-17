@@ -14,8 +14,8 @@ export function PlayerInfo ({ onClose }: PlayerInfoProps) {
   const { squareFrom } = useBoard()
   if (!squareFrom) return
   const player: Player = squareFrom.getBox('player') as Player
-  const { name, portrait } = player.agent
-  const { team } = player
+  const { name, image } = player.card
+  const { teamSide } = player
   const { attack, health, defense, speed, precision, critic, resistance } =
     player.attributes
 
@@ -24,8 +24,8 @@ export function PlayerInfo ({ onClose }: PlayerInfoProps) {
       <article className='agent-info__info'>
         <button onClick={onClose}>{texts.close}</button>
         <span className='info__name'>{name}</span>
-        <span className='info__team'>{team}</span>
-        <img src={portrait} alt={`${name} Image`} />
+        <span className='info__team'>{teamSide}</span>
+        <img src={image} alt={`${name} Image`} />
       </article>
 
       <article className='agent-info__attributes'>

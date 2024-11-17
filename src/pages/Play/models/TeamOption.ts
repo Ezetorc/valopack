@@ -1,3 +1,3 @@
-import { Team } from '../../../models/Team.ts'
+import { TeamSide } from '../../../models/TeamSide.ts'
 
-export type TeamOption = Team | 'current-team' | 'opposite-team'
+export type TeamOption = TeamSide | 'current-team' | 'opposite-team'

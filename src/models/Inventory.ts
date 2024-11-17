@@ -1,42 +1,36 @@
 import { levelMultiplier } from '../valopack.config'
-import { Agent } from './Agent'
+import { Card } from './Card'
 
 export class Inventory {
-  constructor (agents?: Agent[]) {
-    this.agents = agents ?? []
+  constructor (cards?: Card[]) {
+    this.cards = cards ?? []
   }
 
-  public agents: Agent[]
+  public cards: Card[]
 
-  public addAgent (agent: Agent) {
-    this.agents.push(agent)
+  public getCardByName (name: string) {
+    return this.cards.find(card => card.name === name)
   }
 
-  public getAgentByIndex (index: number) {
-    return this.agents[index]
-  }
+  public addCards (newCards: Card[]) {
+    for (const newCard of newCards) {
+      const currentCard = this.getCardByName(newCard.name)
 
-  public hasAgent (agentId: number) {
-    return this.agents.some(agent => agent.id === agentId)
-  }
-
-  public getAgentsNotInTeam (team: Agent[]) {
-    return this.agents.filter(
-      agent => !team.some(teamAgent => teamAgent?.id === agent.id)
-    )
-  }
-
-  public update (newAgents: Agent[]) {
-    for (const newAgent of newAgents) {
-      const agentIndex = this.agents.findIndex(
-        agent => agent.id === newAgent.id
-      )
-
-      if (agentIndex !== -1) {
-        this.getAgentByIndex(agentIndex).level += levelMultiplier
+      if (currentCard) {
+        currentCard.level += levelMultiplier
       } else {
-        this.addAgent(newAgent)
+        this.cards.push(newCard)
       }
     }
+  }
+
+  public hasCard (name: string) {
+    return this.cards.some(card => card.name === name)
+  }
+
+  public getCardsNotInTeam (team: Card[]) {
+    return this.cards.filter(
+      card => !team.some(teamCard => teamCard.name === card.name)
+    )
   }
 }

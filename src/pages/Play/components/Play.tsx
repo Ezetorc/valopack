@@ -10,6 +10,7 @@ import { ResultModal } from './ResultModal.tsx'
 import { Agents } from '../../../services/Agents.service.ts'
 import { backgrounds } from '../../../valopack.config.ts'
 import './Play.css'
+import { Team } from '../../../models/Team.ts'
 
 export default function Play () {
   const { squareFrom, setBoard, board } = useBoard()
@@ -17,7 +18,7 @@ export default function Play () {
   const [matchStarted, setMatchStarted] = useState(false)
   const [result, setResult] = useState<Result>(undefined)
   const { texts, updateSection } = useSettings()
-  const { team } = useUser()
+  const { team: allyTeam } = useUser()
 
   useEffect(() => {
     const initialize = async () => {
@@ -25,14 +26,14 @@ export default function Play () {
         const { allyPlayers, enemyPlayers } = board.getTotalPlayers()
 
         if (allyPlayers !== 0 && enemyPlayers !== 0) return
-        const enemyTeam = await Agents.getMixed(5)
-        setBoard(board.getInitialized(team, enemyTeam))
+        const enemyTeam = Agents.getCardsFromAgents(await Agents.getMixed(5)) as Team
+        setBoard(board.getInitialized(allyTeam, enemyTeam))
         setMatchStarted(true)
       }
     }
 
     initialize()
-  }, [board, setBoard, team, matchStarted])
+  }, [board, setBoard, allyTeam, matchStarted])
 
   useEffect(() => {
     if (!matchStarted) return

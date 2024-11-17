@@ -11,12 +11,12 @@ interface CardSlotProps {
 }
 
 export function CardSlot ({ card, index }: CardSlotProps) {
-  const { setAgentToChange } = useUser()
+  const { setCardToChange } = useUser()
   const { texts } = useSettings()
   const className = card ? 'slot-card' : 'slot-null'
 
   const handleClick = () => {
-    setAgentToChange(index)
+    setCardToChange(index)
     sounds.click.play()
   }
 

@@ -1,3 +1,3 @@
-import { Team } from '../../../models/Team.ts'
+import { TeamSide } from './../../../models/TeamSide';
 
-export type Result = Team | 'draw' | undefined
+export type Result = TeamSide | 'draw' | undefined

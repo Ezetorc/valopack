@@ -3,12 +3,15 @@ import { initialCredits, initialAgentsNames } from '../valopack.config'
 import { Agents } from '../services/Agents.service'
 import { UserStore } from '../models/UserStore'
 import { Inventory } from '../models/Inventory'
+import { FiveOrLessArray } from '../models/FiveOrLessArray'
+import { Card } from '../models/Card'
 
 export const getUserStore = create<UserStore>()(set => {
   const initializeAgents = async () => {
     const initialAgents = await Agents.getByName(initialAgentsNames)
-    const initialInventory = new Inventory(initialAgents)
-    set({ team: initialAgents, inventory: initialInventory })
+    const initialCards = Agents.getCardsFromAgents(initialAgents) as FiveOrLessArray<Card>
+    const initialInventory = new Inventory(initialCards)
+    set({ team: initialCards, inventory: initialInventory })
   }
 
   initializeAgents()
@@ -23,8 +26,7 @@ export const getUserStore = create<UserStore>()(set => {
     team: [],
     setTeam: newTeam => set({ team: newTeam }),
 
-    agentToChange: null,
-    setAgentToChange: newAgentToChange =>
-      set({ agentToChange: newAgentToChange })
+    cardToChange: null,
+    setCardToChange: newCardToChange => set({ cardToChange: newCardToChange })
   }
 })

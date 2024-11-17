@@ -1,4 +1,4 @@
-import { Team } from "../../../models/Team"
+import { TeamSide } from "../../../models/TeamSide"
 import { Action } from "./Action"
 import { Board } from "./Board"
 import { Effect } from "./Effect"
@@ -11,8 +11,8 @@ export interface GameStore {
   setSquareFrom: (newSquareFrom: Square | null) => void
   squareTo: Square | null
   setSquareTo: (squareTo: Square | null) => void
-  turn: Team
-  setTurn: (turn: Team) => void
+  turn: TeamSide
+  setTurn: (turn: TeamSide) => void
   action: Action | null
   setAction: (newAction: Action | null) => void
   effects: Effect[]

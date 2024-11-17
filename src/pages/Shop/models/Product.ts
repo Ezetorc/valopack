@@ -1,6 +1,6 @@
 import { Dictionary } from '../../../models/Dictionary.ts'
 import { Hexadecimal } from '../../../models/Hexadecimal.ts'
-import { Pack } from '../../../models/Pack.ts'
+import { Pack } from './Pack.ts'
 
 export interface Product {
   pack: Pack

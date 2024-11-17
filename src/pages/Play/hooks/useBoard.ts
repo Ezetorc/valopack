@@ -1,3 +1,4 @@
+import { TeamSide } from './../../../models/TeamSide';
 import { useCallback } from 'react'
 import { Player } from '../models/Player.ts'
 import { Square } from '../models/Square.ts'
@@ -5,7 +6,6 @@ import { Position } from '../models/Position.ts'
 import { getDamage } from '../utilities/getDamage.ts'
 import { GameStore } from '../models/GameStore.ts'
 import { getGameStore } from '../stores/getGameStore.ts'
-import { Team } from '../../../models/Team.ts'
 
 export function useBoard () {
   const gameStore: GameStore = getGameStore()
@@ -13,7 +13,7 @@ export function useBoard () {
     gameStore
 
   const toggleTurn = (): void => {
-    const newTurn: Team = turn === 'ally' ? 'enemy' : 'ally'
+    const newTurn: TeamSide = turn === 'ally' ? 'enemy' : 'ally'
     setTurn(newTurn)
   }
 

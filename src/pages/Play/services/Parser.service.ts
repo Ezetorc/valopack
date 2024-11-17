@@ -1,9 +1,9 @@
-import { Team } from '../../../models/Team.ts'
+import { TeamSide } from '../../../models/TeamSide.ts'
 import { Tag } from '../models/Tag.ts'
 import { TeamOption } from '../models/TeamOption.ts'
 
 export class Parser {
-  static getParsedTeamOption (teamOption: TeamOption, turn: Team): Team {
+  static getParsedTeamOption (teamOption: TeamOption, turn: TeamSide) {
     if (teamOption == 'opposite-team') {
       return turn == 'ally' ? 'enemy' : 'ally'
     } else if (teamOption == 'current-team') {
@@ -13,7 +13,7 @@ export class Parser {
     }
   }
 
-  static getParsedTags (tags: Tag[], turn: Team): Tag[] {
+  static getParsedTags (tags: Tag[], turn: TeamSide): Tag[] {
     return tags.map(tag => ({
       ...tag,
       team: this.getParsedTeamOption(tag.team, turn)

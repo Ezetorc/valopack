@@ -7,6 +7,5 @@ export interface Agent {
   portrait: string
   icon: string
   role: Role
-  level: number
   abilities: Ability[]
 }

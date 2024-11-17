@@ -1,14 +1,15 @@
-import { Agent } from '../../../models/Agent.ts'
 import { Tag } from './Tag.ts'
 import { BoardGrid } from './BoardGrid.ts'
 import { Hexadecimal } from '../../../models/Hexadecimal.ts'
 import { Result } from './Result.ts'
-import { Team } from '../../../models/Team.ts'
+import { TeamSide } from '../../../models/TeamSide.ts'
 import { Player } from './Player.ts'
 import { Position } from './Position.ts'
 import { Square } from './Square.ts'
 import { allyPositions, enemyPositions } from '../constants/positions.ts'
 import { Distance } from '../services/Distance.service.ts'
+import { Team } from '../../../models/Team.ts'
+import { Card } from '../../../models/Card.ts'
 
 export class Board {
   public colors: [Hexadecimal, Hexadecimal]
@@ -29,8 +30,8 @@ export class Board {
       (accumulator, square) => {
         square.boxes.forEach(box => {
           if (box.type !== 'player') return
-          const { team } = box as Player
-          accumulator[`${team}Players`] += 1
+          const { teamSide } = box as Player
+          accumulator[`${teamSide}Players`] += 1
         })
         return accumulator
       },
@@ -77,19 +78,19 @@ export class Board {
     return squaresInRange
   }
 
-  getInitialized (allyTeam: Agent[], enemyTeam: Agent[]): this {
+  getInitialized (allyTeam: Team, enemyTeam: Team): this {
     const placePlayers = (
-      agents: Agent[],
+      team: Team,
       positions: Position[],
-      team: Team
+      teamSide: TeamSide
     ) => {
       positions.forEach((position, index) => {
-        const agent: Agent = agents[index]
+        const card: Card = team[index]
+        if (!card) return
         const square: Square = this.getSquare(position)
-
-        const newPlayer = new Player({
-          agent: { ...agent },
-          team: team,
+        const newPlayer: Player = new Player({
+          card: { ...card },
+          teamSide: teamSide,
           position: position
         })
 

@@ -1,4 +1,4 @@
-import { Team } from '../../../models/Team.ts'
+import { TeamSide } from './../../../models/TeamSide';
 import { teamColors } from '../../../valopack.config.ts'
 import { Parser } from '../services/Parser.service.ts'
 import { Ability } from '../models/Ability.ts'
@@ -95,9 +95,9 @@ export function useAbility () {
       }
 
       if (filters.team && player) {
-        const parsedTeam: Team = Parser.getParsedTeamOption(filters.team, turn)
+        const parsedTeamSide: TeamSide = Parser.getParsedTeamOption(filters.team, turn)
 
-        if (player.team !== parsedTeam) {
+        if (player.teamSide !== parsedTeamSide) {
           squares.splice(i, 1)
           continue
         }

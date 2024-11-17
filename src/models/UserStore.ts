@@ -1,4 +1,5 @@
-import { Agent } from './Agent'
+import { Card } from './Card'
+import { FiveOrLessArray } from './FiveOrLessArray'
 import { Inventory } from './Inventory'
 
 export interface UserStore {
@@ -6,8 +7,8 @@ export interface UserStore {
   setCredits: (newCredits: number) => void
   inventory: Inventory
   setInventory: (newInventory: Inventory) => void
-  team: Agent[]
-  setTeam: (newTeam: Agent[]) => void
-  agentToChange: number | null
-  setAgentToChange: (newAgentToChange: number | null) => void
+  team: FiveOrLessArray<Card>
+  setTeam: (newTeam: FiveOrLessArray<Card>) => void
+  cardToChange: number | null
+  setCardToChange: (newAgentToChange: number | null) => void
 }

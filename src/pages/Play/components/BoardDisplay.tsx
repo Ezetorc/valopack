@@ -73,7 +73,7 @@ export function BoardDisplay () {
       const playerTo: Player = squareToAttack.getBox('player') as Player
       const canAttack: boolean =
         playerTo &&
-        playerTo.team == 'enemy' &&
+        playerTo.teamSide == 'enemy' &&
         Distance.isValid(squareFrom.position, squareToAttack.position, 1)
 
       if (canAttack) {
@@ -101,7 +101,7 @@ export function BoardDisplay () {
       if (!squareFrom) return
 
       const player: Player = squareFrom.getBox('player') as Player
-      const { abilities } = player.agent
+      const { abilities } = player.card
       const selectedAbility: Ability =
         action === 'ability0' ? abilities[0] : abilities[1]
       const distance: number = Distance.get(

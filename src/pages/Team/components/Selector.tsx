@@ -1,54 +1,51 @@
 import { useCallback } from 'react'
 import { useUser } from '../../../hooks/useUser.ts'
 import { useSettings } from '../../../hooks/useSettings.ts'
-import { Agent } from '../../../models/Agent.ts'
 import { sounds } from '../../../constants/sounds.ts'
-import { Agents } from '../../../services/Agents.service.ts'
 import CardDisplay from '../../../components/CardDisplay.tsx'
 import './Selector.css'
+import { FiveOrLessArray } from '../../../models/FiveOrLessArray.ts'
+import { Card } from '../../../models/Card.ts'
 
 export function Selector () {
   const { texts } = useSettings()
-  const { inventory, team, setTeam, agentToChange, setAgentToChange } =
-    useUser()
-  const filteredAgents = inventory.getAgentsNotInTeam(team)
+  const { inventory, team, setTeam, cardToChange, setCardToChange } = useUser()
+  const filteredCards = inventory.getCardsNotInTeam(team)
 
   const handleClose = () => {
-    setAgentToChange(null)
+    setCardToChange(null)
     sounds.click.play()
   }
 
   const handleClick = useCallback(
-    (agent: Agent) => {
-      if (!agentToChange) return
+    (card: Card) => {
+      if (!cardToChange) return
 
       sounds.click.play()
-      setAgentToChange(null)
-      const newTeam = [...team]
-      newTeam[agentToChange] = agent
+      setCardToChange(null)
+      const newTeam = [...team] as FiveOrLessArray<Card>
+      newTeam[cardToChange] = card
       setTeam(newTeam)
     },
-    [setTeam, agentToChange, setAgentToChange, team]
+    [setTeam, cardToChange, setCardToChange, team]
   )
 
   const Header = () => (
     <header className='selector__header'>
       <button onClick={handleClose}>{texts.close}</button>
-      <span>
-        {filteredAgents.length > 0 ? texts.chooseCard : texts.noCards}
-      </span>
+      <span>{filteredCards.length > 0 ? texts.chooseCard : texts.noCards}</span>
     </header>
   )
 
   const Cards = () => (
     <div className='selector__cards'>
-      {filteredAgents.map((agent, index) => (
+      {filteredCards.map((card, index) => (
         <button
           key={index}
           className='selector__card'
-          onClick={() => handleClick(agent)}
+          onClick={() => handleClick(card)}
         >
-          <CardDisplay card={Agents.getCardsFromAgents([agent])[0]} />
+          <CardDisplay card={card} />
         </button>
       ))}
     </div>
@@ -57,7 +54,7 @@ export function Selector () {
   return (
     <div className='selector'>
       <Header />
-      {filteredAgents.length > 0 && <Cards />}
+      {filteredCards.length > 0 && <Cards />}
     </div>
   )
 }

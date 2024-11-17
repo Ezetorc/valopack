@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useUser } from '../../../hooks/useUser.ts'
 import { useSettings } from '../../../hooks/useSettings.ts'
-import { Agent } from '../../../models/Agent.ts'
 import { CardSlot } from './CardSlot.tsx'
 import { Selector } from './Selector.tsx'
 import { backgrounds } from '../../../valopack.config.ts'
-import { Agents } from '../../../services/Agents.service.ts'
+import { Card } from '../../../models/Card.ts'
 import './Team.css'
 
 export default function Team () {
-  const { team, agentToChange } = useUser()
+  const { team, cardToChange } = useUser()
   const { texts, updateSection } = useSettings()
-  const [agents, setAgents] = useState<(Agent | null)[]>([])
+  const [cards, setCards] = useState<(Card | null)[]>([])
 
   useEffect(
     () => updateSection(texts.team, backgrounds.team, true),
@@ -29,20 +28,16 @@ export default function Team () {
         newAgents.push(null)
       }
     }
-    
-    setAgents(newAgents)
-  }, [setAgents, team])
+
+    setCards(newAgents)
+  }, [setCards, team])
 
   return (
     <>
-      {!agentToChange ? (
+      {!cardToChange ? (
         <section className='team'>
-          {agents.map((agent, index) => (
-            <CardSlot
-              key={index}
-              index={index}
-              card={agent ? Agents.getCardsFromAgents([agent])[0] : null}
-            />
+          {cards.map((card, index) => (
+            <CardSlot key={index} index={index} card={card ? card : null} />
           ))}
         </section>
       ) : (

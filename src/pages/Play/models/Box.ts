@@ -1,6 +1,5 @@
 import { Tag } from './Tag.ts'
 import { BoxType } from './BoxType.ts'
-import { Team } from '../../../models/Team.ts'
 import { Player } from './Player.ts'
 import { Position } from './Position.ts'
 import { Square } from './Square.ts'
@@ -33,9 +32,9 @@ export class Box {
     )
 
     if (smokeInSquare && this.type == 'player' && this instanceof Player) {
-      const playerTeam: Team = this.team
+      const playerTeamSide = this.teamSide
 
-      if (playerTeam == 'ally') {
+      if (playerTeamSide == 'ally') {
         return 0.4
       }
     }

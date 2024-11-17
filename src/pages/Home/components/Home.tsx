@@ -11,11 +11,11 @@ import { backgrounds, paths } from '../../../valopack.config.ts'
 
 export default function Home () {
   const { texts, updateSection } = useSettings()
-  const { setAgentToChange } = useUser()
+  const { setCardToChange } = useUser()
   const { setOwnedProduct, setSelectedProduct } = useShop()
 
   useEffect(() => {
-    setAgentToChange(null)
+    setCardToChange(null)
     setOwnedProduct(null)
     setSelectedProduct(null)
     updateSection(texts.home, backgrounds.home, true)

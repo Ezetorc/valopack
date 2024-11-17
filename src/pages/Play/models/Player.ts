@@ -1,29 +1,29 @@
-import { Agent } from '../../../models/Agent.ts'
 import { Box } from './Box.ts'
-import { Team } from '../../../models/Team.ts'
+import { TeamSide } from '../../../models/TeamSide.ts'
 import { Attributes } from '../../../models/Attributes.ts'
 import { Position } from './Position.ts'
 import { initialAttributes } from '../../../valopack.config.ts'
+import { Card } from '../../../models/Card.ts'
 
 export class Player extends Box {
-  public agent: Agent
+  public card: Card
   public attributes: Attributes
-  public team: Team
+  public teamSide: TeamSide
 
   constructor ({
-    agent,
-    team = 'ally',
+    card,
+    teamSide = 'ally',
     attributes = { ...initialAttributes },
     position = new Position(0, 0),
     free = false,
     tags = [],
     type = 'player'
-  }: Partial<Omit<Player, 'agent'>> & { agent: Agent }) {
+  }: Partial<Omit<Player, 'agent'>> & { card: Card }) {
     super({ position, free, tags, type })
 
-    this.agent = agent
+    this.card = card
     this.attributes = attributes
-    this.team = team
+    this.teamSide = teamSide
   }
 
   isDead (): boolean {

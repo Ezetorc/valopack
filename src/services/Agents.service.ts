@@ -5,6 +5,7 @@ import { Product } from '../pages/Shop/models/Product'
 import { Role } from '../models/Role'
 import { shuffle } from '../utilities/shuffle'
 import { Inventory } from '../models/Inventory'
+import { Card } from '../models/Card'
 
 export class Agents {
   static async getAll () {
@@ -29,7 +30,7 @@ export class Agents {
   static async getNew (inventory: Inventory, amount: number) {
     const agentsCopy = await this.getAll()
     const filteredAgents = agentsCopy.filter(
-      agent => !inventory.hasAgent(agent.id)
+      agent => !inventory.hasCard(agent.name)
     )
     shuffle(filteredAgents)
     return filteredAgents.slice(0, amount)
@@ -55,16 +56,18 @@ export class Agents {
 
     const newAgents = await actions[product.pack.type]()
     const newInventory = inventory
-    newInventory.update(newAgents)
+    newInventory.addCards(this.getCardsFromAgents(newAgents))
     return { newAgents, newInventory }
   }
 
-  static getCardsFromAgents (agents: Agent[]) {
+  static getCardsFromAgents (agents: Agent[]): Card[] {
     return agents.map(agent => ({
       image: agent.portrait,
       name: agent.name,
       role: agent.role,
-      level: agent.level
+      level: 1,
+      icon: agent.icon,
+      abilities: agent.abilities
     }))
   }
 }

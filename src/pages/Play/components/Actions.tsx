@@ -14,10 +14,10 @@ export function Actions ({ onOpenInfo }: ActionsProps) {
   const { texts } = useSettings()
   const { squareFrom, setAction } = useBoard()
   if (!squareFrom) return
-  const { team, agent } = squareFrom?.getFirstBox() as Player
-  if (!agent) return
-  const borderColor: string = teamColors[team]
-  const { icon, name, abilities } = agent
+  const { teamSide, card } = squareFrom?.getFirstBox() as Player
+  if (!card) return
+  const borderColor: string = teamColors[teamSide]
+  const { icon, name, abilities } = card
   const [ability0, ability1] = abilities
 
   const isAvailable = (ability: Ability): boolean => ability.usesLeft > 0
@@ -26,7 +26,7 @@ export function Actions ({ onOpenInfo }: ActionsProps) {
     <footer className='game__actions'>
       <img style={{ borderColor }} src={icon} alt={name} />
 
-      {team === 'ally' && (
+      {teamSide === 'ally' && (
         <>
           <Action usesLeft={-1} onClick={() => setAction('move')}>
             {texts.actions.move}
