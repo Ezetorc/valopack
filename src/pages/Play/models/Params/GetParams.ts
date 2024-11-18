@@ -1,4 +1,4 @@
-import { BoxType } from '../BoxType.ts'
+import { EntityType } from '../EntityType.ts'
 import { GetBy } from '../GetBy.ts'
 import { TeamOption } from '../TeamOption.ts'
 import {Tag} from '../Tag.ts'
@@ -8,7 +8,7 @@ export interface GetParams {
   range?: number
   tags?: Tag[]
   filters?: {
-    boxTypes?: BoxType[]
+    entityTypes?: EntityType[]
     team?: TeamOption
     tags?: Tag[]
   }

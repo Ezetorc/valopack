@@ -3,7 +3,7 @@ import { Agent } from '../models/Agent'
 import { Pack } from '../pages/Shop/models/Pack'
 import { Product } from '../pages/Shop/models/Product'
 import { Role } from '../models/Role'
-import { shuffle } from '../utilities/shuffle'
+import { getShuffled } from '../utilities/getShuffled'
 import { Inventory } from '../models/Inventory'
 import { Card } from '../models/Card'
 
@@ -17,14 +17,12 @@ export class Agents {
     const filteredAgents = agentsCopy.filter(
       (agent: Agent) => agent.role === role
     )
-    shuffle(filteredAgents)
-    return filteredAgents.slice(0, amount)
+    return getShuffled(filteredAgents).slice(0, amount)
   }
 
   static async getMixed (amount: number) {
     const agentsCopy = await this.getAll()
-    shuffle(agentsCopy)
-    return agentsCopy.slice(0, amount)
+    return getShuffled(agentsCopy).slice(0, amount)
   }
 
   static async getNew (inventory: Inventory, amount: number) {
@@ -32,8 +30,7 @@ export class Agents {
     const filteredAgents = agentsCopy.filter(
       agent => !inventory.hasCard(agent.name)
     )
-    shuffle(filteredAgents)
-    return filteredAgents.slice(0, amount)
+    return getShuffled(filteredAgents).slice(0, amount)
   }
 
   static async getByName (names: string[]) {

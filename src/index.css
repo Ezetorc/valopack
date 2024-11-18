@@ -1,3 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+  font-family: 'valorant';
+  font-display: swap;
+  src: url('./assets/fonts/valorant.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'stroke';
+  font-display: swap;
+  src: url('./assets/fonts/stroke.woff2') format('woff2');
+}
+@layer utilities {
+  .clip-path-card {
+    clip-path: polygon(95% 0, 100% 0, 100% 100%, 14% 100%);
+  }
+}
+
+.clip-polygon-custom::after {
+  content: '';
+  position: absolute;
+  width: 99%;
+  height: 98%;
+  background: linear-gradient(45deg, #161526 30%, #6052b6 100%);
+  clip-path: inherit;
+  z-index: -1;
+  pointer-events: none;
+}
+
 :root {
   font-family: stroke;
   color-scheme: light dark;
@@ -6,12 +36,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --main-color: #da3848;
-  --ally-color: #348ac7;
-  --enemy-color: #b83231;
-  --hover-color: #00ffff;
-  --red-gradient: linear-gradient(0deg, #cd515d 0%, #da3848 100%);
-  --blue-gradient: linear-gradient(0deg, #7ea9ab 0%, #6a9a9c 100%);
 }
 
 html,
@@ -29,10 +53,4 @@ body {
 
 * {
   box-sizing: border-box;
-}
-
-@font-face {
-  font-family: stroke;
-  font-display: swap;
-  src: url('src/assets/fonts/stroke.woff2') format('woff2');
 }

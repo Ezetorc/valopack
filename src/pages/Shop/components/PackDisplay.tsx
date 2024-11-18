@@ -1,6 +1,5 @@
 import { sounds } from '../../../constants/sounds.ts'
 import { Pack } from '../models/Pack.ts'
-import './PackDisplay.css'
 
 interface PackDisplayProps {
   pack: Pack
@@ -20,11 +19,11 @@ export function PackDisplay ({ pack, onAnimationEnd }: PackDisplayProps) {
 
   return (
     <article
-      className='pack'
+      className='w-[20%] aspect-[9/16] grid relative animate-opening'
       onAnimationEnd={handleAnimationEnd}
       onAnimationStart={handleAnimationStart}
     >
-      <img src={pack.image} alt='Product Image' />
+      <img className='w-full h-full' src={pack.image} alt='Product Image' />
     </article>
   )
 }

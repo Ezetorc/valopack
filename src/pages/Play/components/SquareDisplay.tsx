@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import { Square } from '../models'
-import './SquareDisplay.css'
 
 interface SquareDisplayProps {
   children: ReactNode
@@ -15,11 +14,11 @@ export function SquareDisplay ({
   onClick,
   square
 }: SquareDisplayProps) {
-  const className: string = `square ${Array.from(square.classes).join(' ')}`
+  const className: string = `${Array.from(square.classes).join(' ')}`
 
   return (
     <button
-      className={className}
+      className={`aspect-square w-full relative flex flex-col justify-center items-center border-[5px] border-transparent hover:cursor-pointer hover:border-white ${className}`}
       onClick={onClick}
       style={{ ...square.style, backgroundColor: color }}
     >

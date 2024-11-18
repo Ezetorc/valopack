@@ -28,9 +28,9 @@ export class Board {
     const grid = this.grid.flat()
     return grid.reduce(
       (accumulator, square) => {
-        square.boxes.forEach(box => {
-          if (box.type !== 'player') return
-          const { teamSide } = box as Player
+        square.entities.forEach(entity => {
+          if (entity.type !== 'player') return
+          const { teamSide } = entity as Player
           accumulator[`${teamSide}Players`] += 1
         })
         return accumulator
@@ -94,7 +94,7 @@ export class Board {
           position: position
         })
 
-        square.boxes.unshift(newPlayer)
+        square.entities.unshift(newPlayer)
       })
     }
 
@@ -106,9 +106,9 @@ export class Board {
 
   getByTags (tags: Tag[]): Square[] {
     return this.grid.flat().filter(square => {
-      return square.boxes.some(box => {
+      return square.entities.some(entity => {
         return tags.every(tag =>
-          box.tags.some(boxTag => boxTag.text === tag.text)
+          entity.tags.some(entityTag => entityTag.text === tag.text)
         )
       })
     })

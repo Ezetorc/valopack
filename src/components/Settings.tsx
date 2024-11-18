@@ -1,107 +1,48 @@
 import { useSettings } from '../hooks/useSettings.ts'
 import { Language } from '../models/Language.ts'
-import {sounds} from '../constants/sounds.ts'
-import Select, { SingleValue, StylesConfig } from 'react-select'
+import { sounds } from '../constants/sounds.ts'
 import { Modal } from './Modal.tsx'
-import './Settings.css'
-
-interface Option {
-  value: string
-  label: string
-}
+import { languages } from '../valopack.config.ts'
+import React from 'react'
 
 export default function Settings () {
-  const { setSettingsOpen, texts, setLanguage, language } = useSettings()
-  const options: Option[] = [
-    { value: 'en', label: 'English' },
-    { value: 'es', label: 'Español' }
-  ]
+  const { setSettingsOpen, texts, setLanguage } = useSettings()
 
-  const styles: StylesConfig<Option, false> = {
-    control: baseStyles => ({
-      ...baseStyles,
-      cursor: 'pointer',
-      aspectRatio: '16 / 6',
-      textAlign: 'center',
-      fontSize: 'clamp(30px, 2vw, 50px)',
-      fontFamily: 'stroke',
-      background: 'var(--red-gradient)',
-      border: '2px solid var(--main-color)',
-      '&:hover': {
-        borderColor: '#fff'
-      }
-    }),
-
-    menu: baseStyles => ({
-      ...baseStyles,
-      background: 'var(--red-gradient)',
-      borderRadius: '5px',
-      marginTop: '10px',
-      display: 'flex',
-      flexDirection: 'column'
-    }),
-
-    menuList: baseStyles => ({
-      ...baseStyles,
-      display: 'flex',
-      flexDirection: 'column'
-    }),
-
-    option: (baseStyles, { isFocused, isSelected }) => ({
-      ...baseStyles,
-      padding: '10px 15px',
-      textAlign: 'center',
-      backgroundColor: isFocused
-        ? 'rgba(255, 255, 255, 0.2)'
-        : isSelected
-        ? 'rgba(255, 255, 255, 0.5)'
-        : 'transparent',
-      cursor: 'pointer',
-      display: 'block',
-      width: '100%',
-      '&:hover': {
-        backgroundColor: 'rgba(255, 255, 255, 0.3)'
-      }
-    }),
-
-    singleValue: baseStyles => ({
-      ...baseStyles,
-      color: '#fff'
-    })
-  }
-
-  const getValue = () => {
-    return options.find(option => option.value === language)
-  }
-
-  const handleClose = () => {
+  const handleClose = (): void => {
     setSettingsOpen(false)
     sounds.click.play()
   }
 
-  const handleChange = (selectedOption: SingleValue<Option>) => {
-    const newLanguage = selectedOption?.value as Language
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    const newLanguage: Language = event.currentTarget.value as Language
     setLanguage(newLanguage)
   }
 
   return (
-    <Modal className='settings-modal'>
-      <header>
-        <span>{texts.settings}</span>
-        <button onClick={handleClose}>{texts.close}</button>
+    <Modal className='flex flex-col overflow-y-auto'>
+      <header className='w-full h-[100px] grid grid-cols-[3fr_1fr] border-b border-white place-items-center'>
+        <span className='w-full h-full text-center text-[clamp(70px,_4vw,_100px)]'>
+          {texts.settings}
+        </span>
+        <button
+          onClick={handleClose}
+          className='w-[90%] mr-[20%] aspect-[16/9] bg-gradient-to-t from-[#cd515d] to-[#da3848] border-2 border-v_red font-stroke text-[clamp(30px,_2vw,_40px)] hover:border-white cursor-pointer'
+        >
+          {texts.close}
+        </button>
       </header>
 
-      <div className='settings__language'>
-        <span>{texts.language}</span>
-
-        <Select
-          options={options}
-          value={getValue()}
-          onChange={handleChange}
-          styles={styles}
-          isClearable={false}
-          isSearchable={false}
-        />
+      <div className='w-full h-[150px] grid grid-cols-[1fr_2fr] place-items-center'>
+        <span className='text-[clamp(40px,_2.5vw,_60px)] pl-[20%] flex'>
+          {texts.language}
+        </span>
+        <select onChange={handleChange} className='w-full h-full'>
+          {languages.map((language, index) => (
+            <option key={index} value={language.value}>
+              {language.label}
+            </option>
+          ))}
+        </select>
       </div>
     </Modal>
   )

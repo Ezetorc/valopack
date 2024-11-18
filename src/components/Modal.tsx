@@ -1,5 +1,4 @@
-import { useEffect, useRef, ReactNode } from 'react'
-import './Modal.css'
+import React, { useEffect, useRef, ReactNode } from 'react'
 
 interface ModalProps {
   children?: ReactNode
@@ -8,9 +7,9 @@ interface ModalProps {
 }
 
 export function Modal ({ children, onLoad, className }: ModalProps) {
-  const modalRef = useRef<HTMLDivElement>(null)
+  const modalRef: React.RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  useEffect((): void => {
     async function fetchData () {
       if (onLoad) {
         await onLoad()
@@ -20,8 +19,15 @@ export function Modal ({ children, onLoad, className }: ModalProps) {
   }, [onLoad])
 
   return (
-    <div className='modal-container' ref={modalRef}>
-      <div className={`modal-content ${className}`}>{children}</div>
+    <div
+      className='fixed w-screen h-screen bg-black bg-opacity-60 flex items-center justify-center z-[1000]'
+      ref={modalRef}
+    >
+      <div
+        className={`bg-v_black w-[25%] min-w-[400px] aspect-[12/13] relative border-y border-white animate-appear ${className}`}
+      >
+        {children}
+      </div>
     </div>
   )
 }

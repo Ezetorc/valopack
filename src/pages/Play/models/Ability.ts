@@ -1,11 +1,11 @@
 import { AbilityIdentifier } from './AbilityIdentifier.ts'
-import { BoxType } from './BoxType.ts'
+import { EntityType } from './EntityType.ts'
 import { Method } from './Method.ts'
 
 export interface Ability {
   identifier: AbilityIdentifier
   usesLeft: number
-  validBoxTypes: BoxType[]
+  validEntityTypes: EntityType[]
   useRange: [number, number]
   methods: Method[]
 }

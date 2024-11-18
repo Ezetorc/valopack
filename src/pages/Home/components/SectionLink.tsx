@@ -1,14 +1,21 @@
 import { Link } from 'react-router-dom'
 import { sounds } from '../../../constants/sounds.ts'
-import './SectionLink.css'
 
 interface SectionLinkProps {
   to: string
   text: string
   image: string
+  className?: string
+  imgClassName?: string
 }
 
-export function SectionLink ({ to, text, image }: SectionLinkProps) {
+export function SectionLink ({
+  to,
+  text,
+  image,
+  className,
+  imgClassName
+}: SectionLinkProps) {
   const handleHover = () => {
     sounds.hover.play()
   }
@@ -21,11 +28,13 @@ export function SectionLink ({ to, text, image }: SectionLinkProps) {
     <Link
       onClick={handleClick}
       onMouseEnter={handleHover}
-      className='section-link'
+      className={`relative overflow-hidden ${className}`}
       to={to}
     >
-      <img src={image} />
-      <span>{text}</span>
+      <img className={imgClassName} src={image} />
+      <span className='left-0 bottom-0 absolute w-full text-white text no-underline text-left pl-[5%]'>
+        {text}
+      </span>
     </Link>
   )
 }

@@ -25,8 +25,8 @@ export function useBoard () {
       position: new Position(square.position.x, square.position.y)
     })
 
-    squareTo.addBox(movedPlayer)
-    playerSquare.removeBox(player)
+    squareTo.addEntity(movedPlayer)
+    playerSquare.removeEntity(player)
   }
 
   const attackPlayer = (attacker: Player, target: Player) => {
@@ -35,13 +35,13 @@ export function useBoard () {
 
     if (target.isDead()) {
       const targetSquare: Square = board.getSquare(target.position)
-      targetSquare.removeBox(target)
+      targetSquare.removeEntity(target)
     }
   }
 
   const killPlayer = (player: Player) => {
     const playerSquare: Square = board.getSquare(player.position)
-    playerSquare.removeBox(player)
+    playerSquare.removeEntity(player)
   }
 
   const resetActions = useCallback(() => {

@@ -4,6 +4,11 @@ import { Language } from './Language.ts'
 import { Section } from './Section.ts'
 import { TeamSide } from './TeamSide.ts'
 
+interface LanguageOption {
+  label: string
+  value: Language
+}
+
 export interface ValopackConfig {
   appName: string
   initialCredits: number
@@ -15,4 +20,5 @@ export interface ValopackConfig {
   backgrounds: { [key in Section]: string }
   initialAgentsNames: FiveOrLessArray<string>
   initialAttributes: Attributes
+  languages: LanguageOption[]
 }

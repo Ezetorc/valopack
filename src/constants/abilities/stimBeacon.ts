@@ -4,7 +4,7 @@ export const stimBeacon: Ability = {
   identifier: 'stimBeacon',
   usesLeft: 1,
   useRange: [1, 10],
-  validBoxTypes: [],
+  validEntityTypes: [],
   methods: [
     {
       type: 'add-box',
@@ -12,7 +12,7 @@ export const stimBeacon: Ability = {
         get: {
           getBy: 'squareTo'
         },
-        boxType: 'stimBeacon'
+        entityType: 'stimBeacon'
       }
     },
     {
@@ -21,7 +21,7 @@ export const stimBeacon: Ability = {
         get: {
           getBy: 'squareTo'
         },
-        classNames: ['scale-up']
+        classNames: ['animate-scale_up']
       }
     },
     {
@@ -36,7 +36,7 @@ export const stimBeacon: Ability = {
               get: {
                 getBy: 'squareTo'
               },
-              classNames: ['scale-up']
+              classNames: ['animate-scale_up']
             }
           }
         ]
@@ -54,7 +54,7 @@ export const stimBeacon: Ability = {
               get: {
                 getBy: 'squareTo'
               },
-              boxTypes: ['stimBeacon']
+              entityTypes: ['stimBeacon']
             }
           }
         ]
@@ -67,7 +67,7 @@ export const stimBeacon: Ability = {
           getBy: 'range',
           range: 1,
           filters: {
-            boxTypes: ['player'],
+            entityTypes: ['player'],
             team: 'current-team'
           }
         },
@@ -82,7 +82,7 @@ export const stimBeacon: Ability = {
           getBy: 'range',
           range: 1,
           filters: {
-            boxTypes: ['player'],
+            entityTypes: ['player'],
             team: 'current-team'
           }
         },
@@ -123,7 +123,7 @@ export const stimBeacon: Ability = {
                 getBy: 'range',
                 range: 1,
                 filters: {
-                  boxTypes: ['player'],
+                  entityTypes: ['player'],
                   team: 'current-team'
                 }
               },
@@ -140,7 +140,7 @@ export const stimBeacon: Ability = {
           getBy: 'range',
           range: 1,
           filters: {
-            boxTypes: ['player'],
+            entityTypes: ['player'],
             team: 'current-team'
           }
         },

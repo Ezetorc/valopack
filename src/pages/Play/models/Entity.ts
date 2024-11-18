@@ -1,13 +1,13 @@
 import { Tag } from './Tag.ts'
-import { BoxType } from './BoxType.ts'
+import { EntityType } from './EntityType.ts'
 import { Player } from './Player.ts'
 import { Position } from './Position.ts'
 import { Square } from './Square.ts'
 
-export class Box {
+export class Entity {
   public free: boolean
   public tags: Tag[]
-  public type: BoxType
+  public type: EntityType
   public position: Position
 
   constructor ({
@@ -15,7 +15,7 @@ export class Box {
     free = true,
     tags = [],
     type
-  }: Omit<Partial<Box>, 'type'> & { type: BoxType }) {
+  }: Omit<Partial<Entity>, 'type'> & { type: EntityType }) {
     this.position = position
     this.free = free
     this.tags = tags
@@ -27,8 +27,8 @@ export class Box {
   }
 
   getOpacity (square: Square): number {
-    const smokeInSquare: boolean = square.boxes.some(
-      box => box.type == 'skySmoke'
+    const smokeInSquare: boolean = square.entities.some(
+      entity => entity.type == 'skySmoke'
     )
 
     if (smokeInSquare && this.type == 'player' && this instanceof Player) {

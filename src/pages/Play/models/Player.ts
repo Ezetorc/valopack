@@ -1,11 +1,11 @@
-import { Box } from './Box.ts'
+import { Entity } from './Entity.ts'
 import { TeamSide } from '../../../models/TeamSide.ts'
 import { Attributes } from '../../../models/Attributes.ts'
 import { Position } from './Position.ts'
 import { initialAttributes } from '../../../valopack.config.ts'
 import { Card } from '../../../models/Card.ts'
 
-export class Player extends Box {
+export class Player extends Entity {
   public card: Card
   public attributes: Attributes
   public teamSide: TeamSide

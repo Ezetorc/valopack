@@ -1,44 +1,44 @@
-import { BoxType } from './BoxType.ts'
+import { EntityType } from './EntityType.ts'
 import { Hexadecimal } from '../../../models/Hexadecimal.ts'
-import { Box } from './Box.ts'
+import { Entity } from './Entity.ts'
 import { Position } from './Position.ts'
 
 export class Square {
-  public boxes: Box[]
+  public entities: Entity[]
   public position: Position
   public style: { [key: string]: string }
   public classes: Set<string>
 
   constructor ({
     position = new Position(0, 0),
-    boxes = [],
+    entities = [],
     style = {},
     classes = new Set<string>()
   }: Partial<Square> = {}) {
     this.position = position
-    this.boxes = boxes
+    this.entities = entities
     this.style = style
     this.classes = classes
   }
 
-  getFirstBox (): Box {
-    return this.boxes[0]
+  getFirstEntity (): Entity {
+    return this.entities[0]
   }
 
-  hasBox (boxType: BoxType): boolean {
-    return this.boxes.some(box => box.type == boxType)
+  hasEntity (entityType: EntityType): boolean {
+    return this.entities.some(entity => entity.type == entityType)
   }
 
-  getBox (boxType: BoxType): Box | undefined {
-    return this.boxes.find(box => box.type == boxType)
+  getEntityByType (entityType: EntityType): Entity | undefined {
+    return this.entities.find(entiy => entiy.type == entityType)
   }
 
   isFree (): boolean {
-    return this.boxes.every(box => box.free === true)
+    return this.entities.every(entity => entity.free === true)
   }
 
-  addBox (box: Box): void {
-    this.boxes.unshift(box)
+  addEntity (entity: Entity): void {
+    this.entities.unshift(entity)
   }
 
   addClass (className: string): void {
@@ -57,16 +57,20 @@ export class Square {
     delete this.style[propertyName]
   }
 
-  removeBox (box: Box | BoxType): void {
-    if (box instanceof Box) {
-      this.boxes = this.boxes.filter(boxInBoxes => boxInBoxes !== box)
+  removeEntity (entity: Entity | EntityType): void {
+    if (entity instanceof Entity) {
+      this.entities = this.entities.filter(
+        entityInEntities => entityInEntities !== entity
+      )
     } else {
-      this.boxes = this.boxes.filter(boxInBoxes => boxInBoxes.type !== box)
+      this.entities = this.entities.filter(
+        entityInEntities => entityInEntities.type !== entity
+      )
     }
   }
 
-  getBoxesTypes (): BoxType[] {
-    return this.boxes.map(box => box.type)
+  getEntitiesTypes (): EntityType[] {
+    return this.entities.map(entity => entity.type)
   }
 
   getColor (colors: Hexadecimal[]): Hexadecimal {

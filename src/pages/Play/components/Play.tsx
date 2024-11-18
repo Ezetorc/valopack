@@ -9,7 +9,6 @@ import { PlayerInfo } from './PlayerInfo.tsx'
 import { ResultModal } from './ResultModal.tsx'
 import { Agents } from '../../../services/Agents.service.ts'
 import { backgrounds } from '../../../valopack.config.ts'
-import './Play.css'
 import { Team } from '../../../models/Team.ts'
 
 export default function Play () {
@@ -51,9 +50,9 @@ export default function Play () {
       {result && <ResultModal result={result} />}
       {infoVisible && <PlayerInfo onClose={() => setInfoVisible(false)} />}
 
-      <section className='game'>
+      <section className='w-full h-[100dvh] grid p-[1%] gap-[1%] grid-rows-[1fr,_1fr] place-items-center'>
         <BoardDisplay />
-        {squareFrom?.hasBox('player') && (
+        {squareFrom?.hasEntity('player') && (
           <Actions onOpenInfo={() => setInfoVisible(true)} />
         )}
       </section>

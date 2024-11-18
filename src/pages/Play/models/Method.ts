@@ -1,4 +1,4 @@
-import { ModifyAttributeParams, WaitParams, AddTagParams, AddBoxParams, RemoveBoxParams, RemoveTagParams, ShowFadeParams, AddClassParams, RemoveClassParams } from "./params"
+import { ModifyAttributeParams, WaitParams, AddTagParams, AddEntityParams, RemoveEntityParams, RemoveTagParams, ShowFadeParams, AddClassParams, RemoveClassParams } from "./params"
 
 
 export interface Method {
@@ -16,8 +16,8 @@ export interface Method {
     | ModifyAttributeParams
     | WaitParams
     | AddTagParams
-    | AddBoxParams
-    | RemoveBoxParams
+    | AddEntityParams
+    | RemoveEntityParams
     | RemoveTagParams
     | ShowFadeParams
     | AddClassParams

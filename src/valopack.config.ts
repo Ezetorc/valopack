@@ -5,6 +5,16 @@ export const valopackConfig: ValopackConfig = {
   levelMultiplier: 1,
   initialCredits: 10000,
   defaultLanguage: 'en',
+  languages: [
+    {
+      label: 'English',
+      value: 'en'
+    },
+    {
+      label: 'Español',
+      value: 'es'
+    }
+  ],
   creditsWinned: 1000,
   paths: {
     home: '/',
@@ -50,7 +60,7 @@ export const valopackConfig: ValopackConfig = {
       #15103E 100%
     )`
   },
-  initialAgentsNames: ['Sage', 'Brimstone', 'Phoenix', 'Jett'],
+  initialAgentsNames: ['Sage', 'Brimstone', 'Phoenix', 'Jett', 'Clove'],
   initialAttributes: {
     attack: 50,
     health: 100,
@@ -72,5 +82,6 @@ export const {
   backgrounds,
   initialAgentsNames,
   initialAttributes,
-  initialCredits
+  initialCredits,
+  languages
 } = valopackConfig

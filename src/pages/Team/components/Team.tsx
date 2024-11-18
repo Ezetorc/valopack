@@ -5,7 +5,6 @@ import { CardSlot } from './CardSlot.tsx'
 import { Selector } from './Selector.tsx'
 import { backgrounds } from '../../../valopack.config.ts'
 import { Card } from '../../../models/Card.ts'
-import './Team.css'
 
 export default function Team () {
   const { team, cardToChange } = useUser()
@@ -35,7 +34,7 @@ export default function Team () {
   return (
     <>
       {!cardToChange ? (
-        <section className='team'>
+        <section className='grid grid-cols-[repeat(5,_1fr)] place-items-center w-full min-h-dvh pt-[10vh]'>
           {cards.map((card, index) => (
             <CardSlot key={index} index={index} card={card ? card : null} />
           ))}

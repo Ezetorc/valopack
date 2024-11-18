@@ -5,9 +5,8 @@ import { Player } from '../models/Player.ts'
 import { Action } from '../models/Action.ts'
 import { useAbility } from '../hooks/useAbility.ts'
 import { Ability } from '../models/Ability.ts'
-import { BoxDisplay } from './BoxDisplay.tsx'
+import { EntityDisplay } from './EntityDisplay.tsx'
 import { SquareDisplay } from './SquareDisplay.tsx'
-import './BoardDisplay.css'
 import { Distance } from '../services/Distance.service.ts'
 
 export function BoardDisplay () {
@@ -31,15 +30,18 @@ export function BoardDisplay () {
   }, [handleEffects, toggleTurn])
 
   const showInvalidMove = useCallback(() => {
-    boardRef.current?.classList.add('invalid-move')
-    setTimeout(() => boardRef.current?.classList.remove('invalid-move'), 300)
+    boardRef.current?.classList.add('animate-invalid_move')
+    setTimeout(
+      () => boardRef.current?.classList.remove('animate-invalid_move'),
+      300
+    )
   }, [boardRef])
 
   const handleMoveAction = useCallback(
     (squareToMove: Square) => {
       if (!squareFrom) return
 
-      const player: Player = squareFrom.getBox('player') as Player
+      const player: Player = squareFrom.getEntityByType('player') as Player
       const validDistance: boolean = Distance.isValid(
         player.position,
         squareToMove.position,
@@ -70,14 +72,14 @@ export function BoardDisplay () {
     (squareToAttack: Square) => {
       if (!squareFrom) return
 
-      const playerTo: Player = squareToAttack.getBox('player') as Player
+      const playerTo: Player = squareToAttack.getEntityByType('player') as Player
       const canAttack: boolean =
         playerTo &&
         playerTo.teamSide == 'enemy' &&
         Distance.isValid(squareFrom.position, squareToAttack.position, 1)
 
       if (canAttack) {
-        const playerFrom: Player = squareFrom.getBox('player') as Player
+        const playerFrom: Player = squareFrom.getEntityByType('player') as Player
         attackPlayer(playerFrom, playerTo)
         resetActions()
         changeTurn()
@@ -100,7 +102,7 @@ export function BoardDisplay () {
     (targetSquare: Square) => {
       if (!squareFrom) return
 
-      const player: Player = squareFrom.getBox('player') as Player
+      const player: Player = squareFrom.getEntityByType('player') as Player
       const { abilities } = player.card
       const selectedAbility: Ability =
         action === 'ability0' ? abilities[0] : abilities[1]
@@ -111,8 +113,8 @@ export function BoardDisplay () {
       const canUseAbility: boolean =
         Distance.isWithinRange(distance, selectedAbility.useRange) &&
         targetSquare
-          .getBoxesTypes()
-          .every(boxType => selectedAbility.validBoxTypes.includes(boxType))
+          .getEntitiesTypes()
+          .every(boxType => selectedAbility.validEntityTypes.includes(boxType))
 
       if (canUseAbility) {
         handleAbility(selectedAbility, targetSquare)
@@ -164,7 +166,10 @@ export function BoardDisplay () {
   )
 
   return (
-    <div className='board' ref={boardRef}>
+    <div
+      className='grid grid-cols-[repeat(7,_1fr)] grid-rows-[repeat(5,_1fr)] border-[20px] border-[#ffffff5e] items-center w-[90%] min-w-[700px] max-w-[900px] aspect-[16/10] border-r-[5px]'
+      ref={boardRef}
+    >
       {board.grid.flat().map((square, squareIndex) => (
         <SquareDisplay
           onClick={() => handleClick(square)}
@@ -172,11 +177,11 @@ export function BoardDisplay () {
           square={square}
           key={`square-${squareIndex}`}
         >
-          {square.boxes.map((box, boxIndex) => (
-            <BoxDisplay
-              box={box}
-              key={`box-${squareIndex}-${boxIndex}`}
-              opacity={box.getOpacity(square)}
+          {square.entities.map((entity, entityIndex) => (
+            <EntityDisplay
+              entity={entity}
+              key={`box-${squareIndex}-${entityIndex}`}
+              opacity={entity.getOpacity(square)}
             />
           ))}
         </SquareDisplay>
