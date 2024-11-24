@@ -23,8 +23,6 @@ export function Actions ({ onOpenInfo }: ActionsProps) {
   const renderAbility = (index: number) => {
     const ability: Ability = player.abilities[index]
     const abilityUses: number = player.abilityUses[index]
-    if (!abilityUses) return null
-
     const isAvailable: boolean = abilityUses > 0
     const actionType: string = `ability${index}`
 

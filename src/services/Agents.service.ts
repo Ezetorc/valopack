@@ -36,7 +36,7 @@ export class Agents {
     return finalAgents
   }
 
-  static async getByName (names: string[]): Promise<Agent[]> {
+  static async getByName (names: readonly string[]): Promise<Agent[]> {
     const nameSet: Set<string> = new Set(names)
     const agents: Agent[] = await this.getAll()
     const filteredAgents: Agent[] = agents.filter(agent =>

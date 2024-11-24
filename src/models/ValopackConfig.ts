@@ -5,15 +5,15 @@ import { Section } from './Section.ts'
 import { TeamSide } from './TeamSide.ts'
 
 export interface ValopackConfig {
-  appName: string
-  initialCredits: number
-  levelMultiplier: number
-  defaultLanguage: Language
-  creditsWinned: number
-  paths: { [key in Section]: string }
-  teamColors: { [key in TeamSide]: string }
-  backgrounds: { [key in Section]: string }
-  initialCardsNames: string[]
-  initialAttributes: Attributes
-  languages: LanguageOption[]
+  appName: Readonly<string>
+  initialCredits: Readonly<number>
+  levelMultiplier: Readonly<number>
+  defaultLanguage: Readonly<Language>
+  creditsWinned: Readonly<number>
+  paths: Readonly<{ [key in Section]: string }>
+  teamColors: Readonly<{ [key in TeamSide]: string }>
+  backgrounds: Readonly<{ [key in Section]: string }>
+  initialCardsNames: Readonly<string[]>
+  initialAttributes: Readonly<Attributes>
+  languages: Readonly<LanguageOption[]>
 }
