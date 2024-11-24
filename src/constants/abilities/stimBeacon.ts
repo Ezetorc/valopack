@@ -3,6 +3,7 @@ import { Ability } from '../../pages/Play/models/Ability'
 export const stimBeacon: Ability = {
   identifier: 'stimBeacon',
   useRange: [1, 10],
+  uses: 2,
   index: 0,
   validEntityTypes: [],
   methods: [

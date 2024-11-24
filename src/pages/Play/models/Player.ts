@@ -31,8 +31,7 @@ export class Player extends Entity {
     position = new Position(0, 0),
     free = false,
     tags = [],
-    type = 'player',
-    abilityUses = [1, 1]
+    type = 'player'
   }: Partial<Player>) {
     super({ position, free, tags, type })
 
@@ -45,7 +44,7 @@ export class Player extends Entity {
     this.isInTeam = isInTeam
     this.attributes = attributes
     this.teamSide = teamSide
-    this.abilityUses = abilityUses
+    this.abilityUses = [abilities[0]?.uses ?? 1, abilities[1]?.uses ?? 1]
   }
 
   isDead (): boolean {

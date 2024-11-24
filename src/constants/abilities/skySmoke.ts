@@ -3,6 +3,7 @@ import { Ability } from '../../pages/Play/models/Ability'
 export const skySmoke: Ability = {
   identifier: 'skySmoke',
   useRange: [1, 10],
+  uses: 1,
   index: 1,
   validEntityTypes: [],
   methods: [

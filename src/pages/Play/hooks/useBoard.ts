@@ -34,14 +34,17 @@ export function useBoard () {
     target.setHealth(prevHealth => (prevHealth -= damage))
 
     if (target.isDead()) {
-      const targetSquare: Square = board.getSquare(target.position)
-      targetSquare.removeEntity(target)
+      killPlayer(attacker, target)
     }
   }
 
-  const killPlayer = (player: Player) => {
-    const playerSquare: Square = board.getSquare(player.position)
-    playerSquare.removeEntity(player)
+  const killPlayer = (attacker: Player, target: Player) => {
+    const targetSquare: Square = board.getSquare(target.position)
+    targetSquare.removeEntity(target)
+
+    if (attacker.abilityUses[0] <= 0) {
+      attacker.abilityUses[0] += 1
+    }
   }
 
   const resetActions = useCallback(() => {
