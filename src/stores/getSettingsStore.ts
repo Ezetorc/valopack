@@ -7,8 +7,5 @@ export const getSettingsStore = create<SettingsStore>(set => ({
   setLanguage: newLanguage => set({ language: newLanguage }),
 
   settingsOpen: false,
-  setSettingsOpen: isOpen => set({ settingsOpen: isOpen }),
-
-  headerVisible: true,
-  setHeaderVisible: isVisible => set({ headerVisible: isVisible })
+  setSettingsOpen: isOpen => set({ settingsOpen: isOpen })
 }))

@@ -1,9 +1,9 @@
-import { Ability } from "../../pages/Play/models/Ability";
+import { Ability } from '../../pages/Play/models/Ability'
 
 export const skySmoke: Ability = {
   identifier: 'skySmoke',
-  usesLeft: 1,
   useRange: [1, 10],
+  index: 1,
   validEntityTypes: [],
   methods: [
     {

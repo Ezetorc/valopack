@@ -29,8 +29,8 @@ export function EntityDisplay ({ entity, opacity }: EntityDisplayProps) {
       )}
       style={{ transform: `scaleX(${flip})`, opacity: opacity }}
     >
-      {isPlayer && player?.card && (
-        <img className='w-full' src={player.card.icon} alt={player.card.name} />
+      {isPlayer && player && (
+        <img className='w-full' src={player.icon} alt={player.name} />
       )}
     </div>
   )

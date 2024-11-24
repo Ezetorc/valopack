@@ -8,4 +8,5 @@ export interface Card {
   role: Role
   level: number
   abilities: Ability[]
+  isInTeam: boolean
 }

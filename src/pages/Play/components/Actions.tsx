@@ -1,9 +1,10 @@
 import { Player } from '../models/Player.ts'
 import { useBoard } from '../hooks/useBoard.ts'
 import { useSettings } from '../../../hooks/useSettings.ts'
-import { Ability } from '../models/Ability.ts'
-import { Action } from './Action.tsx'
+import { ActionDisplay } from './ActionDisplay.tsx'
 import { teamColors } from '../../../valopack.config.ts'
+import { Action } from '../models/Action.ts'
+import { Ability } from '../models/Ability.ts'
 
 interface ActionsProps {
   onOpenInfo: () => void
@@ -12,67 +13,72 @@ interface ActionsProps {
 export function Actions ({ onOpenInfo }: ActionsProps) {
   const { texts } = useSettings()
   const { squareFrom, setAction } = useBoard()
-  if (!squareFrom) return
-  const { teamSide, card } = squareFrom?.getFirstEntity() as Player
-  if (!card) return
-  const borderColor: string = teamColors[teamSide]
-  const { icon, name, abilities } = card
-  const [ability0, ability1] = abilities
+  if (!squareFrom) return null
 
-  const isAvailable = (ability: Ability): boolean => ability.usesLeft > 0
+  const player: Player = squareFrom.getFirstEntity() as Player
+  if (!player) return
+
+  const borderColor: string = teamColors[player.teamSide]
+
+  const renderAbility = (index: number) => {
+    const ability: Ability = player.abilities[index]
+    const abilityUses: number = player.abilityUses[index]
+    if (!abilityUses) return null
+
+    const isAvailable: boolean = abilityUses > 0
+    const actionType: string = `ability${index}`
+
+    return (
+      <ActionDisplay
+        usesLeft={abilityUses}
+        className={`${
+          isAvailable
+            ? 'border-v_red bg-v_red_gradient'
+            : 'border-v_gray bg-v_gray_gradient'
+        }`}
+        onClick={() => isAvailable && setAction(actionType as Action)}
+      >
+        {texts.abilities[ability.identifier].name}
+      </ActionDisplay>
+    )
+  }
 
   return (
     <footer className='flex bg-[#7979a8] w-[90%] aspect-[16/2] overflow-hidden items-center animate-appear gap-[3%] [padding-inline:2%]'>
       <img
         style={{ borderColor }}
-        src={icon}
-        alt={name}
+        src={player.icon}
+        alt={player.name}
         className='w-full max-w-[150px] border-b-[10px] border-b-transparent'
       />
 
-      {teamSide === 'ally' && (
+      {player.teamSide === 'ally' && (
         <>
-          <Action
-            usesLeft={-1}
+          <ActionDisplay
             onClick={() => setAction('move')}
             className='border-v_red bg-v_red_gradient'
           >
             {texts.actions.move}
-          </Action>
-          <Action
-            usesLeft={-1}
+          </ActionDisplay>
+
+          <ActionDisplay
             onClick={() => setAction('attack')}
             className='border-v_red bg-v_red_gradient'
           >
             {texts.actions.attack}
-          </Action>
+          </ActionDisplay>
 
-          {ability0 && (
-            <Action
-              className={`available-${isAvailable(ability0)} border-v_red bg-v_red_gradient`}
-              onClick={() => setAction('ability0')}
-            >
-              {texts.abilities[ability0.identifier].name}
-            </Action>
-          )}
-
-          {ability1 && (
-            <Action
-              className={`available-${isAvailable(ability1)} border-v_red bg-v_red_gradient`}
-              onClick={() => setAction('ability1')}
-            >
-              {texts.abilities[ability1.identifier].name}
-            </Action>
-          )}
+          {renderAbility(0)}
+          {renderAbility(1)}
         </>
       )}
 
-      <Action
+      <ActionDisplay
         className='grow-[1] bg-v_aqua_gradient border-v_aqua hover:border-white'
         onClick={onOpenInfo}
       >
         Info
-      </Action>
+      </ActionDisplay>
     </footer>
   )
 }

@@ -9,7 +9,9 @@ import { PlayerInfo } from './PlayerInfo.tsx'
 import { ResultModal } from './ResultModal.tsx'
 import { Agents } from '../../../services/Agents.service.ts'
 import { backgrounds } from '../../../valopack.config.ts'
-import { Team } from '../../../models/Team.ts'
+import { Card } from '../../../models/Card.ts'
+import { Agent } from '../../../models/Agent.ts'
+import { Board } from '../models/Board.ts'
 
 export default function Play () {
   const { squareFrom, setBoard, board } = useBoard()
@@ -17,33 +19,51 @@ export default function Play () {
   const [matchStarted, setMatchStarted] = useState(false)
   const [result, setResult] = useState<Result>(undefined)
   const { texts, updateSection } = useSettings()
-  const { team: allyTeam } = useUser()
+  const { inventory, addCredits, removeCredits } = useUser()
+
+  useEffect(
+    () => updateSection(texts.play, backgrounds.play),
+    [texts.play, updateSection]
+  )
 
   useEffect(() => {
     const initialize = async () => {
       if (!matchStarted) {
         const { allyPlayers, enemyPlayers } = board.getTotalPlayers()
-
         if (allyPlayers !== 0 && enemyPlayers !== 0) return
-        const enemyTeam = Agents.getCardsFromAgents(await Agents.getMixed(5)) as Team
-        setBoard(board.getInitialized(allyTeam, enemyTeam))
+
+        const enemyAgents: Agent[] = await Agents.getMixed(5)
+        const enemyTeam: Card[] = Agents.getCardsFromAgents(enemyAgents)
+        const allyTeam: Card[] = inventory.getCardsInTeam()
+        const initializedBoard: Board = board.getInitialized(
+          allyTeam,
+          enemyTeam
+        )
+
+        setBoard(initializedBoard)
         setMatchStarted(true)
       }
     }
 
     initialize()
-  }, [board, setBoard, allyTeam, matchStarted])
+  }, [board, setBoard, inventory, matchStarted])
 
   useEffect(() => {
     if (!matchStarted) return
-    const gameResult: Result = board.getResult()
-    setResult(gameResult)
-  }, [board, matchStarted])
 
-  useEffect(
-    () => updateSection(texts.play, backgrounds.play, false),
-    [texts.play, updateSection]
-  )
+    const gameResult: Result = board.getResult()
+    if (!result) return
+    
+    setResult(gameResult)
+
+    if (gameResult === 'ally') {
+      addCredits(1000)
+    } else if (gameResult === 'enemy') {
+      removeCredits(500)
+    } else if (gameResult === 'draw') {
+      addCredits(500)
+    }
+  }, [board, matchStarted, result, addCredits, removeCredits])
 
   return (
     <>

@@ -119,8 +119,15 @@ export function useAbility () {
     }
   }
 
-  const handleAbility = (ability: Ability, squareTo: Square): void => {
+  const handleAbility = (ability: Ability, squareFrom: Square, squareTo: Square): void => {
     const { methods } = ability
+    const player: Entity | undefined = squareFrom.getEntityByType('player')
+
+    console.log(player)
+    if (player) {
+      ;(player as Player).abilityUses[ability.index] -= 1
+      console.log('aca')
+    }
 
     methods.forEach(method => {
       handleMethod(method, squareTo)
@@ -131,28 +138,28 @@ export function useAbility () {
     const { type, params } = method
 
     if (type == 'add-box') {
-      handleAddEntityMethod(params as AddEntityParams, squareTo)
+      addEntity(params as AddEntityParams, squareTo)
     } else if (type == 'remove-box') {
       handleRemoveEntityMethod(params as RemoveEntityParams, squareTo)
     } else if (type == 'modify-attribute') {
-      handleModifyAttributeMethod(params as ModifyAttributeParams, squareTo)
+      modifyAttribute(params as ModifyAttributeParams, squareTo)
     } else if (type == 'add-tag') {
-      handleAddTagMethod(params as AddTagParams, squareTo)
+      addTag(params as AddTagParams, squareTo)
     } else if (type == 'wait') {
-      handleWaitMethod(params as WaitParams, squareTo)
+      wait(params as WaitParams, squareTo)
     } else if (type == 'show-fade') {
-      handleShowFadeMethod(params as ShowFadeParams, squareTo)
+      showFade(params as ShowFadeParams, squareTo)
     } else if (type == 'add-class') {
-      handleAddClassMethod(params as AddClassParams, squareTo)
+      addClass(params as AddClassParams, squareTo)
     } else if (type == 'remove-tag') {
-      handleRemoveTagMethod(params as RemoveTagParams, squareTo)
+      removeTag(params as RemoveTagParams, squareTo)
     } else if (type == 'remove-class') {
-      handleRemoveClassMethod(params as RemoveClassParams, squareTo)
+      removeClass(params as RemoveClassParams, squareTo)
     }
   }
 
-  const handleRemoveTagMethod = (params: RemoveTagParams, squareTo: Square) => {
-    const squares: Square[] = handleGetMethod(params.get, squareTo)
+  const removeTag = (params: RemoveTagParams, squareTo: Square) => {
+    const squares: Square[] = getSquares(params.get, squareTo)
     const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
 
     squares.forEach(square => {
@@ -164,7 +171,7 @@ export function useAbility () {
     })
   }
 
-  const handleGetMethod = (params: GetParams, squareTo: Square): Square[] => {
+  const getSquares = (params: GetParams, squareTo: Square): Square[] => {
     const { getBy, filters, range } = params
     const squares: Square[] = []
 
@@ -197,8 +204,8 @@ export function useAbility () {
     return squares
   }
 
-  const handleAddEntityMethod = (params: AddEntityParams, squareTo: Square) => {
-    const squares: Square[] = handleGetMethod(params.get, squareTo)
+  const addEntity = (params: AddEntityParams, squareTo: Square) => {
+    const squares: Square[] = getSquares(params.get, squareTo)
     const entityToAdd: Entity = new Entity({ type: params.entityType })
 
     squares.forEach(square => {
@@ -210,7 +217,7 @@ export function useAbility () {
     params: RemoveEntityParams,
     squareTo: Square
   ) => {
-    const squares: Square[] = handleGetMethod(params.get, squareTo)
+    const squares: Square[] = getSquares(params.get, squareTo)
 
     squares.forEach(square =>
       params.entityTypes.forEach(entityType => {
@@ -219,11 +226,8 @@ export function useAbility () {
     )
   }
 
-  const handleModifyAttributeMethod = (
-    params: ModifyAttributeParams,
-    squareTo: Square
-  ) => {
-    const squares: Square[] = handleGetMethod(params.get, squareTo)
+  const modifyAttribute = (params: ModifyAttributeParams, squareTo: Square) => {
+    const squares: Square[] = getSquares(params.get, squareTo)
 
     squares.forEach(square => {
       const player: Entity | undefined = square.getEntityByType('player')
@@ -233,8 +237,8 @@ export function useAbility () {
     })
   }
 
-  const handleAddTagMethod = (params: AddTagParams, squareTo: Square) => {
-    const squares: Square[] = handleGetMethod(params.get, squareTo)
+  const addTag = (params: AddTagParams, squareTo: Square) => {
+    const squares: Square[] = getSquares(params.get, squareTo)
     const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
 
     squares.forEach(square =>
@@ -244,7 +248,7 @@ export function useAbility () {
     )
   }
 
-  const handleWaitMethod = (params: WaitParams, squareTo: Square) => {
+  const wait = (params: WaitParams, squareTo: Square) => {
     if (params.type == 'miliseconds') {
       setTimeout(() => {
         params.methods.forEach(method => handleMethod(method, squareTo))
@@ -265,8 +269,8 @@ export function useAbility () {
     }
   }
 
-  const handleShowFadeMethod = (params: ShowFadeParams, squareTo: Square) => {
-    const squares: Square[] = handleGetMethod(params.get, squareTo)
+  const showFade = (params: ShowFadeParams, squareTo: Square) => {
+    const squares: Square[] = getSquares(params.get, squareTo)
     let color: string = params.color
 
     if (params.color == 'current-team-color') {
@@ -286,8 +290,8 @@ export function useAbility () {
     })
   }
 
-  const handleAddClassMethod = (params: AddClassParams, squareTo: Square) => {
-    const squares: Square[] = handleGetMethod(params.get, squareTo)
+  const addClass = (params: AddClassParams, squareTo: Square) => {
+    const squares: Square[] = getSquares(params.get, squareTo)
 
     squares.forEach(square => {
       params.classNames.forEach(className => {
@@ -296,11 +300,8 @@ export function useAbility () {
     })
   }
 
-  const handleRemoveClassMethod = (
-    params: RemoveClassParams,
-    squareTo: Square
-  ) => {
-    const squares: Square[] = handleGetMethod(params.get, squareTo)
+  const removeClass = (params: RemoveClassParams, squareTo: Square) => {
+    const squares: Square[] = getSquares(params.get, squareTo)
 
     squares.forEach(square => {
       params.classNames.forEach(className => {

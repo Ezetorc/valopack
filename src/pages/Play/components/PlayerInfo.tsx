@@ -13,10 +13,9 @@ export function PlayerInfo ({ onClose }: PlayerInfoProps) {
   const { squareFrom } = useBoard()
   if (!squareFrom) return
   const player: Player = squareFrom.getEntityByType('player') as Player
-  const { name, image } = player.card
-  const { teamSide } = player
+  const { name, image, teamSide, attributes } = player
   const { attack, health, defense, speed, precision, critic, resistance } =
-    player.attributes
+    attributes
 
   return (
     <Modal className='w-[90%] h-[90%] min-w-[400px] grid grid-cols-1 md:grid-cols-2 relative'>
@@ -33,7 +32,11 @@ export function PlayerInfo ({ onClose }: PlayerInfoProps) {
         <span className='w-full text-center text-[clamp(20px,_3vw,_70px)] px-5'>
           {teamSide}
         </span>
-        <img src={image} alt={`${name} Image`} className='w-[60%] self-center' />
+        <img
+          src={image}
+          alt={`${name} Image`}
+          className='w-[60%] self-center'
+        />
       </article>
 
       <article className='grid p-2 overflow-hidden'>

@@ -6,19 +6,12 @@ import { getSettingsStore } from '../stores/getSettingsStore.ts'
 
 export function useSettings () {
   const settingsStore: SettingsStore = getSettingsStore()
-  const { language, headerVisible, setHeaderVisible } = settingsStore
+  const { language} = settingsStore
   const texts: Dictionary = dictionaries[language]
 
-  const updateSection = (
-    name: string,
-    background: string,
-    newHeaderVisible: boolean
-  ): void => {
-    document.title = `${appName}: ${name}`
+  const updateSection = (pageTitle: string, background: string): void => {
+    document.title = `${appName}: ${pageTitle}`
 
-    if (headerVisible != newHeaderVisible) {
-      setHeaderVisible(newHeaderVisible)
-    }
 
     const HTMLElement: HTMLElement = document.documentElement
     if (HTMLElement) {

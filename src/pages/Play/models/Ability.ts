@@ -3,9 +3,9 @@ import { EntityType } from './EntityType.ts'
 import { Method } from './Method.ts'
 
 export interface Ability {
-  identifier: AbilityIdentifier
-  usesLeft: number
-  validEntityTypes: EntityType[]
-  useRange: [number, number]
-  methods: Method[]
+  readonly identifier: AbilityIdentifier
+  readonly validEntityTypes: EntityType[]
+  readonly useRange: [number, number]
+  readonly index: 0 | 1
+  readonly methods: Method[]
 }

@@ -20,7 +20,7 @@ export function Modal ({ children, onLoad, className }: ModalProps) {
 
   return (
     <div
-      className='fixed w-screen h-screen bg-black bg-opacity-60 flex items-center justify-center z-[1000]'
+      className='fixed w-screen h-screen bg-[#0008] flex items-center justify-center z-[1000]'
       ref={modalRef}
     >
       <div

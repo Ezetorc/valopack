@@ -1,13 +1,8 @@
 import { Attributes } from './Attributes.ts'
-import { FiveOrLessArray } from './FiveOrLessArray.ts'
 import { Language } from './Language.ts'
+import { LanguageOption } from './LanguageOption.ts'
 import { Section } from './Section.ts'
 import { TeamSide } from './TeamSide.ts'
-
-interface LanguageOption {
-  label: string
-  value: Language
-}
 
 export interface ValopackConfig {
   appName: string
@@ -18,7 +13,7 @@ export interface ValopackConfig {
   paths: { [key in Section]: string }
   teamColors: { [key in TeamSide]: string }
   backgrounds: { [key in Section]: string }
-  initialAgentsNames: FiveOrLessArray<string>
+  initialCardsNames: string[]
   initialAttributes: Attributes
   languages: LanguageOption[]
 }

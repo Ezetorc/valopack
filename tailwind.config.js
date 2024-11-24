@@ -122,7 +122,9 @@ export default {
         v_red_gradient: 'linear-gradient(0deg, #cd515d 0%, #da3848 100%)',
         v_aqua_gradient: 'linear-gradient(0deg, #7ea9ab 0%, #6a9a9c 100%)',
         v_opener_gradient:
-          'linear-gradient(220deg,#65204c,#6c2d4c 17%,#591e47 39%,#240919 81%,#3e102d 100%)'
+          'linear-gradient(220deg,#65204c,#6c2d4c 17%,#591e47 39%,#240919 81%,#3e102d 100%)',
+        v_gray_gradient:
+          'linear-gradient(0deg, rgba(52,52,52,1) 0%, rgba(112,112,112,1) 100%);'
       },
       colors: {
         v_red: '#da3848',

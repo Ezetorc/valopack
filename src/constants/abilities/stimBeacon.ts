@@ -1,9 +1,9 @@
-import { Ability } from "../../pages/Play/models/Ability";
+import { Ability } from '../../pages/Play/models/Ability'
 
 export const stimBeacon: Ability = {
   identifier: 'stimBeacon',
-  usesLeft: 1,
   useRange: [1, 10],
+  index: 0,
   validEntityTypes: [],
   methods: [
     {

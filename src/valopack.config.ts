@@ -60,7 +60,7 @@ export const valopackConfig: ValopackConfig = {
       #15103E 100%
     )`
   },
-  initialAgentsNames: ['Sage', 'Brimstone', 'Phoenix', 'Jett', 'Clove'],
+  initialCardsNames: ['Sage', 'Brimstone', 'Phoenix', 'Jett', 'Sova'],
   initialAttributes: {
     attack: 50,
     health: 100,
@@ -80,7 +80,7 @@ export const {
   paths,
   teamColors,
   backgrounds,
-  initialAgentsNames,
+  initialCardsNames,
   initialAttributes,
   initialCredits,
   languages

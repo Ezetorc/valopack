@@ -11,7 +11,7 @@ export class Inventory {
   public getCardByName (name: string) {
     return this.cards.find(card => card.name === name)
   }
-
+  
   public addCards (newCards: Card[]) {
     for (const newCard of newCards) {
       const currentCard = this.getCardByName(newCard.name)
@@ -28,9 +28,11 @@ export class Inventory {
     return this.cards.some(card => card.name === name)
   }
 
-  public getCardsNotInTeam (team: Card[]) {
-    return this.cards.filter(
-      card => !team.some(teamCard => teamCard.name === card.name)
-    )
+  public getCardsInTeam (): Card[] {
+    return this.cards.filter(card => card.isInTeam)
+  }
+
+  public getCardsNotInTeam (): Card[] {
+    return this.cards.filter(card => !card.isInTeam)
   }
 }

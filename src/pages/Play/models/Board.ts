@@ -8,7 +8,6 @@ import { Position } from './Position.ts'
 import { Square } from './Square.ts'
 import { allyPositions, enemyPositions } from '../constants/positions.ts'
 import { Distance } from '../services/Distance.service.ts'
-import { Team } from '../../../models/Team.ts'
 import { Card } from '../../../models/Card.ts'
 
 export class Board {
@@ -78,9 +77,9 @@ export class Board {
     return squaresInRange
   }
 
-  getInitialized (allyTeam: Team, enemyTeam: Team): this {
+  getInitialized (allyTeam: Card[], enemyTeam: Card[]): this {
     const placePlayers = (
-      team: Team,
+      team: Card[],
       positions: Position[],
       teamSide: TeamSide
     ) => {
@@ -89,7 +88,7 @@ export class Board {
         if (!card) return
         const square: Square = this.getSquare(position)
         const newPlayer: Player = new Player({
-          card: { ...card },
+          ...card,
           teamSide: teamSide,
           position: position
         })

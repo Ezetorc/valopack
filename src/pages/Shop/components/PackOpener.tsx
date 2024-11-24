@@ -5,7 +5,7 @@ import { sounds } from '../../../constants/sounds.ts'
 import { PackDisplay } from './PackDisplay.tsx'
 import CardDisplay from '../../../components/CardDisplay.tsx'
 
-export function Opener () {
+export function PackOpener () {
   const { ownedProduct, ownedCards, setOwnedProduct } = useShop()
   const [showCards, setShowCards] = useState<boolean>(false)
   const { texts } = useSettings()

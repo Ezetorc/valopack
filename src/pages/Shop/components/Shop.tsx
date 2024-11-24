@@ -2,11 +2,12 @@ import { useEffect } from 'react'
 import { useSettings } from '../../../hooks/useSettings.ts'
 import { useUser } from '../../../hooks/useUser.ts'
 import { useShop } from '../hooks/useShop.ts'
-import { Opener } from './Opener.tsx'
 import { BuyModal } from './BuyModal.tsx'
 import { backgrounds } from '../../../valopack.config.ts'
 import { products } from '../constants/products.ts'
 import { ProductDisplay } from './ProductDisplay.tsx'
+import { PackOpener } from './PackOpener.tsx'
+import { Header } from '../../../components/Header.tsx'
 
 export default function Shop () {
   const { ownedProduct, selectedProduct } = useShop()
@@ -17,7 +18,7 @@ export default function Shop () {
     : false
 
   useEffect(() => {
-    updateSection(texts.shop, backgrounds.shop, true)
+    updateSection(texts.shop, backgrounds.shop)
   })
 
   return (
@@ -25,13 +26,16 @@ export default function Shop () {
       {selectedProduct && <BuyModal canBuy={canBuy} />}
 
       {!ownedProduct ? (
-        <section className='p-[2%] gap-[3%] pt-[20vh] grid grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] justify-items-center w-[100vw] min-h-full'>
-          {products.map((product, index) => (
-            <ProductDisplay key={index} product={product} />
-          ))}
-        </section>
+        <>
+          <Header />
+          <section className='p-[2%] gap-[3%] pt-[20vh] grid grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] justify-items-center w-[100vw] min-h-full'>
+            {products.map((product, index) => (
+              <ProductDisplay key={index} product={product} />
+            ))}
+          </section>
+        </>
       ) : (
-        <Opener />
+        <PackOpener />
       )}
     </>
   )

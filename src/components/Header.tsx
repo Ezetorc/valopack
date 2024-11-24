@@ -11,8 +11,7 @@ const LazySettings = lazy(() => import('./Settings.tsx'))
 
 export function Header () {
   const { credits } = useUser()
-  const { texts, settingsOpen, setSettingsOpen, headerVisible } = useSettings()
-  if (!headerVisible) return null
+  const { texts, settingsOpen, setSettingsOpen } = useSettings()
 
   const handleClick = (): void => {
     sounds.click.play()
@@ -43,7 +42,10 @@ export function Header () {
             </button>
           </div>
 
-          <div className='z-[450] flex items-center justify-center bg-v_red hover:bg-white clip-header-center h-[80%] text-[clamp(1rem,7vw,7rem)]'>
+          <div
+            onMouseEnter={handleMouseEnter}
+            className='z-[450] flex items-center justify-center bg-v_red hover:bg-white clip-header-center h-[80%] text-[clamp(1rem,7vw,7rem)]'
+          >
             <Link
               to={paths.home}
               onClick={handleClick}

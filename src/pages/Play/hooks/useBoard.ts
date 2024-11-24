@@ -1,4 +1,4 @@
-import { TeamSide } from './../../../models/TeamSide';
+import { TeamSide } from './../../../models/TeamSide'
 import { useCallback } from 'react'
 import { Player } from '../models/Player.ts'
 import { Square } from '../models/Square.ts'

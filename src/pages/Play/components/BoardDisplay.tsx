@@ -72,14 +72,18 @@ export function BoardDisplay () {
     (squareToAttack: Square) => {
       if (!squareFrom) return
 
-      const playerTo: Player = squareToAttack.getEntityByType('player') as Player
+      const playerTo: Player = squareToAttack.getEntityByType(
+        'player'
+      ) as Player
       const canAttack: boolean =
         playerTo &&
         playerTo.teamSide == 'enemy' &&
         Distance.isValid(squareFrom.position, squareToAttack.position, 1)
 
       if (canAttack) {
-        const playerFrom: Player = squareFrom.getEntityByType('player') as Player
+        const playerFrom: Player = squareFrom.getEntityByType(
+          'player'
+        ) as Player
         attackPlayer(playerFrom, playerTo)
         resetActions()
         changeTurn()
@@ -103,7 +107,7 @@ export function BoardDisplay () {
       if (!squareFrom) return
 
       const player: Player = squareFrom.getEntityByType('player') as Player
-      const { abilities } = player.card
+      const { abilities } = player
       const selectedAbility: Ability =
         action === 'ability0' ? abilities[0] : abilities[1]
       const distance: number = Distance.get(
@@ -117,7 +121,7 @@ export function BoardDisplay () {
           .every(boxType => selectedAbility.validEntityTypes.includes(boxType))
 
       if (canUseAbility) {
-        handleAbility(selectedAbility, targetSquare)
+        handleAbility(selectedAbility, squareFrom, targetSquare)
         resetActions()
         changeTurn()
       } else {

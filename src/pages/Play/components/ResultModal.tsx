@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useSettings } from '../../../hooks/useSettings.ts'
 import { Modal } from '../../../components/Modal.tsx'
-import { useUser } from '../../../hooks/useUser.ts'
 import { Result } from '../models/Result.ts'
 import { paths } from '../../../valopack.config.ts'
 
@@ -9,22 +8,12 @@ interface ResultModalProps {
   result: Result
 }
 
-export function ResultModal ({ result }: ResultModalProps) {
+export function ResultModal({ result }: ResultModalProps) {
   const { texts } = useSettings()
-  const { addCredits, removeCredits } = useUser()
-  if (!result) return
-  let creditsWinned: string = ''
+  if (!result) return null
 
-  if (result === 'ally') {
-    addCredits(1000)
-    creditsWinned = '+1000'
-  } else if (result === 'enemy') {
-    removeCredits(500)
-    creditsWinned = '-500'
-  } else if (result === 'draw') {
-    addCredits(500)
-    creditsWinned = '+500'
-  }
+  const creditsWinned =
+    result === 'ally' ? '+1000' : result === 'enemy' ? '-500' : '+500'
 
   return (
     <Modal className='flex flex-col justify-center items-center'>
