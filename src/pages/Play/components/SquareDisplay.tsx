@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Square } from '../models'
+import { Square } from '../models/Square'
 
 interface SquareDisplayProps {
   children: ReactNode

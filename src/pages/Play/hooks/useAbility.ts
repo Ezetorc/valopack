@@ -1,29 +1,26 @@
-import { TeamSide } from './../../../models/TeamSide'
-import { teamColors } from '../../../valopack.config.ts'
-import { Parser } from '../services/Parser.service.ts'
-import { Ability } from '../models/Ability.ts'
-import { Board } from '../models/Board.ts'
-import { Entity } from '../models/Entity.ts'
-
-import { Method } from '../models/Method.ts'
-import { Player } from '../models/Player.ts'
-import { Square } from '../models/Square.ts'
-import { Tag } from '../models/Tag.ts'
-import { GameStore } from '../models/GameStore.ts'
-import { getGameStore } from '../stores/getGameStore.ts'
-import { Effect } from '../models/Effect.ts'
-import {
-  GetParams,
-  AddEntityParams,
-  RemoveEntityParams,
-  ModifyAttributeParams,
-  AddTagParams,
-  WaitParams,
-  ShowFadeParams,
-  AddClassParams,
-  RemoveTagParams,
-  RemoveClassParams
-} from '../models/index.ts'
+import { TeamSide } from '../../../models/TeamSide'
+import { teamColors } from '../../../valopack.config'
+import { Ability } from '../models/Ability'
+import { AddClassParams } from '../models/AddClassParams'
+import { AddEntityParams } from '../models/AddEntityParams'
+import { AddTagParams } from '../models/AddTagParams'
+import { Board } from '../models/Board'
+import { Effect } from '../models/Effect'
+import { Entity } from '../models/Entity'
+import { GameStore } from '../models/GameStore'
+import { GetParams } from '../models/GetParams'
+import { Method } from '../models/Method'
+import { ModifyAttributeParams } from '../models/ModifyAttributeParams'
+import { Player } from '../models/Player'
+import { RemoveClassParams } from '../models/RemoveClassParams'
+import { RemoveEntityParams } from '../models/RemoveEntityParams'
+import { RemoveTagParams } from '../models/RemoveTagParams'
+import { ShowFadeParams } from '../models/ShowFadeParams'
+import { Square } from '../models/Square'
+import { Tag } from '../models/Tag'
+import { WaitParams } from '../models/WaitParams'
+import { Parser } from '../services/Parser.service'
+import { getGameStore } from '../stores/getGameStore'
 
 export function useAbility () {
   const gameStore: GameStore = getGameStore()
@@ -256,7 +253,9 @@ export function useAbility () {
   const wait = (params: WaitParams, squareTo: Square) => {
     if (params.type == 'miliseconds') {
       setTimeout(() => {
-        params.methods.forEach(method => handleMethod(method, squareTo))
+        params.methods.forEach((method: Method) =>
+          handleMethod(method, squareTo)
+        )
 
         const newBoard: Board = new Board(board.colors, [...board.grid])
         setBoard(newBoard)
@@ -265,7 +264,9 @@ export function useAbility () {
       const newEffects: Effect[] = [
         ...effects,
         {
-          methods: params.methods.map(method => getParsedMethod(method)),
+          methods: params.methods.map((method: Method) =>
+            getParsedMethod(method)
+          ),
           turnsLeft: params.time + 1,
           square: squareTo
         }
@@ -299,7 +300,7 @@ export function useAbility () {
     const squares: Square[] = getSquares(params.get, squareTo)
 
     squares.forEach(square => {
-      params.classNames.forEach(className => {
+      params.classNames.forEach((className: string) => {
         square.addClass(className)
       })
     })
@@ -309,7 +310,7 @@ export function useAbility () {
     const squares: Square[] = getSquares(params.get, squareTo)
 
     squares.forEach(square => {
-      params.classNames.forEach(className => {
+      params.classNames.forEach((className: string) => {
         square.removeClass(className)
       })
     })

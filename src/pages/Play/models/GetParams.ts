@@ -1,7 +1,7 @@
-import { EntityType } from '../EntityType.ts'
-import { GetBy } from '../GetBy.ts'
-import { TeamOption } from '../TeamOption.ts'
-import {Tag} from '../Tag.ts'
+import { EntityType } from './EntityType.ts'
+import { GetBy } from './GetBy.ts'
+import { TeamOption } from './TeamOption.ts'
+import {Tag} from './Tag.ts'
 
 export interface GetParams {
   getBy: GetBy

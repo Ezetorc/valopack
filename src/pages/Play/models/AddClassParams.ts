@@ -1,4 +1,4 @@
-import { GetParams } from "./GetParams.ts"
+import { GetParams } from "./GetParams"
 
 export interface AddClassParams {
   get: GetParams

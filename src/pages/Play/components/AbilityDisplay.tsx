@@ -1,5 +1,5 @@
 import { useSettings } from '../../../hooks/useSettings'
-import { Ability } from '../models'
+import { Ability } from '../models/Ability'
 
 export function AbilityDisplay ({ ability }: { ability: Ability }) {
   const { texts } = useSettings()
