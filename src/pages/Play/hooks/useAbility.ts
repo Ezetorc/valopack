@@ -4,6 +4,14 @@ import { Parser } from '../services/Parser.service.ts'
 import { Ability } from '../models/Ability.ts'
 import { Board } from '../models/Board.ts'
 import { Entity } from '../models/Entity.ts'
+
+import { Method } from '../models/Method.ts'
+import { Player } from '../models/Player.ts'
+import { Square } from '../models/Square.ts'
+import { Tag } from '../models/Tag.ts'
+import { GameStore } from '../models/GameStore.ts'
+import { getGameStore } from '../stores/getGameStore.ts'
+import { Effect } from '../models/Effect.ts'
 import {
   GetParams,
   AddEntityParams,
@@ -14,15 +22,8 @@ import {
   ShowFadeParams,
   AddClassParams,
   RemoveTagParams,
-  RemoveClassParams,
-  Effect
+  RemoveClassParams
 } from '../models/index.ts'
-import { Method } from '../models/Method.ts'
-import { Player } from '../models/Player.ts'
-import { Square } from '../models/Square.ts'
-import { Tag } from '../models/Tag.ts'
-import { GameStore } from '../models/GameStore.ts'
-import { getGameStore } from '../stores/getGameStore.ts'
 
 export function useAbility () {
   const gameStore: GameStore = getGameStore()
@@ -119,7 +120,11 @@ export function useAbility () {
     }
   }
 
-  const handleAbility = (ability: Ability, squareFrom: Square, squareTo: Square): void => {
+  const handleAbility = (
+    ability: Ability,
+    squareFrom: Square,
+    squareTo: Square
+  ): void => {
     const { methods } = ability
     const player: Entity | undefined = squareFrom.getEntityByType('player')
 
