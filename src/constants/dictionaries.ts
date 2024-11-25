@@ -8,6 +8,7 @@ export const dictionaries: {
     addCard: 'Add Card',
     youHave: 'You have',
     buy: 'Buy',
+    audio: 'Audio',
     cantBuy: (product: Product, name: string, credits: number) =>
       `You need $${product.price - credits} more to buy ${name}`,
     chooseCard: 'Choose a card',
@@ -179,6 +180,7 @@ export const dictionaries: {
           'Lanza una baliza de estímulo que aumenta la velocidad en uno de los aliados a su alrededor durante dos turnos.'
       }
     },
+    audio: 'Audio',
     wannaBuy: (name: string) => `¿Quieres comprar ${name}?`
   }
 }

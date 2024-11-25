@@ -56,6 +56,7 @@ export function Header () {
             <button
               onMouseEnter={handleMouseEnter}
               onClick={handleOpen}
+              aria-label={texts.settings}
               className='bg-transparent border-none font-stroke cursor-pointer max-h-[100px] aspect-[2/1] flex justify-center items-center text-[clamp(1rem,3vw,4rem)] hover:text-v_aqua'
             >
               <SettingsIcon />
@@ -63,6 +64,7 @@ export function Header () {
             <button
               onMouseEnter={handleMouseEnter}
               onClick={handleToggleAudio}
+              aria-label={texts.audio}
               className='bg-transparent border-none font-stroke cursor-pointer max-h-[100px] aspect-[2/1] flex justify-center items-center text-[clamp(1rem,3vw,4rem)] hover:text-v_aqua'
             >
               {isAudioMuted ? <AudioOFFIcon /> : <AudioONIcon />}

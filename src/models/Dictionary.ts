@@ -8,6 +8,7 @@ interface AbilityInfo {
 export interface Dictionary {
   addCard: string
   buy: string
+  audio: string
   youHave: string
   creditsInfo: string
   cantBuy: (product: Product, name: string, credits: number) => string

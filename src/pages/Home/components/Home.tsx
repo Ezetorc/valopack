@@ -23,7 +23,7 @@ export default function Home () {
   }, [])
 
   return (
-    <section className='w-full min-h-[100dvh] flex items-center justify-center'>
+    <main className='w-full min-h-[100dvh] flex items-center justify-center'>
       <Header />
 
       <article className='grid grid-cols-[1.2fr_1fr] grid-rows-[1fr_1fr] place-items-center gap-[3%] p-[3%] w-full min-h-[100dvh] pt-[20vh]'>
@@ -49,6 +49,6 @@ export default function Home () {
           imgClassName='w-[clamp(300px,_45%,_500px)]'
         />
       </article>
-    </section>
+    </main>
   )
 }
