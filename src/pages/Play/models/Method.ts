@@ -18,7 +18,7 @@ export interface Method {
     | 'remove-box'
     | 'show-fade'
     | 'add-class'
-    | 'remove-class'
+    | 'remove-class',
   params:
     | ModifyAttributeParams
     | WaitParams
