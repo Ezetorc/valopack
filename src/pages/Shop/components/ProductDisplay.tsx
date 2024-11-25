@@ -1,12 +1,12 @@
 import { useShop } from '../hooks/useShop.ts'
 import { getLightColor } from '../../../utilities/getLightColor.ts'
 import { Product } from '../models/Product.ts'
-import { sounds } from '../../../constants/sounds.ts'
 import { useSettings } from '../../../hooks/useSettings.ts'
+import { hoverAudio } from '../../../constants/audios.ts'
 
 export function ProductDisplay ({ product }: { product: Product }) {
   const { setSelectedProduct } = useShop()
-  const { texts } = useSettings()
+  const { texts, playAudio } = useSettings()
   const { color, identifier, price, pack } = product
   const lightColor: string = getLightColor(color, 0.4)
   const name: string = texts.packs[identifier]
@@ -15,7 +15,7 @@ export function ProductDisplay ({ product }: { product: Product }) {
   }
 
   const handleMouseEnter = (): void => {
-    sounds.hover.play()
+    playAudio(hoverAudio)
   }
 
   const handleClick = (): void => {

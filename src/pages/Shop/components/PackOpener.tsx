@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import { useShop } from '../hooks/useShop.ts'
 import { useSettings } from '../../../hooks/useSettings.ts'
-import { sounds } from '../../../constants/sounds.ts'
 import { PackDisplay } from './PackDisplay.tsx'
 import CardDisplay from '../../../components/CardDisplay.tsx'
+import { clickAudio } from '../../../constants/audios.ts'
+import { CloseButton } from '../../../components/CloseButton.tsx'
 
 export function PackOpener () {
   const { ownedProduct, ownedCards, setOwnedProduct } = useShop()
   const [showCards, setShowCards] = useState<boolean>(false)
-  const { texts } = useSettings()
+  const { playAudio } = useSettings()
   if (!ownedProduct) return null
 
   const handleAnimationEnd = (): void => {
@@ -17,7 +18,7 @@ export function PackOpener () {
 
   const handleClose = (): void => {
     setOwnedProduct(null)
-    sounds.click.play()
+    playAudio(clickAudio)
   }
 
   return (
@@ -30,12 +31,7 @@ export function PackOpener () {
             ))}
           </div>
 
-          <button
-            className='sticky bottom-0 border-[2px] border-v_red bg-v_red_gradient font-stroke text-[clamp(40px,_4vw,_100px)] cursor-pointer w-full h-full z-[500] hover:border-white'
-            onClick={handleClose}
-          >
-            {texts.close}
-          </button>
+          <CloseButton onClose={handleClose} className='fixed left-0 top-0 m-[2%] w-[10%]' />
         </div>
       ) : (
         <PackDisplay

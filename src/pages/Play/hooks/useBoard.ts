@@ -57,7 +57,6 @@ export function useBoard () {
     ...gameStore,
     movePlayer,
     attackPlayer,
-    killPlayer,
     resetActions,
     toggleTurn
   }

@@ -1,4 +1,5 @@
-import { sounds } from '../../../constants/sounds.ts'
+import { openingAudio } from '../../../constants/audios.ts'
+import { useSettings } from '../../../hooks/useSettings.ts'
 import { Pack } from '../models/Pack.ts'
 
 interface PackDisplayProps {
@@ -7,8 +8,10 @@ interface PackDisplayProps {
 }
 
 export function PackDisplay ({ pack, onAnimationEnd }: PackDisplayProps) {
+  const { playAudio } = useSettings()
+
   const handleAnimationStart = () => {
-    sounds.opening.play()
+    playAudio(openingAudio)
   }
 
   const handleAnimationEnd = () => {

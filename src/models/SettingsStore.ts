@@ -1,8 +1,12 @@
-import { Language } from "./Language"
+import { Language } from './Language'
 
 export interface SettingsStore {
   language: Language
   setLanguage: (newLanguage: Language) => void
   settingsOpen: boolean
-  setSettingsOpen: (isOpen: boolean) => void
+  setSettingsOpen: (newSettingsOpen: boolean) => void
+  creditsOpen: boolean
+  setCreditsOpen: (newCreditsOpen: boolean) => void
+  isAudioMuted: boolean
+  setIsAudioMuted: (newIsAudioMuted: boolean) => void
 }

@@ -6,6 +6,7 @@ export const dictionaries: {
 } = {
   en: {
     addCard: 'Add Card',
+    youHave: 'You have',
     buy: 'Buy',
     cantBuy: (product: Product, name: string, credits: number) =>
       `You need $${product.price - credits} more to buy ${name}`,
@@ -19,6 +20,8 @@ export const dictionaries: {
       mixed: 'Mixed Pack'
     },
     close: 'Close',
+    creditsInfo:
+      'Get credits by winning matches. You can use credits to buy packs and get new cards to play with new strategys or simply for just collecting all of them.',
     controller: 'Controller',
     credits: 'Credits',
     duelist: 'Duelist',
@@ -92,6 +95,9 @@ export const dictionaries: {
   es: {
     addCard: 'Añadir Carta',
     buy: 'Comprar',
+    youHave: 'Tienes',
+    creditsInfo:
+      'Consigue créditos ganando partidos. Puedes usar los créditos para comprar packs y conseguir nuevas cartas para jugar con nuevas estrategias o simplemente para coleccionarlas todas.',
     cantBuy: (product: Product, name: string, credits: number) =>
       `Necesitas $${product.price - credits} más para comprar ${name}`,
     chooseCard: 'Elige una carta',
@@ -165,7 +171,7 @@ export const dictionaries: {
       skySmoke: {
         name: 'Humo celestial',
         description:
-          'Lanza un humo 3x3 que deje pasar a tus aliados pero no a tus enemigos'
+          'Lanza un humo 3x3 que deja pasar a tus aliados pero no a tus enemigos'
       },
       stimBeacon: {
         name: 'Baliza potenciadora',

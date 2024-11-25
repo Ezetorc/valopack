@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { sounds } from '../../../constants/sounds.ts'
+import { clickAudio, hoverAudio } from '../../../constants/audios.ts'
+import { useSettings } from '../../../hooks/useSettings.ts'
 
 interface SectionLinkProps {
   to: string
@@ -16,12 +17,14 @@ export function SectionLink ({
   className,
   imgClassName
 }: SectionLinkProps) {
+  const { playAudio } = useSettings()
+
   const handleHover = () => {
-    sounds.hover.play()
+    playAudio(hoverAudio)
   }
 
   const handleClick = () => {
-    sounds.click.play()
+    playAudio(clickAudio)
   }
 
   return (

@@ -22,7 +22,7 @@ function CardDisplay ({ card }: { card: Card }) {
           {texts[role]}
         </span>
       </div>
-      <span className='font-stroke text-[clamp(24px,4vw,20px)] absolute text-center bottom-0 w-full z-[200]'>
+      <span className='font-stroke text-[clamp(24px,4vw,20px)] absolute text-right bottom-0 w-full z-[20] pr-[5%]'>
         {`${texts.level}: ${level}`}
       </span>
     </div>

@@ -1,17 +1,18 @@
 import { useUser } from '../../../hooks/useUser.ts'
 import { useSettings } from '../../../hooks/useSettings.ts'
-import { sounds } from '../../../constants/sounds.ts'
 import CardDisplay from '../../../components/CardDisplay.tsx'
 import { Card } from '../../../models/Card.ts'
 import { Inventory } from '../../../models/Inventory.ts'
 import { CardSlot } from '../../../models/CardSlot.ts'
+import { clickAudio } from '../../../constants/audios.ts'
+import { CloseButton } from '../../../components/CloseButton.tsx'
 
 interface TeamSelectorProps {
   cardSlotToChange: CardSlot
 }
 
 export function TeamSelector ({ cardSlotToChange }: TeamSelectorProps) {
-  const { texts } = useSettings()
+  const { texts, playAudio } = useSettings()
   const { inventory, setInventory, selectorVisible, setSelectorVisible } =
     useUser()
   const cardsNotInTeam: Card[] = inventory.getCardsNotInTeam()
@@ -19,11 +20,11 @@ export function TeamSelector ({ cardSlotToChange }: TeamSelectorProps) {
 
   const handleClose = () => {
     setSelectorVisible(false)
-    sounds.click.play()
+    playAudio(clickAudio)
   }
 
   const handleClick = (clickedCard: Card) => {
-    sounds.click.play()
+    playAudio(clickAudio)
     setSelectorVisible(false)
 
     const newInventory: Inventory = new Inventory([...inventory.cards])
@@ -48,12 +49,7 @@ export function TeamSelector ({ cardSlotToChange }: TeamSelectorProps) {
   return (
     <div className='absolute w-[100vw] min-h-[100dvh] z-[1000]'>
       <header className='bg-[#282828] w-full h-[20%] min-h-[100px] grid grid-cols-[1fr_8fr] justify-items-center items-center sticky z-[200] top-0'>
-        <button
-          onClick={handleClose}
-          className='cursor-pointer bg-v_red_gradient border-v_red text-white text-[clamp(30px,5vw,50px)] font-stroke border-2 border-main ml-[10%] min-w-[150px] aspect-[16/9] hover:border-white'
-        >
-          {texts.close}
-        </button>
+        <CloseButton onClose={handleClose} className='ml-[10%] min-w-[150px]' />
         <span className='text-[clamp(60px,5vw,100px)] text-center'>
           {cardsNotInTeam.length > 0 ? texts.chooseCard : texts.noCards}
         </span>
