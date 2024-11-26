@@ -15,7 +15,9 @@ export default function Settings () {
     playAudio(clickAudio)
   }
 
-  const handleChangeLanguage = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+  const handleChangeLanguage = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
     const newLanguage: Language = event.currentTarget.value as Language
     setLanguage(newLanguage)
   }
@@ -28,8 +30,12 @@ export default function Settings () {
       </header>
 
       <div className='w-full h-[80%] flex justify-center'>
-        <Setting label={texts.language} >
-          <select onChange={handleChangeLanguage} className='w-full h-full'>
+        <Setting label={texts.language}>
+          <select
+            id={texts.language}
+            onChange={handleChangeLanguage}
+            className='w-full h-full'
+          >
             {languages.map((language, index) => (
               <option key={index} value={language.value}>
                 {language.label}
