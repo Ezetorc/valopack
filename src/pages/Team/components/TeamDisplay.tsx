@@ -48,7 +48,7 @@ export default function TeamDisplay () {
       {!selectorVisible ? (
         <>
           <Header />
-          <section className='grid grid-cols-[repeat(5,1fr)] place-items-center w-full min-h-dvh pt-[10vh]'>
+          <main className='grid grid-cols-[repeat(5,1fr)] place-items-center w-full min-h-dvh pt-[10vh]'>
             {Object.values(cardSlots).map((cardSlot, index) => (
               <CardSlotDisplay
                 key={index}
@@ -56,7 +56,7 @@ export default function TeamDisplay () {
                 handleClick={() => handleClick(cardSlot)}
               />
             ))}
-          </section>
+          </main>
         </>
       ) : (
         <TeamSelector cardSlotToChange={cardSlotToChange} />

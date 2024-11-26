@@ -28,11 +28,11 @@ export default function Shop () {
       {!ownedProduct ? (
         <>
           <Header />
-          <section className='p-[2%] gap-[3%] pt-[20vh] grid grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] justify-items-center w-[100vw] min-h-full'>
+          <main className='p-[2%] gap-[3%] pt-[20vh] grid grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] justify-items-center w-[100vw] min-h-full'>
             {products.map((product, index) => (
               <ProductDisplay key={index} product={product} />
             ))}
-          </section>
+          </main>
         </>
       ) : (
         <PackOpener />

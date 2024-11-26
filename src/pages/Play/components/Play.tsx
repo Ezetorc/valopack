@@ -53,7 +53,7 @@ export default function Play () {
 
     const gameResult: Result = board.getResult()
     if (!result) return
-    
+
     setResult(gameResult)
 
     if (gameResult === 'ally') {
@@ -70,12 +70,12 @@ export default function Play () {
       {result && <ResultModal result={result} />}
       {infoVisible && <PlayerInfo onClose={() => setInfoVisible(false)} />}
 
-      <section className='w-full h-[100dvh] grid p-[1%] gap-[1%] grid-rows-[1fr,_1fr] place-items-center'>
+      <main className='w-full h-[100dvh] grid p-[1%] gap-[1%] grid-rows-[1fr,_1fr] place-items-center'>
         <BoardDisplay />
         {squareFrom?.hasEntity('player') && (
           <Actions onOpenInfo={() => setInfoVisible(true)} />
         )}
-      </section>
+      </main>
     </>
   )
 }

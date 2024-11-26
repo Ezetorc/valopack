@@ -34,7 +34,7 @@ export function SectionLink ({
       className={`relative overflow-hidden ${className}`}
       to={to}
     >
-      <img className={imgClassName} src={image} alt={text} aria-label={text} />
+      <img className={imgClassName} src={image} alt={text} />
       <span className='left-0 bottom-0 absolute w-full text-white text no-underline text-left pl-[5%]'>
         {text}
       </span>

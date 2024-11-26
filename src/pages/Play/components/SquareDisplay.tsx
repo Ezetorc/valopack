@@ -20,6 +20,7 @@ export function SquareDisplay ({
     <button
       className={`aspect-square w-full relative flex flex-col justify-center items-center border-[5px] border-transparent hover:cursor-pointer hover:border-white ${className}`}
       onClick={onClick}
+      aria-label={`Square ${square.position.x}-${square.position.y}`}
       style={{ ...square.style, backgroundColor: color }}
     >
       {children}
