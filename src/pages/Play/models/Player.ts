@@ -5,6 +5,7 @@ import { Position } from './Position.ts'
 import { initialAttributes } from '../../../valopack.config.ts'
 import { Role } from '../../../models/Role.ts'
 import { Ability } from './Ability.ts'
+import { Parser } from '../services/Parser.service.ts'
 
 export class Player extends Entity {
   public name: string
@@ -35,10 +36,11 @@ export class Player extends Entity {
   }: Partial<Player>) {
     super({ position, free, tags, type })
 
-    const parsedAbilities: Ability[] = [
-      { ...abilities[0], index: 0 },
-      { ...abilities[1], index: 1 }
-    ]
+    const parsedAbilities: Ability[] = Parser.getParsedAbilities(abilities)
+    const parsedAttributes: Attributes = Parser.getParsedAttributes(
+      attributes,
+      level
+    )
 
     this.name = name
     this.image = image
@@ -47,9 +49,12 @@ export class Player extends Entity {
     this.level = level
     this.abilities = parsedAbilities
     this.isInTeam = isInTeam
-    this.attributes = attributes
+    this.attributes = parsedAttributes
     this.teamSide = teamSide
-    this.abilityUses = [parsedAbilities[0]?.uses ?? 1, parsedAbilities[1]?.uses ?? 1]
+    this.abilityUses = [
+      parsedAbilities[0]?.uses ?? 1,
+      parsedAbilities[1]?.uses ?? 1
+    ]
   }
 
   isDead (): boolean {

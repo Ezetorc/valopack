@@ -7,7 +7,10 @@ interface CardSlotDisplayProps {
   handleClick?: () => void
 }
 
-export function CardSlotDisplay ({ cardSlot, handleClick }: CardSlotDisplayProps) {
+export function CardSlotDisplay ({
+  cardSlot,
+  handleClick
+}: CardSlotDisplayProps) {
   const { texts } = useSettings()
 
   return (
@@ -19,7 +22,11 @@ export function CardSlotDisplay ({ cardSlot, handleClick }: CardSlotDisplayProps
       } `}
       onClick={handleClick}
     >
-      {cardSlot ? <CardDisplay card={cardSlot} /> : texts.addCard}
+      {cardSlot ? (
+        <CardDisplay showLevel={true} card={cardSlot} />
+      ) : (
+        texts.addCard
+      )}
     </button>
   )
 }

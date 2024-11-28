@@ -56,14 +56,14 @@ export function TeamSelector ({ cardSlotToChange }: TeamSelectorProps) {
       </header>
 
       {cardsNotInTeam.length > 0 && (
-        <div className='grid grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] justify-items-center w-[100vw] min-h-full'>
+        <div className='grid grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] justify-items-center w-[100vw] min-h-full pt-[2%]'>
           {cardsNotInTeam.map((card, index) => (
             <button
               key={index}
               className='w-full max-w-[300px] min-w-[200px] aspect-[9/16] rounded-[20px] relative overflow-hidden cursor-pointer mb-[5%] bg-transparent hover:opacity-80'
               onClick={() => handleClick(card)}
             >
-              <CardDisplay card={card} />
+              <CardDisplay showLevel={true} card={card} />
             </button>
           ))}
         </div>

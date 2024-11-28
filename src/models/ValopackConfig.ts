@@ -7,6 +7,7 @@ import { TeamSide } from './TeamSide.ts'
 export interface ValopackConfig {
   appName: Readonly<string>
   maxHealth: Readonly<number>
+  maxCardLevel: Readonly<number>
   initialCredits: Readonly<number>
   levelMultiplier: Readonly<number>
   defaultLanguage: Readonly<Language>
@@ -16,5 +17,6 @@ export interface ValopackConfig {
   backgrounds: Readonly<{ [key in Section]: string }>
   initialCardsNames: Readonly<string[]>
   initialAttributes: Readonly<Attributes>
+  maxLeveledAttributes: Readonly<Attributes>
   languages: Readonly<LanguageOption[]>
 }

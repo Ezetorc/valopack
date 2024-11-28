@@ -5,9 +5,10 @@ import { Card } from '../models/Card'
 interface CardDisplayProps {
   card: Card
   className?: string
+  showLevel?: boolean
 }
 
-function CardDisplay ({ card, className }: CardDisplayProps) {
+function CardDisplay ({ card, className, showLevel = false }: CardDisplayProps) {
   const { texts } = useSettings()
   const { image, name, role, level } = card
 
@@ -29,9 +30,11 @@ function CardDisplay ({ card, className }: CardDisplayProps) {
           {texts[role]}
         </span>
       </div>
-      <span className='font-stroke text-[clamp(24px,4vw,20px)] absolute text-right bottom-0 w-full z-[20] pr-[5%]'>
-        {`${texts.level}: ${level}`}
-      </span>
+      {showLevel && (
+        <span className='font-stroke text-[clamp(24px,4vw,20px)] absolute text-right bottom-0 w-full z-[20] pr-[5%]'>
+          {`${texts.level}: ${level}`}
+        </span>
+      )}
     </div>
   )
 }

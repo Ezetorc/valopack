@@ -34,7 +34,7 @@ export function PlayerInfo ({ onClose }: PlayerInfoProps) {
   }
 
   return (
-    <Modal className='w-[clamp(310px,80vw,1000px)] h-[90vh] grid grid-cols-[1fr,1fr]'>
+    <Modal className='w-[clamp(315px,80vw,1000px)] h-[90vh] grid grid-cols-[1fr,1fr]'>
       <div className='w-full h-full'>
         <header className='w-full h-[20%] grid grid-cols-2'>
           <CloseButton onClose={onClose} className='h-[50%] ml-[5%] mt-[5%]' />

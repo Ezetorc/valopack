@@ -3,8 +3,9 @@ import { ValopackConfig } from './models/ValopackConfig.ts'
 export const valopackConfig: ValopackConfig = {
   appName: 'VALOPACK',
   maxHealth: 100,
+  maxCardLevel: 5,
   levelMultiplier: 1,
-  initialCredits: 10000,
+  initialCredits: 100000,
   defaultLanguage: 'en',
   languages: [
     {
@@ -63,13 +64,22 @@ export const valopackConfig: ValopackConfig = {
   },
   initialCardsNames: ['Sage', 'Brimstone', 'Phoenix', 'Jett', 'Sova'],
   initialAttributes: {
-    attack: 50,
     health: 100,
+    attack: 50,
     defense: 10,
     speed: 1,
     precision: 90,
     critic: 20,
     resistance: 30
+  },
+  maxLeveledAttributes: {
+    health: 200,
+    attack: 100,
+    defense: 100,
+    speed: 2,
+    precision: 100,
+    critic: 50,
+    resistance: 50
   }
 }
 
@@ -85,5 +95,7 @@ export const {
   initialAttributes,
   initialCredits,
   languages,
-  maxHealth
+  maxHealth,
+  maxCardLevel,
+  maxLeveledAttributes
 } = valopackConfig
