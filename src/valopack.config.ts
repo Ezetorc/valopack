@@ -2,6 +2,7 @@ import { ValopackConfig } from './models/ValopackConfig.ts'
 
 export const valopackConfig: ValopackConfig = {
   appName: 'VALOPACK',
+  maxHealth: 100,
   levelMultiplier: 1,
   initialCredits: 10000,
   defaultLanguage: 'en',
@@ -83,5 +84,6 @@ export const {
   initialCardsNames,
   initialAttributes,
   initialCredits,
-  languages
+  languages,
+  maxHealth
 } = valopackConfig

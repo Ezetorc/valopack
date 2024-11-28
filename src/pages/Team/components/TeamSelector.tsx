@@ -48,9 +48,9 @@ export function TeamSelector ({ cardSlotToChange }: TeamSelectorProps) {
 
   return (
     <div className='absolute w-[100vw] min-h-[100dvh] z-[1000]'>
-      <header className='bg-[#282828] w-full h-[20%] min-h-[100px] grid grid-cols-[1fr_8fr] justify-items-center items-center sticky z-[200] top-0'>
+      <header className='bg-v_black border-b-[1px] border-[#fff] w-full h-[150px] grid grid-cols-[1fr_8fr] justify-items-center items-center sticky z-[200] top-0'>
         <CloseButton onClose={handleClose} className='ml-[10%] min-w-[150px]' />
-        <span className='text-[clamp(60px,5vw,100px)] text-center'>
+        <span className='text-[clamp(60px,5vw,70px)] text-center'>
           {cardsNotInTeam.length > 0 ? texts.chooseCard : texts.noCards}
         </span>
       </header>

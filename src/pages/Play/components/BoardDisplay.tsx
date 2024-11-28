@@ -8,6 +8,9 @@ import { Ability } from '../models/Ability.ts'
 import { EntityDisplay } from './EntityDisplay.tsx'
 import { SquareDisplay } from './SquareDisplay.tsx'
 import { Distance } from '../services/Distance.service.ts'
+import { getMissingEntityTypes } from '../utilities/getMissingEntityTypes.ts'
+import { EntityType } from '../models/EntityType.ts'
+import { Effect } from '../models/Effect.ts'
 
 export function BoardDisplay () {
   const {
@@ -19,15 +22,18 @@ export function BoardDisplay () {
     squareFrom,
     resetActions,
     attackPlayer,
-    toggleTurn
+    toggleTurn,
+    effects,
+    setEffects
   } = useBoard()
-  const { handleAbility, handleEffects } = useAbility()
+  const { handleAbility, getUpdatedEffects } = useAbility()
   const boardRef = useRef<HTMLDivElement>(null)
 
   const changeTurn = useCallback(() => {
     toggleTurn()
-    handleEffects()
-  }, [handleEffects, toggleTurn])
+    const newEffects: Effect[] = getUpdatedEffects(effects)
+    setEffects(newEffects)
+  }, [toggleTurn, effects, getUpdatedEffects, setEffects])
 
   const showInvalidMove = useCallback(() => {
     boardRef.current?.classList.add('animate-invalid_move')
@@ -77,7 +83,7 @@ export function BoardDisplay () {
       ) as Player
       const canAttack: boolean =
         playerTo &&
-        playerTo.teamSide == 'enemy' &&
+        playerTo.teamSide === 'enemy' &&
         Distance.isValid(squareFrom.position, squareToAttack.position, 1)
 
       if (canAttack) {
@@ -114,11 +120,26 @@ export function BoardDisplay () {
         squareFrom.position,
         targetSquare.position
       )
+
+      const validEntityTypes: (EntityType | 'empty')[] =
+        selectedAbility.validEntityTypes
+      const missingEntityTypes: EntityType[] = getMissingEntityTypes(
+        validEntityTypes.filter(type => type !== 'empty') as EntityType[]
+      )
+
+      const targetEntities = targetSquare.isEmpty()
+        ? 'empty'
+        : targetSquare.getEntitiesTypes()
+
       const canUseAbility: boolean =
         Distance.isWithinRange(distance, selectedAbility.useRange) &&
-        targetSquare
-          .getEntitiesTypes()
-          .every(boxType => selectedAbility.validEntityTypes.includes(boxType))
+        (targetEntities === 'empty'
+          ? validEntityTypes.includes('empty')
+          : targetEntities.every(
+              entityType =>
+                validEntityTypes.includes(entityType) &&
+                !missingEntityTypes.includes(entityType)
+            ))
 
       if (canUseAbility) {
         handleAbility(selectedAbility, squareFrom, targetSquare)
@@ -171,7 +192,7 @@ export function BoardDisplay () {
 
   return (
     <div
-      className='grid grid-cols-[repeat(7,_1fr)] grid-rows-[repeat(5,_1fr)] border-[20px] border-[#ffffff5e] items-center w-[90%] min-w-[700px] max-w-[900px] aspect-[16/10] border-r-[5px]'
+      className='grid grid-cols-[repeat(7,_1fr)] grid-rows-[repeat(5,_1fr)] border-[20px] border-[#ffffff5e] items-center w-[90%] min-w-[700px] max-w-[900px] aspect-[16/10]'
       ref={boardRef}
     >
       {board.grid.flat().map((square, squareIndex) => (

@@ -1,20 +1,27 @@
-import { TeamSide } from "../../../models/TeamSide"
-import { Action } from "./Action"
-import { Board } from "./Board"
-import { Effect } from "./Effect"
-import { Square } from "./Square"
+import { TeamSide } from '../../../models/TeamSide'
+import { Action } from './Action'
+import { Board } from './Board'
+import { Effect } from './Effect'
+import { Square } from './Square'
+
+type StateUpdater<T> = T | ((prev: T) => T)
 
 export interface GameStore {
   board: Board
-  setBoard: (newBoard: Board) => void
+  setBoard: (newBoard: StateUpdater<Board>) => void
+
   squareFrom: Square | null
-  setSquareFrom: (newSquareFrom: Square | null) => void
+  setSquareFrom: (newSquareFrom: StateUpdater<Square | null>) => void
+
   squareTo: Square | null
-  setSquareTo: (squareTo: Square | null) => void
+  setSquareTo: (newSquareTo: StateUpdater<Square | null>) => void
+
   turn: TeamSide
-  setTurn: (turn: TeamSide) => void
+  setTurn: (turn: StateUpdater<TeamSide>) => void
+
   action: Action | null
-  setAction: (newAction: Action | null) => void
+  setAction: (newAction: StateUpdater<Action | null>) => void
+
   effects: Effect[]
-  setEffects: (newEffects: Effect[]) => void
+  setEffects: (newEffects: StateUpdater<Effect[]>) => void
 }

@@ -5,7 +5,7 @@ export const skySmoke: Ability = {
   useRange: [1, 10],
   uses: 1,
   index: 1,
-  validEntityTypes: [],
+  validEntityTypes: ["empty"],
   methods: [
     {
       type: 'add-box',

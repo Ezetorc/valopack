@@ -25,17 +25,17 @@ export function ProductDisplay ({ product }: { product: Product }) {
   return (
     <button
       onMouseEnter={handleMouseEnter}
-      className='w-full max-w-[400px] aspect-[1/1.5] grid grid-rows-[1fr_3fr] relative bg-transparent border-none cursor-pointer'
+      className='w-full max-w-[400px] aspect-[1/1.5] grid grid-rows-[1fr_3fr] relative bg-transparent border-none cursor-pointer group'
       onClick={handleClick}
     >
       <img
-        className='w-[70%] absolute translate-x-[20%] transition-transform hover:translate-x-[20%] hover:translate-y-[-5%]'
+        className='w-[70%] absolute translate-x-[20%] transition-transform group-hover:translate-x-[20%] group-hover:translate-y-[-5%]'
         src={pack.image}
         title={name}
         alt={`${name} image`}
       />
       <div
-        className='border-[3px] border-white aspect-[1/1.3] row-[2] grid grid-rows-[7fr,_1fr,_1fr]'
+        className='border-y-[2px] border-white aspect-[1/1.3] row-[2] grid grid-rows-[7fr,_1fr,_1fr]'
         style={backgroundStyle}
       >
         <span className='font-stroke flex items-center justify-start pl-[2%] overflow-hidden row-[2] text-[clamp(30px,_3vw,_50px)]'>

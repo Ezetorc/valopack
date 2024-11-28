@@ -34,7 +34,7 @@ export default function Settings () {
           <select
             id={texts.language}
             onChange={handleChangeLanguage}
-            className='w-full h-full'
+            className='w-[60%] aspect-video bg-v_red_gradient border-2 border-v_red hover:border-[#fff] cursor-pointer text-center text-[clamp(20px,3vw,40px)]'
           >
             {languages.map((language, index) => (
               <option key={index} value={language.value}>

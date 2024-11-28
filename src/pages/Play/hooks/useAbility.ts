@@ -1,4 +1,3 @@
-import { TeamSide } from '../../../models/TeamSide'
 import { teamColors } from '../../../valopack.config'
 import { Ability } from '../models/Ability'
 import { AddClassParams } from '../models/AddClassParams'
@@ -21,12 +20,14 @@ import { Tag } from '../models/Tag'
 import { WaitParams } from '../models/WaitParams'
 import { Parser } from '../services/Parser.service'
 import { getGameStore } from '../stores/getGameStore'
+import { applyFilters } from '../utilities/applyFilters'
 
 export function useAbility () {
   const gameStore: GameStore = getGameStore()
-  const { squareFrom, board, setBoard, setEffects, turn, effects } = gameStore
+  const { squareFrom, board, setBoard, setEffects, turn } = gameStore
 
-  const handleEffects = (): void => {
+  const getUpdatedEffects = (effects: Effect[]): Effect[] => {
+    console.log('handleEffects => ', effects)
     effects.forEach(effect => {
       effect.turnsLeft -= 1
 
@@ -35,86 +36,7 @@ export function useAbility () {
       }
     })
 
-    setEffects(effects.filter(effect => effect.turnsLeft > 0))
-  }
-
-  const getParsedMethod = (method: Method): Method => {
-    const { type, params } = method
-
-    if (type == 'add-tag' || type == 'remove-tag') {
-      if ('tags' in params) {
-        params['tags'] = Parser.getParsedTags(params['tags'], turn)
-      }
-    }
-
-    if ('get' in params) {
-      const getParams: GetParams = params['get']
-
-      if (getParams.tags) {
-        getParams.tags = Parser.getParsedTags(getParams.tags, turn)
-      }
-
-      if (getParams.filters?.tags) {
-        getParams.filters.tags = Parser.getParsedTags(
-          getParams.filters.tags,
-          turn
-        )
-      }
-
-      if (getParams.filters?.team) {
-        getParams.filters.team = Parser.getParsedTeamOption(
-          getParams.filters.team,
-          turn
-        )
-      }
-    }
-
-    return method
-  }
-
-  const applyFilters = (
-    squares: Square[],
-    filters: GetParams['filters']
-  ): void => {
-    if (!filters) return
-    for (let i = squares.length - 1; i >= 0; i--) {
-      const square = squares[i]
-      const player: Player = square.getEntityByType('player') as Player
-
-      if (filters.entityTypes) {
-        const hasAllBoxTypes = filters.entityTypes.every(entityType =>
-          square.entities.some(entity => entity.type === entityType)
-        )
-
-        if (!hasAllBoxTypes) {
-          squares.splice(i, 1)
-          continue
-        }
-      }
-
-      if (filters.team && player) {
-        const parsedTeamSide: TeamSide = Parser.getParsedTeamOption(
-          filters.team,
-          turn
-        )
-
-        if (player.teamSide !== parsedTeamSide) {
-          squares.splice(i, 1)
-          continue
-        }
-      }
-
-      if (filters.tags) {
-        const hasTags: boolean = square.entities.some(entity =>
-          entity.has(filters.tags as Tag[])
-        )
-
-        if (!hasTags) {
-          squares.splice(i, 1)
-          continue
-        }
-      }
-    }
+    return effects.filter(effect => effect.turnsLeft > 0)
   }
 
   const handleAbility = (
@@ -125,10 +47,8 @@ export function useAbility () {
     const { methods } = ability
     const player: Entity | undefined = squareFrom.getEntityByType('player')
 
-    console.log(player)
     if (player) {
       ;(player as Player).abilityUses[ability.index] -= 1
-      console.log('aca')
     }
 
     methods.forEach(method => {
@@ -201,7 +121,7 @@ export function useAbility () {
       }
     }
 
-    applyFilters(squares, filters)
+    applyFilters(squares, filters, turn)
 
     return squares
   }
@@ -233,6 +153,7 @@ export function useAbility () {
 
     squares.forEach(square => {
       const player: Entity | undefined = square.getEntityByType('player')
+
       if (player) {
         ;(player as Player).attributes[params.attribute] += params.amount
       }
@@ -253,25 +174,21 @@ export function useAbility () {
   const wait = (params: WaitParams, squareTo: Square) => {
     if (params.type == 'miliseconds') {
       setTimeout(() => {
-        params.methods.forEach((method: Method) =>
-          handleMethod(method, squareTo)
-        )
+        params.methods.forEach(method => handleMethod(method, squareTo))
 
         const newBoard: Board = new Board(board.colors, [...board.grid])
         setBoard(newBoard)
       }, params.time)
     } else {
-      const newEffects: Effect[] = [
-        ...effects,
-        {
-          methods: params.methods.map((method: Method) =>
-            getParsedMethod(method)
-          ),
-          turnsLeft: params.time + 1,
-          square: squareTo
-        }
-      ]
-      setEffects(newEffects)
+      const newEffect: Effect = {
+        methods: params.methods.map(method =>
+          Parser.getParsedMethod(method, turn)
+        ),
+        turnsLeft: params.time + 1,
+        square: squareTo
+      }
+
+      setEffects(prevEffects => [...prevEffects, newEffect])
     }
   }
 
@@ -310,11 +227,11 @@ export function useAbility () {
     const squares: Square[] = getSquares(params.get, squareTo)
 
     squares.forEach(square => {
-      params.classNames.forEach((className: string) => {
+      params.classNames.forEach(className => {
         square.removeClass(className)
       })
     })
   }
 
-  return { ...gameStore, handleAbility, handleMethod, handleEffects }
+  return { ...gameStore, handleAbility, handleMethod, getUpdatedEffects }
 }

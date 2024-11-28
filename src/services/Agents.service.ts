@@ -1,5 +1,5 @@
 import { Agent } from './../models/Agent'
-import { agents } from '../constants/agents'
+import { agents } from '../constants/agentsWithOnlyOneAbility'
 import { Pack } from '../pages/Shop/models/Pack'
 import { Product } from '../pages/Shop/models/Product'
 import { Role } from '../models/Role'

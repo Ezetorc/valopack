@@ -6,8 +6,8 @@ import { Position } from './Position.ts'
 export class Square {
   public entities: Entity[]
   public position: Position
-  public style: { [key: string]: string }
   public classes: Set<string>
+  public style: { [key: string]: string }
 
   constructor ({
     position = new Position(0, 0),
@@ -17,8 +17,8 @@ export class Square {
   }: Partial<Square> = {}) {
     this.position = position
     this.entities = entities
-    this.style = style
     this.classes = classes
+    this.style = style
   }
 
   getFirstEntity (): Entity {
@@ -29,8 +29,16 @@ export class Square {
     return this.entities.some(entity => entity.type == entityType)
   }
 
+  isEmpty (): boolean {
+    return this.entities.length === 0
+  }
+
   getEntityByType (entityType: EntityType): Entity | undefined {
     return this.entities.find(entiy => entiy.type == entityType)
+  }
+
+  getEntitiesByType (entityType: EntityType): Entity[] {
+    return this.entities.filter(entity => entity.type === entityType)
   }
 
   isFree (): boolean {
@@ -69,8 +77,8 @@ export class Square {
     }
   }
 
-  getEntitiesTypes (): EntityType[] {
-    return this.entities.map(entity => entity.type)
+  getEntitiesTypes (): EntityType[] | 'empty' {
+    return this.isEmpty() ? 'empty' : this.entities.map(entity => entity.type)
   }
 
   getColor (colors: Hexadecimal[]): Hexadecimal {

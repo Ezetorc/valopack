@@ -6,6 +6,7 @@ import { TeamSide } from './TeamSide.ts'
 
 export interface ValopackConfig {
   appName: Readonly<string>
+  maxHealth: Readonly<number>
   initialCredits: Readonly<number>
   levelMultiplier: Readonly<number>
   defaultLanguage: Readonly<Language>

@@ -5,7 +5,7 @@ export const stimBeacon: Ability = {
   useRange: [1, 10],
   uses: 2,
   index: 0,
-  validEntityTypes: [],
+  validEntityTypes: ['empty'],
   methods: [
     {
       type: 'add-box',

@@ -22,23 +22,30 @@ export function PackOpener () {
   }
 
   return (
-    <section className='absolute w-[100vw] min-h-dvh bg-v_opener_gradient z-[100] grid place-items-center'>
-      {showCards ? (
-        <div className='w-[100vw] min-h-dvh grid justify-items-center'>
-          <div className='grid grid-cols-[repeat(auto-fit,_minmax(300px, 1fr))] justify-items-center items-center w-[100vw] min-h-full p-[2%] gap-[2%] animate-show'>
-            {ownedCards.map((card, index) => (
-              <CardDisplay key={index} card={card} />
-            ))}
-          </div>
-
-          <CloseButton onClose={handleClose} className='fixed left-0 top-0 m-[2%] w-[10%]' />
-        </div>
-      ) : (
-        <PackDisplay
-          pack={ownedProduct.pack}
-          onAnimationEnd={handleAnimationEnd}
-        />
+    <section className='relative w-full min-h-[100vh] pb-[3%]'>
+      {showCards && (
+        <header className='bg-v_black border-b-[1px] border-[#fff] w-full h-[150px] sticky top-0 flex items-center justify-start z-[30] animate-show'>
+          <CloseButton
+            onClose={handleClose}
+            className='w-[clamp(10px,100%,200px)] ml-[1%]'
+          />
+        </header>
       )}
+
+      <div className='w-full h-full grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-[3%] p-[1%] place-items-center'>
+        {showCards ? (
+          <>
+            {ownedCards.map((card, index) => (
+              <CardDisplay className='animate-show' key={index} card={card} />
+            ))}
+          </>
+        ) : (
+          <PackDisplay
+            pack={ownedProduct.pack}
+            onAnimationEnd={handleAnimationEnd}
+          />
+        )}
+      </div>
     </section>
   )
 }

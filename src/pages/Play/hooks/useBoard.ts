@@ -17,7 +17,7 @@ export function useBoard () {
     setTurn(newTurn)
   }
 
-  const movePlayer = (player: Player, square: Square) => {
+  const movePlayer = (player: Player, square: Square): void => {
     const squareTo: Square = board.getSquare(square.position)
     const playerSquare: Square = board.getSquare(player.position)
     const movedPlayer: Player = new Player({
@@ -29,7 +29,7 @@ export function useBoard () {
     playerSquare.removeEntity(player)
   }
 
-  const attackPlayer = (attacker: Player, target: Player) => {
+  const attackPlayer = (attacker: Player, target: Player): void => {
     const damage: number = getDamage(attacker, target)
     target.setHealth(prevHealth => (prevHealth -= damage))
 
@@ -38,7 +38,7 @@ export function useBoard () {
     }
   }
 
-  const killPlayer = (attacker: Player, target: Player) => {
+  const killPlayer = (attacker: Player, target: Player): void => {
     const targetSquare: Square = board.getSquare(target.position)
     targetSquare.removeEntity(target)
 

@@ -65,6 +65,7 @@ export default function Play () {
     }
   }, [board, matchStarted, result, addCredits, removeCredits])
 
+
   return (
     <>
       {result && <ResultModal result={result} />}

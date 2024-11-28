@@ -4,20 +4,32 @@ import { GameStore } from '../models/GameStore'
 
 export const getGameStore = create<GameStore>(set => ({
   board: getRandomBoard(),
-  setBoard: newBoard => set({ board: newBoard }),
+  setBoard: (newBoard) => set(state => ({
+    board: typeof newBoard === 'function' ? newBoard(state.board) : newBoard
+  })),
 
   squareFrom: null,
-  setSquareFrom: newSquareFrom => set({ squareFrom: newSquareFrom }),
+  setSquareFrom: (newSquareFrom) => set(state => ({
+    squareFrom: typeof newSquareFrom === 'function' ? newSquareFrom(state.squareFrom) : newSquareFrom
+  })),
 
   squareTo: null,
-  setSquareTo: newSquareTo => set({ squareTo: newSquareTo }),
+  setSquareTo: (newSquareTo) => set(state => ({
+    squareTo: typeof newSquareTo === 'function' ? newSquareTo(state.squareTo) : newSquareTo
+  })),
 
   turn: 'ally',
-  setTurn: newTurn => set({ turn: newTurn }),
+  setTurn: (newTurn) => set(state => ({
+    turn: typeof newTurn === 'function' ? newTurn(state.turn) : newTurn
+  })),
 
   action: null,
-  setAction: newAction => set({ action: newAction }),
+  setAction: (newAction) => set(state => ({
+    action: typeof newAction === 'function' ? newAction(state.action) : newAction
+  })),
 
   effects: [],
-  setEffects: newEffects => set({ effects: newEffects })
+  setEffects: (updateFn) => set(state => ({
+    effects: typeof updateFn === 'function' ? updateFn(state.effects) : updateFn
+  }))
 }))

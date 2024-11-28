@@ -1,7 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import Loading from './components/Loading.tsx'
 import { paths } from './valopack.config.ts'
+import { useBoard } from './pages/Play/hooks/useBoard.ts'
 
 const LazyHome: React.LazyExoticComponent<() => JSX.Element> = React.lazy(
   () => import('./pages/Home/components/Home.tsx')
@@ -17,6 +18,10 @@ const LazyPlay: React.LazyExoticComponent<() => JSX.Element> = React.lazy(
 )
 
 export default function App () {
+  const { effects } = useBoard()
+
+  useEffect(() => console.log(effects), [effects])
+
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
