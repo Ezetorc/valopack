@@ -4,7 +4,7 @@ export const skySmoke: Ability = {
   identifier: 'skySmoke',
   useRange: [1, 10],
   uses: 1,
-  index: 1,
+  index: undefined,
   validEntityTypes: ["empty"],
   methods: [
     {

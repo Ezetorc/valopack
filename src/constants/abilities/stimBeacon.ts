@@ -4,7 +4,7 @@ export const stimBeacon: Ability = {
   identifier: 'stimBeacon',
   useRange: [1, 10],
   uses: 2,
-  index: 0,
+  index: undefined,
   validEntityTypes: ['empty'],
   methods: [
     {

@@ -47,7 +47,7 @@ export function useAbility () {
     const { methods } = ability
     const player: Entity | undefined = squareFrom.getEntityByType('player')
 
-    if (player) {
+    if (player && ability.index !== undefined) {
       ;(player as Player).abilityUses[ability.index] -= 1
     }
 

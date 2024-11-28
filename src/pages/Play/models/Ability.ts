@@ -7,6 +7,6 @@ export interface Ability {
   readonly validEntityTypes: (EntityType | 'empty')[]
   readonly uses: number
   readonly useRange: [number, number]
-  readonly index: 0 | 1
+  readonly index: undefined | 0 | 1
   readonly methods: Method[]
 }

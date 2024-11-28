@@ -10,7 +10,7 @@ export const agents: Readonly<Agent[]> = [
       'https://media.valorant-api.com/agents/9f0d8ba9-4140-b941-57d3-a7ad57c6b417/fullportrait.png',
     icon: 'https://media.valorant-api.com/agents/9f0d8ba9-4140-b941-57d3-a7ad57c6b417/displayiconsmall.png',
     id: 0,
-    abilities: [stimBeacon, skySmoke]
+    abilities: [skySmoke, stimBeacon]
   },
   {
     name: 'Phoenix',
