@@ -8,6 +8,8 @@
 - **TailwindCSS**
 - **Vite**
 
+
+
 # 🌟 Features
 
 ✨ **Open Packs:** Unlock unique cards inspired by your favorite VALORANT agents.  
@@ -15,19 +17,22 @@
 ✨ **Battle AI:** Test your team against randomly generated AI opponents.  
 ✨ **Cross-Platform Play:** Optimized for **both mobile and desktop!**
 
-## 📸 Screenshots
 
+
+## 📸 Screenshots
 (Coming Soon!)
 
 ## 📋 Roadmap
 
-Core gameplay: Collect cards, create teams, and battle.
-Card rarity system: Add common, rare, and legendary cards.
-Improved AI: Smarter opponents with strategic team-building.
+- [ ] Bot to play with
+- [ ] All cards abilities
+- [ ] Responsive
+- [ ] 
 
 ---
 
-ValoPack is a fan project inspired by VALORANT.
-This project is not affiliated with or endorsed by Riot Games.
+> [!IMPORTANT]
+> ValoPack is a fan project inspired by VALORANT.
+> This project is not affiliated with or endorsed by Riot Games.
 
 Made with ❤️ by Ezequías Valentin Torczuk.
