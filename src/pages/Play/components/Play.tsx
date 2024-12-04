@@ -31,10 +31,7 @@ export default function Play () {
         const enemyAgents: Agent[] = await Agents.getMixed(5)
         const enemyTeam: Card[] = Agents.getCardsFromAgents(enemyAgents)
         const allyTeam: Card[] = inventory.getCardsInTeam()
-        const initializedBoard: Board = board.getInitialized(
-          allyTeam,
-          enemyTeam
-        )
+        const initializedBoard: Board = board.getInitialized(allyTeam, enemyTeam)
 
         setBoard(initializedBoard)
         setMatchStarted(true)
@@ -48,6 +45,7 @@ export default function Play () {
     if (!matchStarted) return
 
     const gameResult: Result = board.getResult()
+    
     if (!result) return
 
     setResult(gameResult)
