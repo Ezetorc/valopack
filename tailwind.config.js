@@ -1,8 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+// 320 - 767 | 768 - 1279 | 1280 - 1920
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      screens: {
+        "tm": '320px'
+      },
       fontFamily: {
         valorant: ['valorant', 'sans-serif'],
         stroke: ['stroke', 'sans-serif']

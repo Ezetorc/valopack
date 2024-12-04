@@ -3,7 +3,6 @@ import { useSettings } from '../../../hooks/useSettings.ts'
 import { useUser } from '../../../hooks/useUser.ts'
 import { useShop } from '../hooks/useShop.ts'
 import { BuyModal } from './BuyModal.tsx'
-import { backgrounds } from '../../../valopack.config.ts'
 import { products } from '../constants/products.ts'
 import { ProductDisplay } from './ProductDisplay.tsx'
 import { PackOpener } from './PackOpener.tsx'
@@ -12,13 +11,13 @@ import { Header } from '../../../components/Header.tsx'
 export default function Shop () {
   const { ownedProduct, selectedProduct } = useShop()
   const { credits } = useUser()
-  const { texts, updateSection } = useSettings()
+  const { updatePage } = useSettings()
   const canBuy: boolean = selectedProduct
     ? credits >= selectedProduct.price
     : false
 
   useEffect(() => {
-    updateSection(texts.shop, backgrounds.shop)
+    updatePage("shop")
   })
 
   return (

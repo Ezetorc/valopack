@@ -24,7 +24,7 @@ export function Modal ({ children, onLoad, className }: ModalProps) {
       ref={modalRef}
     >
       <div
-        className={`bg-v_black w-[clamp(400px,30vw,500px)] h-[600px] relative border-y border-white animate-appear ${className}`}
+        className={`bg-v_black w-[clamp(320px,80vw,700px)] h-[600px] relative border-y border-white animate-appear ${className}`}
       >
         {children}
       </div>

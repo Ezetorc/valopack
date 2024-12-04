@@ -8,7 +8,6 @@ import { BoardDisplay } from './BoardDisplay.tsx'
 import { PlayerInfo } from './PlayerInfo.tsx'
 import { ResultModal } from './ResultModal.tsx'
 import { Agents } from '../../../services/Agents.service.ts'
-import { backgrounds } from '../../../valopack.config.ts'
 import { Card } from '../../../models/Card.ts'
 import { Agent } from '../../../models/Agent.ts'
 import { Board } from '../models/Board.ts'
@@ -18,13 +17,10 @@ export default function Play () {
   const [infoVisible, setInfoVisible] = useState<boolean>(false)
   const [matchStarted, setMatchStarted] = useState(false)
   const [result, setResult] = useState<Result>(undefined)
-  const { texts, updateSection } = useSettings()
+  const { updatePage } = useSettings()
   const { inventory, addCredits, removeCredits } = useUser()
 
-  useEffect(
-    () => updateSection(texts.play, backgrounds.play),
-    [texts.play, updateSection]
-  )
+  useEffect(() => updatePage('play'), [updatePage])
 
   useEffect(() => {
     const initialize = async () => {
@@ -64,7 +60,6 @@ export default function Play () {
       addCredits(500)
     }
   }, [board, matchStarted, result, addCredits, removeCredits])
-
 
   return (
     <>

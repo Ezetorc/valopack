@@ -19,7 +19,7 @@ export default function Credits () {
       </header>
 
       <div className='w-full h-[80%] flex justify-center p-[5%]'>
-        <span className='text-[clamp(20px,3vw,40px)] text-[#ccc]'>{texts.creditsInfo}</span>
+        <span className='text-[clamp(30px,3vw,40px)] text-[#ccc]'>{texts.creditsInfo}</span>
       </div>
     </Modal>
   )

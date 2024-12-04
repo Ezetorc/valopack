@@ -48,11 +48,11 @@ export function Header () {
 
   return (
     <>
-      <header className='flex justify-center fixed top-0 z-[500] w-full h-[12vh] grid-row-1'>
+      <header className='flex justify-center fixed top-0 z-[500] w-full h-[12vh] grid-row-1 xl:bg-red-600 md:bg-blue-600 tm:bg-green-600'>
         <div className='relative w-full xl:w-[60%] h-full grid grid-cols-[1fr_2fr_1fr]'>
           <div className='absolute w-full h-[98%] bg-black bg-opacity-40 xl:clip-header-aside z-[400]'></div>
 
-          <div className='z-[450] flex items-center overflow-hidden justify-center pl-[20%] gap-[10%] h-[70%] pb-[5%]'>
+          <div className='z-[450] flex items-center overflow-hidden justify-center h-[clamp(80px,7vw,110px)] xl:ml-[25%] gap-x-[10%]'>
             <button
               onMouseEnter={handleMouseEnter}
               onClick={handleOpen}
@@ -73,7 +73,7 @@ export function Header () {
 
           <div
             onMouseEnter={handleMouseEnter}
-            className='z-[450] flex items-center justify-center bg-v_red hover:bg-white clip-header-center h-[80%] text-[clamp(1rem,7vw,7rem)]'
+            className='z-[450] flex items-center justify-center bg-v_red hover:bg-white clip-header-center h-[clamp(105px,8.7vw,135px)] md:text-[clamp(5rem,7vw,7rem)] xl:text-[clamp(1rem,7vw,7rem)]'
           >
             <Link
               to={paths.home}
@@ -84,9 +84,9 @@ export function Header () {
             </Link>
           </div>
 
-          <div className='z-[450] flex items-center justify-start h-[70%] pl-[10%] gap-[10px]'>
+          <div className='z-[450] flex h-[clamp(80px,7vw,110px)] justify-center items-center xl:mr-[10%] gap-x-[4%]'>
             <button
-              className='relative max-h-[60px] w-[40%] text-[clamp(1rem,3vw,4rem)] flex justify-end items-center hover:text-v_aqua'
+              className='relative max-h-[60px] w-[40%] text-[clamp(2.6rem,3vw,5rem)] flex justify-end items-center hover:text-v_aqua'
               onClick={handleOpenCredits}
               onMouseEnter={handleMouseEnter}
             >
