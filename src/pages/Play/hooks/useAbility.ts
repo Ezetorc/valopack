@@ -27,17 +27,25 @@ export function useAbility () {
   const { squareFrom, board, setBoard, setEffects, turn } = gameStore
 
   const getUpdatedEffects = (effects: Effect[]): Effect[] => {
-    effects.forEach(effect => {
+    let i: number = 0
+
+    while (i < effects.length) {
+      const effect: Effect = effects[i]
+
       effect.turnsLeft -= 1
 
       if (effect.turnsLeft <= 0) {
         effect.methods.forEach(method => {
           handleMethod(method, effect.square)
         })
-      }
-    })
 
-    return effects.filter(effect => effect.turnsLeft > 0)
+        effects.splice(i, 1)
+      } else {
+        i++
+      }
+    }
+
+    return effects
   }
 
   const handleAbility = (
@@ -45,14 +53,13 @@ export function useAbility () {
     squareFrom: Square,
     squareTo: Square
   ): void => {
-    const { methods } = ability
     const player: Entity | undefined = squareFrom.getEntityByType('player')
 
     if (player && ability.index !== undefined) {
       ;(player as Player).abilityUses[ability.index] -= 1
     }
 
-    methods.forEach(method => {
+    ability.methods.forEach(method => {
       handleMethod(method, squareTo)
     })
   }
@@ -179,7 +186,9 @@ export function useAbility () {
   const wait = (params: WaitParams, squareTo: Square): void => {
     if (params.type == 'miliseconds') {
       setTimeout(() => {
-        params.methods.forEach(method => handleMethod(method, squareTo))
+        params.methods.forEach(method => {
+          handleMethod(method, squareTo)
+        })
 
         const newBoard: Board = new Board(board.colors, [...board.grid])
 
@@ -194,7 +203,9 @@ export function useAbility () {
         square: squareTo
       }
 
-      setEffects(prevEffects => [...prevEffects, newEffect])
+      console.log('setEffects(newEffect), newEffect => ', newEffect)
+      setEffects([newEffect])
+      // setEffects([...effects, newEffect])
     }
   }
 

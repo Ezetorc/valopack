@@ -1,4 +1,4 @@
-![VALOPACK_1](https://github.com/user-attachments/assets/b33350d4-aa4c-4f8b-bf02-5a9b776a3fb2)# 🎮 VALOPACK 🎴
+# 🎮 VALOPACK 🎴
 
 **ValoPack** is an **unofficial VALORANT-inspired web game** where you collect, build, and battle using custom card packs.
 
@@ -7,8 +7,8 @@
 - **ReactJS**
 - **TailwindCSS**
 - **Vite**
-
-
+- **TypeScript**
+- **Zustand**
 
 # 🌟 Features
 
