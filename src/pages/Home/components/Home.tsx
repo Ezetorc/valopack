@@ -26,13 +26,13 @@ export default function Home () {
     <main className='w-full min-h-[100dvh] flex items-center justify-center'>
       <Header />
 
-      <article className='grid xl:grid-cols-[1.2fr_1fr] xl:grid-rows-[1fr_1fr] md:grid-rows-3 place-items-center gap-[3%] p-[3%] w-full min-h-[100dvh] pt-[20vh]'>
+      <article className='grid xl:grid-cols-[1.2fr_1fr] xl:grid-rows-[1fr_1fr] md:grid-rows-3 gap-[3%] p-[3%] w-full min-h-[100dvh] pt-[20vh]'>
         <SectionLink
           to={paths.play}
           text={texts.play}
           image={vyzeImage}
-          className='flex justify-center items-end relative w-full xl:h-full md:aspect-video xl:col-[1] xl:row-[1/span_2] text-[clamp(100px,_9rem,_200px)] [background:linear-gradient(43deg,#161526_10%,#6052b6_100%)] border-v_aqua border-[5px] hover:border-white'
-          imgClassName='w-[clamp(300px,_80%,_500px)]'
+          className='flex justify-center items-end relative w-full xl:h-full md:aspect-video xl:col-[1] xl:row-[1/span_2] text-[clamp(100px,9rem,200px)] [background:linear-gradient(43deg,#161526_10%,#6052b6_100%)] border-v_aqua border-[5px] hover:border-white'
+          imgClassName='w-[clamp(300px,80%,500px)]'
         />
         <SectionLink
           to={paths.shop}

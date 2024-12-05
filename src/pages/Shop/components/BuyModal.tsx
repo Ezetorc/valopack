@@ -5,6 +5,7 @@ import { useUser } from '../../../hooks/useUser.ts'
 import { purchaseAudio } from '../../../constants/audios.ts'
 import { useEffect } from 'react'
 import { CloseButton } from '../../../components/CloseButton.tsx'
+import { Product } from '../models/Product.ts'
 
 interface BuyModalProps {
   canBuy: boolean
@@ -12,8 +13,10 @@ interface BuyModalProps {
 
 export function BuyModal ({ canBuy }: BuyModalProps) {
   const { texts, playAudio } = useSettings()
-  const { credits } = useUser()
-  const { selectedProduct, setSelectedProduct, buy } = useShop()
+  const { getCredits } = useUser()
+  const { getSelectedProduct, setSelectedProduct, buy } = useShop()
+  const credits: number = getCredits()
+  const selectedProduct: Product | null = getSelectedProduct()
 
   useEffect(() => {
     playAudio(purchaseAudio)

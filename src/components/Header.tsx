@@ -12,17 +12,21 @@ const LazySettings = lazy(() => import('./Settings.tsx'))
 const LazyCredits = lazy(() => import('./Credits.tsx'))
 
 export function Header () {
-  const { credits } = useUser()
+  const { getCredits } = useUser()
   const {
     texts,
-    settingsOpen,
+    getSettingsOpen,
     setSettingsOpen,
     playAudio,
     toggleAudioMuted,
-    isAudioMuted,
-    creditsOpen,
+    getIsAudioMuted,
+    getCreditsOpen,
     setCreditsOpen
   } = useSettings()
+  const settingsOpen: boolean = getSettingsOpen()
+  const isAudioMuted: boolean = getIsAudioMuted()
+  const creditsOpen: boolean = getCreditsOpen()
+  const credits: number = getCredits()
 
   const handleToggleAudio = () => {
     toggleAudioMuted()

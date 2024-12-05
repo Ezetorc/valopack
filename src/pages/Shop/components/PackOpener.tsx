@@ -5,13 +5,18 @@ import { PackDisplay } from './PackDisplay.tsx'
 import CardDisplay from '../../../components/CardDisplay.tsx'
 import { clickAudio } from '../../../constants/audios.ts'
 import { CloseButton } from '../../../components/CloseButton.tsx'
+import { Product } from '../models/Product.ts'
+import { Card } from '../../../models/Card.ts'
 
 export function PackOpener () {
-  const { ownedProduct, ownedCards, setOwnedProduct } = useShop()
+  const { getOwnedProduct, getOwnedCards, setOwnedProduct } = useShop()
   const [showCards, setShowCards] = useState<boolean>(false)
   const { playAudio } = useSettings()
-  
+  const ownedProduct: Product | null = getOwnedProduct()
+
   if (!ownedProduct) return null
+
+  const ownedCards: Card[] = getOwnedCards()
 
   const handleAnimationEnd = (): void => {
     setShowCards(true)

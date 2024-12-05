@@ -5,6 +5,7 @@ import { ActionDisplay } from './ActionDisplay.tsx'
 import { teamColors } from '../../../valopack.config.ts'
 import { Action } from '../models/Action.ts'
 import { Ability } from '../models/Ability.ts'
+import { Square } from '../models/Square.ts'
 
 interface ActionsProps {
   onOpenInfo: () => void
@@ -12,9 +13,10 @@ interface ActionsProps {
 
 export function Actions ({ onOpenInfo }: ActionsProps) {
   const { texts } = useSettings()
-  const { squareFrom, setAction } = useBoard()
-  
-  if (!squareFrom) return null
+  const { getSquareFrom, setAction } = useBoard()
+  const squareFrom: Square | null = getSquareFrom()
+
+  if (!squareFrom) return
 
   const player: Player = squareFrom.getFirstEntity() as Player
 

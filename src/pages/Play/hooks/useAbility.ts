@@ -1,15 +1,16 @@
+import { TeamSide } from '../../../models/TeamSide'
 import { teamColors } from '../../../valopack.config'
 import { Ability } from '../models/Ability'
 import { AddClassParams } from '../models/AddClassParams'
 import { AddEntityParams } from '../models/AddEntityParams'
 import { AddTagParams } from '../models/AddTagParams'
 import { Board } from '../models/Board'
-import { Effect } from '../models/Effect'
 import { Entity } from '../models/Entity'
 import { GameStore } from '../models/GameStore'
 import { GetParams } from '../models/GetParams'
 import { Method } from '../models/Method'
 import { ModifyAttributeParams } from '../models/ModifyAttributeParams'
+import { PendingAction } from '../models/PendingAction'
 import { Player } from '../models/Player'
 import { RemoveClassParams } from '../models/RemoveClassParams'
 import { RemoveEntityParams } from '../models/RemoveEntityParams'
@@ -24,28 +25,27 @@ import { applyFilters } from '../utilities/applyFilters'
 
 export function useAbility () {
   const gameStore: GameStore = getGameStore()
-  const { squareFrom, board, setBoard, setEffects, turn } = gameStore
+  const {
+    getSquareFrom,
+    getBoard,
+    setBoard,
+    getTurn,
+    setPendingActions,
+    getPendingActions
+  } = gameStore
 
-  const getUpdatedEffects = (effects: Effect[]): Effect[] => {
-    let i: number = 0
+  const updatePendingActions = (): void => {
+    const pendingActions: PendingAction[] = getPendingActions()
 
-    while (i < effects.length) {
-      const effect: Effect = effects[i]
+    pendingActions.forEach(pendingAction => {
+      pendingAction.methods.forEach(method => {
+        handleMethod(method, pendingAction.squareTo)
+      })
 
-      effect.turnsLeft -= 1
+      pendingAction.turns--
+    })
 
-      if (effect.turnsLeft <= 0) {
-        effect.methods.forEach(method => {
-          handleMethod(method, effect.square)
-        })
-
-        effects.splice(i, 1)
-      } else {
-        i++
-      }
-    }
-
-    return effects
+    pendingActions.filter(pendingAction => pendingAction.turns > 0)
   }
 
   const handleAbility = (
@@ -90,7 +90,7 @@ export function useAbility () {
 
   const removeTag = (params: RemoveTagParams, squareTo: Square): void => {
     const squares: Square[] = getSquares(params.get, squareTo)
-    const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
+    const parsedTags: Tag[] = Parser.getParsedTags(params.tags, getTurn())
 
     squares.forEach(square => {
       square.entities.forEach(entity => {
@@ -103,6 +103,9 @@ export function useAbility () {
 
   const getSquares = (params: GetParams, squareTo: Square): Square[] => {
     const { getBy, filters, range } = params
+    const squareFrom: Square | null = getSquareFrom()
+    const turn: TeamSide = getTurn()
+    const board: Board = getBoard()
     const squares: Square[] = []
 
     if (getBy === 'squareFrom' && squareFrom) {
@@ -174,7 +177,7 @@ export function useAbility () {
 
   const addTag = (params: AddTagParams, squareTo: Square): void => {
     const squares: Square[] = getSquares(params.get, squareTo)
-    const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
+    const parsedTags: Tag[] = Parser.getParsedTags(params.tags, getTurn())
 
     squares.forEach(square =>
       square.entities.forEach(entity => {
@@ -185,6 +188,8 @@ export function useAbility () {
 
   const wait = (params: WaitParams, squareTo: Square): void => {
     if (params.type == 'miliseconds') {
+      const board: Board = getBoard()
+
       setTimeout(() => {
         params.methods.forEach(method => {
           handleMethod(method, squareTo)
@@ -195,22 +200,19 @@ export function useAbility () {
         setBoard(newBoard)
       }, params.time)
     } else {
-      const newEffect: Effect = {
-        methods: params.methods.map(method =>
-          Parser.getParsedMethod(method, turn)
-        ),
-        turnsLeft: params.time + 1,
-        square: squareTo
+      const newPendingAction: PendingAction = {
+        turns: params.time + 1,
+        squareTo: squareTo,
+        methods: params.methods
       }
 
-      console.log('setEffects(newEffect), newEffect => ', newEffect)
-      setEffects([newEffect])
-      // setEffects([...effects, newEffect])
+      setPendingActions([...getPendingActions(), newPendingAction])
     }
   }
 
   const showFade = (params: ShowFadeParams, squareTo: Square): void => {
     const squares: Square[] = getSquares(params.get, squareTo)
+    const turn: TeamSide = getTurn()
     let color: string = params.color
 
     if (params.color == 'current-team-color') {
@@ -250,5 +252,5 @@ export function useAbility () {
     })
   }
 
-  return { ...gameStore, handleAbility, handleMethod, getUpdatedEffects }
+  return { ...gameStore, handleAbility, handleMethod, updatePendingActions }
 }

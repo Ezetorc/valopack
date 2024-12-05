@@ -7,17 +7,21 @@ import { products } from '../constants/products.ts'
 import { ProductDisplay } from './ProductDisplay.tsx'
 import { PackOpener } from './PackOpener.tsx'
 import { Header } from '../../../components/Header.tsx'
+import { Product } from '../models/Product.ts'
 
 export default function Shop () {
-  const { ownedProduct, selectedProduct } = useShop()
-  const { credits } = useUser()
+  const { getOwnedProduct, getSelectedProduct } = useShop()
+  const { getCredits } = useUser()
+  const ownedProduct: Product | null = getOwnedProduct()
+  const selectedProduct: Product | null = getSelectedProduct()
+  const credits: number = getCredits()
   const { updatePage } = useSettings()
   const canBuy: boolean = selectedProduct
     ? credits >= selectedProduct.price
     : false
 
   useEffect(() => {
-    updatePage("shop")
+    updatePage('shop')
   })
 
   return (

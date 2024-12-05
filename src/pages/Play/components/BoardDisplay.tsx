@@ -10,31 +10,26 @@ import { SquareDisplay } from './SquareDisplay.tsx'
 import { Distance } from '../services/Distance.service.ts'
 import { getMissingEntityTypes } from '../utilities/getMissingEntityTypes.ts'
 import { EntityType } from '../models/EntityType.ts'
-import { Effect } from '../models/Effect.ts'
 
 export function BoardDisplay () {
   const {
-    board,
+    getBoard,
     setSquareFrom,
     setSquareTo,
-    action,
+    getAction,
     movePlayer,
-    squareFrom,
+    getSquareFrom,
     resetActions,
     attackPlayer,
-    toggleTurn,
-    effects,
-    setEffects
+    toggleTurn
   } = useBoard()
-  const { handleAbility, getUpdatedEffects } = useAbility()
+  const { handleAbility, updatePendingActions } = useAbility()
   const boardRef = useRef<HTMLDivElement>(null)
 
   const changeTurn = useCallback(() => {
-    const newEffects: Effect[] = getUpdatedEffects(effects)
-
+    updatePendingActions()
     toggleTurn()
-    setEffects(newEffects)
-  }, [toggleTurn, effects, getUpdatedEffects, setEffects])
+  }, [toggleTurn, updatePendingActions])
 
   const showInvalidMove = useCallback(() => {
     boardRef.current?.classList.add('animate-invalid_move')
@@ -47,6 +42,7 @@ export function BoardDisplay () {
 
   const handleMoveAction = useCallback(
     (squareToMove: Square) => {
+      const squareFrom: Square | null = getSquareFrom()
       if (!squareFrom) return
 
       const player: Player = squareFrom.getEntityByType('player') as Player
@@ -68,7 +64,7 @@ export function BoardDisplay () {
     },
     [
       movePlayer,
-      squareFrom,
+      getSquareFrom,
       resetActions,
       showInvalidMove,
       setSquareTo,
@@ -78,6 +74,7 @@ export function BoardDisplay () {
 
   const handleAttackAction = useCallback(
     (squareToAttack: Square) => {
+      const squareFrom: Square | null = getSquareFrom()
       if (!squareFrom) return
 
       const playerTo: Player = squareToAttack.getEntityByType(
@@ -104,7 +101,7 @@ export function BoardDisplay () {
       attackPlayer,
       resetActions,
       setSquareTo,
-      squareFrom,
+      getSquareFrom,
       showInvalidMove,
       changeTurn
     ]
@@ -112,8 +109,11 @@ export function BoardDisplay () {
 
   const handleAbilityAction = useCallback(
     (targetSquare: Square) => {
+      const squareFrom: Square | null = getSquareFrom()
+
       if (!squareFrom) return
 
+      const action: Action | null = getAction()
       const player: Player = squareFrom.getEntityByType('player') as Player
       const { abilities } = player
       const selectedAbility: Ability =
@@ -153,12 +153,12 @@ export function BoardDisplay () {
       }
     },
     [
-      action,
+      getAction,
       handleAbility,
       resetActions,
       setSquareTo,
       showInvalidMove,
-      squareFrom,
+      getSquareFrom,
       changeTurn
     ]
   )
@@ -179,6 +179,8 @@ export function BoardDisplay () {
 
   const handleClick = useCallback(
     (clickedSquare: Square) => {
+      const action: Action | null = getAction()
+
       if (action === null) {
         if (action) {
           setSquareTo(clickedSquare)
@@ -189,7 +191,7 @@ export function BoardDisplay () {
         handleAction(action, clickedSquare)
       }
     },
-    [action, setSquareFrom, setSquareTo, handleAction]
+    [getAction, setSquareFrom, setSquareTo, handleAction]
   )
 
   return (
@@ -197,22 +199,24 @@ export function BoardDisplay () {
       className='grid grid-cols-[repeat(7,_1fr)] grid-rows-[repeat(5,_1fr)] border-[20px] border-[#ffffff5e] items-center w-[90%] min-w-[700px] max-w-[900px] aspect-[16/10]'
       ref={boardRef}
     >
-      {board.grid.flat().map((square, squareIndex) => (
-        <SquareDisplay
-          onClick={() => handleClick(square)}
-          color={square.getColor(board.colors)}
-          square={square}
-          key={`square-${squareIndex}`}
-        >
-          {square.entities.map((entity, entityIndex) => (
-            <EntityDisplay
-              entity={entity}
-              key={`box-${squareIndex}-${entityIndex}`}
-              opacity={entity.getOpacity(square)}
-            />
-          ))}
-        </SquareDisplay>
-      ))}
+      {getBoard()
+        .grid.flat()
+        .map((square, squareIndex) => (
+          <SquareDisplay
+            onClick={() => handleClick(square)}
+            color={square.getColor(getBoard().colors)}
+            square={square}
+            key={`square-${squareIndex}`}
+          >
+            {square.entities.map((entity, entityIndex) => (
+              <EntityDisplay
+                entity={entity}
+                key={`box-${squareIndex}-${entityIndex}`}
+                opacity={entity.getOpacity(square)}
+              />
+            ))}
+          </SquareDisplay>
+        ))}
     </div>
   )
 }

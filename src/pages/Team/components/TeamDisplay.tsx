@@ -5,8 +5,8 @@ import { CardSlotDisplay } from './CardSlotDisplay.tsx'
 import { TeamSelector } from './TeamSelector.tsx'
 import { Header } from '../../../components/Header.tsx'
 import { CardSlot } from '../../../models/CardSlot.ts'
-import { Card } from '../../../models/Card.ts'
 import { clickAudio } from '../../../constants/audios.ts'
+import { getCardSlotsByTeam } from '../utilities/getCardSlotsByTeam.ts'
 
 export default function TeamDisplay () {
   const { selectorVisible, setSelectorVisible, inventory } = useUser()
@@ -15,16 +15,6 @@ export default function TeamDisplay () {
   const [cardSlots, setCardSlots] = useState<{ [key: string]: CardSlot }>(() =>
     getCardSlotsByTeam(inventory.getCardsInTeam())
   )
-
-  const getCardSlotsByTeam = (team: Card[]): { [key: string]: CardSlot } => {
-    return team.reduce<{ [key: string]: CardSlot }>(
-      (slots, card, index) => {
-        slots[index] = card
-        return slots
-      },
-      { 0: null, 1: null, 2: null, 3: null, 4: null }
-    )
-  }
 
   const handleClick = (clickedCardSlot: CardSlot): void => {
     playAudio(clickAudio)

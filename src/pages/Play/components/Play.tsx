@@ -11,22 +11,30 @@ import { Agents } from '../../../services/Agents.service.ts'
 import { Card } from '../../../models/Card.ts'
 import { Agent } from '../../../models/Agent.ts'
 import { Board } from '../models/Board.ts'
+import { Inventory } from '../../../models/Inventory.ts'
 
 export default function Play () {
-  const { squareFrom, setBoard, board } = useBoard()
+  const { getSquareFrom, setBoard, getBoard, pendingActions } = useBoard()
   const [infoVisible, setInfoVisible] = useState<boolean>(false)
   const [matchStarted, setMatchStarted] = useState(false)
   const [result, setResult] = useState<Result>(undefined)
   const { updatePage } = useSettings()
-  const { inventory, addCredits, removeCredits } = useUser()
+  const { getInventory, addCredits, removeCredits } = useUser()
+  const inventory: Inventory = getInventory()
+
+  useEffect(() => {
+    console.log('pendingActions ', pendingActions)
+  }, [pendingActions])
 
   useEffect(() => {
     updatePage('play')
-  }, [updatePage])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const initialize = async () => {
       if (!matchStarted) {
+        const board: Board = getBoard()
         const { allyPlayers, enemyPlayers } = board.getTotalPlayers()
 
         if (allyPlayers !== 0 && enemyPlayers !== 0) return
@@ -45,11 +53,12 @@ export default function Play () {
     }
 
     initialize()
-  }, [board, setBoard, inventory, matchStarted])
+  }, [getBoard, setBoard, inventory, matchStarted])
 
   useEffect(() => {
     if (!matchStarted) return
 
+    const board: Board = getBoard()
     const gameResult: Result = board.getResult()
 
     if (!result) return
@@ -63,7 +72,7 @@ export default function Play () {
     } else if (gameResult === 'draw') {
       addCredits(500)
     }
-  }, [board, matchStarted, result, addCredits, removeCredits])
+  }, [getBoard, matchStarted, result, addCredits, removeCredits])
 
   return (
     <>
@@ -72,7 +81,7 @@ export default function Play () {
 
       <main className='w-full h-[100dvh] grid p-[1%] gap-[1%] grid-rows-[1fr,_1fr] place-items-center'>
         <BoardDisplay />
-        {squareFrom?.hasEntity('player') && (
+        {getSquareFrom()?.hasEntity('player') && (
           <Actions onOpenInfo={() => setInfoVisible(true)} />
         )}
       </main>

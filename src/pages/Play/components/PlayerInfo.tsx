@@ -8,6 +8,7 @@ import { CloseButton } from '../../../components/CloseButton.tsx'
 import { EntityDisplay } from './EntityDisplay.tsx'
 import { useState } from 'react'
 import { AbilityDisplay } from './AbilityDisplay.tsx'
+import { Square } from '../models/Square.ts'
 
 interface PlayerInfoProps {
   onClose: () => void
@@ -15,7 +16,8 @@ interface PlayerInfoProps {
 
 export function PlayerInfo ({ onClose }: PlayerInfoProps) {
   const { texts } = useSettings()
-  const { squareFrom } = useBoard()
+  const { getSquareFrom } = useBoard()
+  const squareFrom: Square | null = getSquareFrom()
   const [infoSection, setInfoSection] = useState<'attributes' | 'abilities'>(
     'attributes'
   )

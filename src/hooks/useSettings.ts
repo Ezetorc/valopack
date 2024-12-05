@@ -5,10 +5,13 @@ import { SettingsStore } from '../models/SettingsStore.ts'
 import { getSettingsStore } from '../stores/getSettingsStore.ts'
 import { useCallback, useMemo } from 'react'
 import { Section } from '../models/Section.ts'
+import { Language } from '../models/Language.ts'
 
 export function useSettings () {
   const settingsStore: SettingsStore = getSettingsStore()
-  const { language, isAudioMuted, setIsAudioMuted } = settingsStore
+  const { getLanguage, getIsAudioMuted, setIsAudioMuted } = settingsStore
+  const language: Language = getLanguage()
+  const isAudioMuted: boolean = getIsAudioMuted()
   const texts: Dictionary = useMemo(() => dictionaries[language], [language])
 
   const updatePage = (section: Section): void => {
