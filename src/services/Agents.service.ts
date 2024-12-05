@@ -43,6 +43,7 @@ export class Agents {
       nameSet.has(agent.name)
     )
     const finalAgents: Agent[] = filteredAgents.slice(0, names.length)
+
     return finalAgents
   }
 
@@ -65,7 +66,9 @@ export class Agents {
     const newAgents: Agent[] = await actions[product.pack.type]()
     const newInventory: Inventory = inventory
     const newCards: Card[] = this.getCardsFromAgents(newAgents)
+    
     newInventory.addCards(newCards)
+
     return { newAgents, newInventory }
   }
 

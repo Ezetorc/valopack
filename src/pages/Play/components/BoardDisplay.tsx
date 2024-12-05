@@ -30,13 +30,15 @@ export function BoardDisplay () {
   const boardRef = useRef<HTMLDivElement>(null)
 
   const changeTurn = useCallback(() => {
-    toggleTurn()
     const newEffects: Effect[] = getUpdatedEffects(effects)
+
+    toggleTurn()
     setEffects(newEffects)
   }, [toggleTurn, effects, getUpdatedEffects, setEffects])
 
   const showInvalidMove = useCallback(() => {
     boardRef.current?.classList.add('animate-invalid_move')
+
     setTimeout(
       () => boardRef.current?.classList.remove('animate-invalid_move'),
       300
@@ -127,7 +129,7 @@ export function BoardDisplay () {
         validEntityTypes.filter(type => type !== 'empty') as EntityType[]
       )
 
-      const targetEntities = targetSquare.isEmpty()
+      const targetEntities: 'empty' | EntityType[] = targetSquare.isEmpty()
         ? 'empty'
         : targetSquare.getEntitiesTypes()
 

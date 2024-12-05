@@ -19,19 +19,27 @@ export class Board {
     this.grid = grid
   }
 
+  private getFlatteredGrid (): Square[] {
+    return this.grid.flat()
+  }
+
   getSquare (position: Position): Square {
     return this.grid[position.y][position.x]
   }
 
   getTotalPlayers (): { allyPlayers: 0; enemyPlayers: 0 } {
-    const grid = this.grid.flat()
-    return grid.reduce(
+    const flatteredGrid: Square[] = this.getFlatteredGrid()
+
+    return flatteredGrid.reduce(
       (accumulator, square) => {
         square.entities.forEach(entity => {
           if (entity.type !== 'player') return
+
           const { teamSide } = entity as Player
+
           accumulator[`${teamSide}Players`] += 1
         })
+
         return accumulator
       },
       { allyPlayers: 0, enemyPlayers: 0 }
@@ -85,7 +93,9 @@ export class Board {
     ) => {
       positions.forEach((position, index) => {
         const card: Card = team[index]
+
         if (!card) return
+
         const square: Square = this.getSquare(position)
         const newPlayer: Player = new Player({
           ...card,
@@ -93,7 +103,7 @@ export class Board {
           position: position
         })
 
-        square.entities.unshift(newPlayer)
+        square.addEntity(newPlayer)
       })
     }
 
@@ -104,12 +114,14 @@ export class Board {
   }
 
   getByTags (tags: Tag[]): Square[] {
-    return this.grid.flat().filter(square => {
-      return square.entities.some(entity => {
-        return tags.every(tag =>
+    const flatteredGrid: Square[] = this.getFlatteredGrid()
+
+    return flatteredGrid.filter(square => {
+      return square.entities.some(entity =>
+        tags.every(tag =>
           entity.tags.some(entityTag => entityTag.text === tag.text)
         )
-      })
+      )
     })
   }
 }

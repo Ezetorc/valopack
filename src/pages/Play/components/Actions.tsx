@@ -13,16 +13,20 @@ interface ActionsProps {
 export function Actions ({ onOpenInfo }: ActionsProps) {
   const { texts } = useSettings()
   const { squareFrom, setAction } = useBoard()
+  
   if (!squareFrom) return null
 
   const player: Player = squareFrom.getFirstEntity() as Player
+
   if (!player) return
 
   const borderColor: string = teamColors[player.teamSide]
 
   const renderAbility = (index: number) => {
     const ability: Ability = player.abilities[index]
+
     if (!ability || !ability.identifier) return
+
     const abilityUses: number = player.abilityUses[index]
     const isAvailable: boolean = abilityUses > 0
     const actionType: string = `ability${index}`

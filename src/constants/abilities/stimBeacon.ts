@@ -69,7 +69,7 @@ export const stimBeacon: Ability = {
           range: 1,
           filters: {
             entityTypes: ['player'],
-            team: 'current-team'
+            teamSide: 'current-team'
           }
         },
         attribute: 'speed',
@@ -84,7 +84,7 @@ export const stimBeacon: Ability = {
           range: 1,
           filters: {
             entityTypes: ['player'],
-            team: 'current-team'
+            teamSide: 'current-team'
           }
         },
         tags: [
@@ -125,7 +125,7 @@ export const stimBeacon: Ability = {
                 range: 1,
                 filters: {
                   entityTypes: ['player'],
-                  team: 'current-team'
+                  teamSide: 'current-team'
                 }
               },
               tags: [{ text: 'stimBeacon', team: 'current-team' }]
@@ -142,7 +142,7 @@ export const stimBeacon: Ability = {
           range: 1,
           filters: {
             entityTypes: ['player'],
-            team: 'current-team'
+            teamSide: 'current-team'
           }
         },
         color: 'current-team-color',

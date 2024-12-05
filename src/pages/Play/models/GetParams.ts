@@ -9,7 +9,7 @@ export interface GetParams {
   tags?: Tag[]
   filters?: {
     entityTypes?: EntityType[]
-    team?: TeamOption
+    teamSide?: TeamOption
     tags?: Tag[]
   }
 }

@@ -10,11 +10,11 @@ interface PackDisplayProps {
 export function PackDisplay ({ pack, onAnimationEnd }: PackDisplayProps) {
   const { playAudio } = useSettings()
 
-  const handleAnimationStart = () => {
+  const handleAnimationStart = (): void => {
     playAudio(openingAudio)
   }
 
-  const handleAnimationEnd = () => {
+  const handleAnimationEnd = (): void => {
     if (onAnimationEnd) {
       onAnimationEnd()
     }

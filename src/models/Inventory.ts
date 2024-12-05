@@ -19,7 +19,6 @@ export class Inventory {
       if (currentCard) {
         if (currentCard.level <= maxCardLevel) {
           currentCard.level += levelMultiplier
-          console.log('currentCard ', currentCard)
         }
       } else {
         this.cards.push(newCard)

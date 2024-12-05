@@ -20,18 +20,24 @@ export default function Play () {
   const { updatePage } = useSettings()
   const { inventory, addCredits, removeCredits } = useUser()
 
-  useEffect(() => updatePage('play'), [updatePage])
+  useEffect(() => {
+    updatePage('play')
+  }, [updatePage])
 
   useEffect(() => {
     const initialize = async () => {
       if (!matchStarted) {
         const { allyPlayers, enemyPlayers } = board.getTotalPlayers()
+
         if (allyPlayers !== 0 && enemyPlayers !== 0) return
 
         const enemyAgents: Agent[] = await Agents.getMixed(5)
         const enemyTeam: Card[] = Agents.getCardsFromAgents(enemyAgents)
         const allyTeam: Card[] = inventory.getCardsInTeam()
-        const initializedBoard: Board = board.getInitialized(allyTeam, enemyTeam)
+        const initializedBoard: Board = board.getInitialized(
+          allyTeam,
+          enemyTeam
+        )
 
         setBoard(initializedBoard)
         setMatchStarted(true)
@@ -45,7 +51,7 @@ export default function Play () {
     if (!matchStarted) return
 
     const gameResult: Result = board.getResult()
-    
+
     if (!result) return
 
     setResult(gameResult)

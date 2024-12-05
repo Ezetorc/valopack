@@ -11,11 +11,10 @@ export function useShop () {
 
   const buy = async (product: Product): Promise<void> => {
     if (!inventory) return
+
     try {
-      const { newAgents, newInventory } = await Agents.purchase(
-        product,
-        inventory
-      )
+      const { newAgents, newInventory } = await Agents.purchase(product, inventory)
+      
       setOwnedProduct(product)
       setSelectedProduct(null)
       setCredits(credits - product.price)

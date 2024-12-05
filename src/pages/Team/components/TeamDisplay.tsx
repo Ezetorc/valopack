@@ -12,6 +12,9 @@ export default function TeamDisplay () {
   const { selectorVisible, setSelectorVisible, inventory } = useUser()
   const { updatePage, playAudio } = useSettings()
   const [cardSlotToChange, setCardSlotToChange] = useState<CardSlot>(null)
+  const [cardSlots, setCardSlots] = useState<{ [key: string]: CardSlot }>(() =>
+    getCardSlotsByTeam(inventory.getCardsInTeam())
+  )
 
   const getCardSlotsByTeam = (team: Card[]): { [key: string]: CardSlot } => {
     return team.reduce<{ [key: string]: CardSlot }>(
@@ -22,10 +25,6 @@ export default function TeamDisplay () {
       { 0: null, 1: null, 2: null, 3: null, 4: null }
     )
   }
-
-  const [cardSlots, setCardSlots] = useState<{ [key: string]: CardSlot }>(() =>
-    getCardSlotsByTeam(inventory.getCardsInTeam())
-  )
 
   const handleClick = (clickedCardSlot: CardSlot): void => {
     playAudio(clickAudio)

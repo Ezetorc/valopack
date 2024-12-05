@@ -19,11 +19,11 @@ export function SectionLink ({
 }: SectionLinkProps) {
   const { playAudio } = useSettings()
 
-  const handleHover = () => {
+  const handleHover = (): void => {
     playAudio(hoverAudio)
   }
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     playAudio(clickAudio)
   }
 

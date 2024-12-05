@@ -4,5 +4,6 @@ import { Board } from '../models/Board.ts'
 
 export function getRandomBoard (): Board {
   const boardsCopy: Board[] = [...Object.values(boards)]
+  
   return getShuffled(boardsCopy)[0]
 }

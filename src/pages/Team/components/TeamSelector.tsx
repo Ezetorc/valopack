@@ -16,14 +16,15 @@ export function TeamSelector ({ cardSlotToChange }: TeamSelectorProps) {
   const { inventory, setInventory, selectorVisible, setSelectorVisible } =
     useUser()
   const cardsNotInTeam: Card[] = inventory.getCardsNotInTeam()
+
   if (!selectorVisible) return
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setSelectorVisible(false)
     playAudio(clickAudio)
   }
 
-  const handleClick = (clickedCard: Card) => {
+  const handleClick = (clickedCard: Card): void => {
     playAudio(clickAudio)
     setSelectorVisible(false)
 

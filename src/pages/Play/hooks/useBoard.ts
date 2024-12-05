@@ -14,6 +14,7 @@ export function useBoard () {
 
   const toggleTurn = (): void => {
     const newTurn: TeamSide = turn === 'ally' ? 'enemy' : 'ally'
+
     setTurn(newTurn)
   }
 
@@ -31,6 +32,7 @@ export function useBoard () {
 
   const attackPlayer = (attacker: Player, target: Player): void => {
     const damage: number = getDamage(attacker, target)
+
     target.setHealth(prevHealth => (prevHealth -= damage))
 
     if (target.isDead()) {
@@ -40,6 +42,7 @@ export function useBoard () {
 
   const killPlayer = (attacker: Player, target: Player): void => {
     const targetSquare: Square = board.getSquare(target.position)
+    
     targetSquare.removeEntity(target)
 
     if (attacker.abilityUses[0] <= 0) {

@@ -1,9 +1,5 @@
 import { Product } from '../pages/Shop/models/Product.ts'
-
-interface AbilityInfo {
-  name: string
-  description: string
-}
+import { AbilityInfo } from './AbilityInfo.ts'
 
 export interface Dictionary {
   addCard: string

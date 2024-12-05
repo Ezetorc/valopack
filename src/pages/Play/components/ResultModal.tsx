@@ -8,11 +8,12 @@ interface ResultModalProps {
   result: Result
 }
 
-export function ResultModal({ result }: ResultModalProps) {
+export function ResultModal ({ result }: ResultModalProps) {
   const { texts } = useSettings()
+
   if (!result) return null
 
-  const creditsWinned =
+  const creditsWinned: '+1000' | '-500' | '+500' =
     result === 'ally' ? '+1000' : result === 'enemy' ? '-500' : '+500'
 
   return (

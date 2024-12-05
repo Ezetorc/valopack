@@ -25,7 +25,6 @@
 - [ ] Bot to play with
 - [ ] All cards abilities
 - [ ] Responsive
-- [ ] 
 
 ---
 

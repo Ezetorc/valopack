@@ -10,6 +10,7 @@ export function PackOpener () {
   const { ownedProduct, ownedCards, setOwnedProduct } = useShop()
   const [showCards, setShowCards] = useState<boolean>(false)
   const { playAudio } = useSettings()
+  
   if (!ownedProduct) return null
 
   const handleAnimationEnd = (): void => {

@@ -16,7 +16,6 @@ export function EntityDisplay ({ entity, opacity }: EntityDisplayProps) {
   const teamSide: TeamSide | null = player
     ? (player.teamSide as TeamSide)
     : null
-
   const healthPercent: number = player
     ? (player.attributes.health / maxHealth) * 100
     : 0

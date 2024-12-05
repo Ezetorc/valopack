@@ -19,13 +19,15 @@ export function PlayerInfo ({ onClose }: PlayerInfoProps) {
   const [infoSection, setInfoSection] = useState<'attributes' | 'abilities'>(
     'attributes'
   )
+
   if (!squareFrom) return
+
   const player: Player = squareFrom.getEntityByType('player') as Player
   const { name, attributes } = player
   const { attack, health, defense, speed, precision, critic, resistance } =
     attributes
 
-  const handleToggleInfoSection = (state: boolean) => {
+  const handleToggleInfoSection = (state: boolean): void => {
     if (state) {
       setInfoSection('abilities')
     } else {

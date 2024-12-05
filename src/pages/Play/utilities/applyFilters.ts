@@ -27,9 +27,9 @@ export function applyFilters (
       }
     }
 
-    if (filters.team && player) {
-      const parsedTeamSide: TeamSide = Parser.getParsedTeamOption(
-        filters.team,
+    if (filters.teamSide && player) {
+      const parsedTeamSide: TeamSide = Parser.getTeamSide(
+        filters.teamSide,
         turn
       )
 
