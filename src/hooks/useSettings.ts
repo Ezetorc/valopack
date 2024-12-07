@@ -15,10 +15,10 @@ export function useSettings () {
   const texts: Dictionary = useMemo(() => dictionaries[language], [language])
 
   const updatePage = (section: Section): void => {
-    const HTMLElement: HTMLElement = document.documentElement
+    const documentElement: HTMLElement = document.documentElement
 
     document.title = `${appName}: ${texts[section]}`
-    HTMLElement.style.background = backgrounds[section]
+    documentElement.style.background = backgrounds[section]
   }
 
   const toggleAudioMuted = (): void => {

@@ -14,7 +14,7 @@ export function applyFilters (
 
   for (let i = squares.length - 1; i >= 0; i--) {
     const square: Square = squares[i]
-    const player: Player = square.getEntityByType('player') as Player
+    const player: Player = square.getPlayer() as Player
 
     if (filters.entityTypes) {
       const hasAllEntityTypes: boolean = filters.entityTypes.every(entityType =>

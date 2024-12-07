@@ -5,14 +5,6 @@ import CardDisplay from './CardDisplay.tsx'
 import { Agents } from '../services/Agents.service.ts'
 import { Agent } from '../models/Agent.ts'
 
-test('o', async () => {
-  const agents: Agent[] = await Agents.getByName(['Omen'])
-  const card: Card = Agents.getCardsFromAgents(agents)[0]
-
-  const component = render(<CardDisplay card={card} />)
-  expect(component.container).toHaveTextContent(card.name)
-})
-
 describe('CardDisplay', async () => {
   const agents: Agent[] = await Agents.getByName(['Omen'])
   const card: Card = Agents.getCardsFromAgents(agents)[0]
@@ -32,7 +24,9 @@ describe('CardDisplay', async () => {
   it(`Should show the card image`, () => {
     const component = render(<CardDisplay card={card} />)
 
-    expect(component.getByAltText('Agent Image')).toHaveAttribute('src', card.image)
-
+    expect(component.getByAltText('Agent Image')).toHaveAttribute(
+      'src',
+      card.image
+    )
   })
 })

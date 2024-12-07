@@ -43,9 +43,10 @@ export function BoardDisplay () {
   const handleMoveAction = useCallback(
     (squareToMove: Square) => {
       const squareFrom: Square | null = getSquareFrom()
+
       if (!squareFrom) return
 
-      const player: Player = squareFrom.getEntityByType('player') as Player
+      const player: Player = squareFrom.getPlayer() as Player
       const validDistance: boolean = Distance.isValid(
         player.position,
         squareToMove.position,
@@ -75,20 +76,17 @@ export function BoardDisplay () {
   const handleAttackAction = useCallback(
     (squareToAttack: Square) => {
       const squareFrom: Square | null = getSquareFrom()
+
       if (!squareFrom) return
 
-      const playerTo: Player = squareToAttack.getEntityByType(
-        'player'
-      ) as Player
+      const playerTo: Player = squareToAttack.getPlayer() as Player
       const canAttack: boolean =
         playerTo &&
         playerTo.teamSide === 'enemy' &&
         Distance.isValid(squareFrom.position, squareToAttack.position, 1)
 
       if (canAttack) {
-        const playerFrom: Player = squareFrom.getEntityByType(
-          'player'
-        ) as Player
+        const playerFrom: Player = squareFrom.getPlayer() as Player
         attackPlayer(playerFrom, playerTo)
         resetActions()
         changeTurn()
@@ -114,7 +112,7 @@ export function BoardDisplay () {
       if (!squareFrom) return
 
       const action: Action | null = getAction()
-      const player: Player = squareFrom.getEntityByType('player') as Player
+      const player: Player = squareFrom.getPlayer() as Player
       const { abilities } = player
       const selectedAbility: Ability =
         action === 'ability0' ? abilities[0] : abilities[1]

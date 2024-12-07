@@ -2,6 +2,7 @@ import { EntityType } from './EntityType.ts'
 import { Hexadecimal } from '../../../models/Hexadecimal.ts'
 import { Entity } from './Entity.ts'
 import { Position } from './Position.ts'
+import { Player } from './Player.ts'
 
 export class Square {
   public entities: Entity[]
@@ -35,6 +36,16 @@ export class Square {
 
   getEntityByType (entityType: EntityType): Entity | undefined {
     return this.entities.find(entiy => entiy.type == entityType)
+  }
+
+  getPlayer (): Player | undefined {
+    const result: Entity | undefined = this.entities.find(
+      entity => entity.type === 'player'
+    )
+
+    if (result) {
+      return result as Player
+    }
   }
 
   getEntitiesByType (entityType: EntityType): Entity[] {

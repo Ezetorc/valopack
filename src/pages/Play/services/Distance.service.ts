@@ -10,7 +10,7 @@ export class Distance {
     )
   }
 
-  static isValid (pos1: Position, pos2: Position, maxDistance: number) {
+  static isValid (pos1: Position, pos2: Position, maxDistance: number): boolean {
     const distance: number = this.get(pos1, pos2)
 
     return distance <= maxDistance

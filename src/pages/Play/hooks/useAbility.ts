@@ -53,7 +53,7 @@ export function useAbility () {
     squareFrom: Square,
     squareTo: Square
   ): void => {
-    const player: Entity | undefined = squareFrom.getEntityByType('player')
+    const player: Player | undefined = squareFrom.getPlayer()
 
     if (player && ability.index !== undefined) {
       ;(player as Player).abilityUses[ability.index] -= 1
@@ -167,7 +167,7 @@ export function useAbility () {
     const squares: Square[] = getSquares(params.get, squareTo)
 
     squares.forEach(square => {
-      const player: Entity | undefined = square.getEntityByType('player')
+      const player: Player | undefined = square.getPlayer()
 
       if (player instanceof Player) {
         player.attributes[params.attribute] += params.amount

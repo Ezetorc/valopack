@@ -24,7 +24,7 @@ export function PlayerInfo ({ onClose }: PlayerInfoProps) {
 
   if (!squareFrom) return
 
-  const player: Player = squareFrom.getEntityByType('player') as Player
+  const player: Player = squareFrom.getPlayer() as Player
   const { name, attributes } = player
   const { attack, health, defense, speed, precision, critic, resistance } =
     attributes

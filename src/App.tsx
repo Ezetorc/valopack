@@ -17,6 +17,7 @@ const LazyPlay: React.LazyExoticComponent<() => JSX.Element> = React.lazy(
 )
 
 export default function App () {
+
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
