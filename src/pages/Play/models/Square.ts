@@ -3,6 +3,7 @@ import { Hexadecimal } from '../../../models/Hexadecimal.ts'
 import { Entity } from './Entity.ts'
 import { Position } from './Position.ts'
 import { Player } from './Player.ts'
+import { Tag } from './Tag.ts'
 
 export class Square {
   public entities: Entity[]
@@ -26,8 +27,19 @@ export class Square {
     return this.entities[0]
   }
 
-  hasEntity (entityType: EntityType): boolean {
+  hasEntityWithType (entityType: EntityType): boolean {
     return this.entities.some(entity => entity.type == entityType)
+  }
+
+  hasEntityWithTag (tags: Tag[]): boolean {
+    return this.entities.some(entity =>
+      tags.some(tag => {
+        return entity.tags.some(
+          entityTag =>
+            entityTag.text === tag.text && entityTag.team === tag.team
+        )
+      })
+    )
   }
 
   isEmpty (): boolean {

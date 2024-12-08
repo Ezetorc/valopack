@@ -36,16 +36,20 @@ export function useAbility () {
 
   const updatePendingActions = (): void => {
     const pendingActions: PendingAction[] = getPendingActions()
+    const newPendingActions: PendingAction[] = pendingActions
+      .map(pendingAction => {
+        if (pendingAction.turns <= 0) {
+          pendingAction.methods.forEach(method => {
+            console.log('pendingActionMethodHandled ')
+            handleMethod(method, pendingAction.squareTo)
+          })
+        }
 
-    pendingActions.forEach(pendingAction => {
-      pendingAction.methods.forEach(method => {
-        handleMethod(method, pendingAction.squareTo)
+        return { ...pendingAction, turns: pendingAction.turns - 1 }
       })
+      .filter(pendingAction => pendingAction.turns >= 0)
 
-      pendingAction.turns--
-    })
-
-    pendingActions.filter(pendingAction => pendingAction.turns > 0)
+    setPendingActions(newPendingActions)
   }
 
   const handleAbility = (
@@ -117,23 +121,14 @@ export function useAbility () {
     } else if (getBy === 'tag' || getBy === 'all') {
       squares.push(...board.grid.flat())
 
-      if (params.tags) {
-        const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
+      if (!params.tags) return squares
 
-        squares.forEach(square => {
-          const hasTags: boolean = square.entities.some(entity =>
-            entity.has(parsedTags as Tag[])
-          )
+      const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
+      const filteredSquares: Square[] = squares.filter(square =>
+        square.hasEntityWithTag(parsedTags)
+      )
 
-          if (!hasTags) {
-            const index: number = squares.indexOf(square)
-
-            if (index > -1) {
-              squares.splice(index, 1)
-            }
-          }
-        })
-      }
+      return filteredSquares
     }
 
     applyFilters(squares, filters, turn)
@@ -200,10 +195,15 @@ export function useAbility () {
         setBoard(newBoard)
       }, params.time)
     } else {
+      const turn: TeamSide = getTurn()
+      const parsedMethods: Method[] = params.methods.map(method =>
+        Parser.getParsedMethod(method, turn)
+      )
+
       const newPendingAction: PendingAction = {
-        turns: params.time + 1,
+        turns: params.time,
         squareTo: squareTo,
-        methods: params.methods
+        methods: parsedMethods
       }
 
       setPendingActions([...getPendingActions(), newPendingAction])
