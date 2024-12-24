@@ -3,7 +3,7 @@ import { Role } from './Role.ts'
 
 export interface Card {
   image: string
-  icon: string
+  portrait: string
   name: string
   role: Role
   level: number

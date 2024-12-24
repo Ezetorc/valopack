@@ -23,6 +23,10 @@ export class Square {
     this.style = style
   }
 
+  canEntityEnter (entity: Entity): boolean {
+    return this.entities.every(squareEntity => squareEntity.onEntityEnter(entity))
+  }
+
   getFirstEntity (): Entity {
     return this.entities[0]
   }

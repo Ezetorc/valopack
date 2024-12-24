@@ -1,5 +1,6 @@
 import { TeamSide } from '../../../models/TeamSide'
 import { teamColors } from '../../../valopack.config'
+import { entities } from '../constants/entities'
 import { Ability } from '../models/Ability'
 import { AddClassParams } from '../models/AddClassParams'
 import { AddEntityParams } from '../models/AddEntityParams'
@@ -12,6 +13,7 @@ import { Method } from '../models/Method'
 import { ModifyAttributeParams } from '../models/ModifyAttributeParams'
 import { PendingAction } from '../models/PendingAction'
 import { Player } from '../models/Player'
+import { Position } from '../models/Position'
 import { RemoveClassParams } from '../models/RemoveClassParams'
 import { RemoveEntityParams } from '../models/RemoveEntityParams'
 import { RemoveTagParams } from '../models/RemoveTagParams'
@@ -72,31 +74,22 @@ export function useAbility () {
     const { type, params } = method
 
     if (type == 'add-entity') {
-      console.log('addEntity')
       addEntity(params as AddEntityParams, squareTo)
     } else if (type == 'remove-entity') {
-      console.log('removeEntity')
       removeEntity(params as RemoveEntityParams, squareTo)
     } else if (type == 'modify-attribute') {
-      console.log('modifyAttribute')
       modifyAttribute(params as ModifyAttributeParams, squareTo)
     } else if (type == 'add-tag') {
-      console.log('addTag')
       addTag(params as AddTagParams, squareTo)
     } else if (type == 'wait') {
-      console.log('wait')
       wait(params as WaitParams, squareTo)
     } else if (type == 'show-fade') {
-      console.log('showFade')
       showFade(params as ShowFadeParams, squareTo)
     } else if (type == 'add-class') {
-      console.log('addClass')
       addClass(params as AddClassParams, squareTo)
     } else if (type == 'remove-tag') {
-      console.log('removeTag')
       removeTag(params as RemoveTagParams, squareTo)
     } else if (type == 'remove-class') {
-      console.log('removeClass')
       removeClass(params as RemoveClassParams, squareTo)
     }
   }
@@ -149,7 +142,18 @@ export function useAbility () {
 
   const addEntity = (params: AddEntityParams, squareTo: Square): void => {
     const squares: Square[] = getSquares(params.get, squareTo)
-    const entityToAdd: Entity = new Entity({ type: params.entityType })
+    const EntityClass: typeof Entity = entities[params.entityType]
+
+    if (!EntityClass) {
+      throw new Error(
+        `No constructor found for entity type: ${params.entityType}`
+      )
+    }
+
+    const entityToAdd: Entity = new EntityClass({
+      type: params.entityType,
+      position: params.position ? new Position(0, 0) : undefined
+    })
 
     squares.forEach(square => {
       square.addEntity(entityToAdd, params.position)

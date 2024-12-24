@@ -74,11 +74,11 @@ export class Agents {
 
   static getCardsFromAgents (agents: Agent[], isInTeam?: boolean): Card[] {
     return agents.map(agent => ({
-      image: agent.portrait,
+      image: agent.icon,
       name: agent.name,
       role: agent.role,
       level: 1,
-      icon: agent.icon,
+      portrait: agent.portrait,
       abilities: agent.abilities,
       isInTeam: isInTeam ?? false
     }))

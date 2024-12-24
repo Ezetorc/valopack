@@ -52,7 +52,10 @@ export function BoardDisplay () {
         squareToMove.position,
         player.attributes.speed
       )
-      const canMove: boolean = validDistance && squareToMove.isFree()
+      const canMove: boolean =
+        validDistance &&
+        squareToMove.isFree() &&
+        squareToMove.canEntityEnter(player)
 
       if (canMove) {
         movePlayer(player, squareToMove)

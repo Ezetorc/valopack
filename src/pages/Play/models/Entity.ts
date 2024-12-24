@@ -9,17 +9,23 @@ export class Entity {
   public tags: Tag[]
   public type: EntityType
   public position: Position
+  public image: string
+  public onEntityEnter: (entity: Entity) => boolean
 
   constructor ({
     position = new Position(0, 0),
     free = true,
     tags = [],
+    onEntityEnter = () => true,
+    image = '',
     type
   }: Omit<Partial<Entity>, 'type'> & { type: EntityType }) {
     this.position = position
     this.free = free
     this.tags = tags
     this.type = type
+    this.image = image
+    this.onEntityEnter = onEntityEnter
   }
 
   has (tags: Tag[]): boolean {
@@ -40,5 +46,9 @@ export class Entity {
     }
 
     return 1
+  }
+
+  is (entityType: EntityType): boolean {
+    return this.type == entityType
   }
 }

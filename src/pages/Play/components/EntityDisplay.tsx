@@ -19,13 +19,6 @@ export function EntityDisplay ({ entity, opacity }: EntityDisplayProps) {
     ? (player.attributes.health / maxHealth) * 100
     : 0
 
-  const images: { [key in Entity['type']]: string } = {
-    box: 'src/pages/Play/assets/images/box.webp',
-    stimBeacon: 'src/pages/Play/assets/images/stim_beacon.webp',
-    skySmoke: 'src/pages/Play/assets/images/sky_smoke.webp',
-    player: player?.icon || ''
-  }
-
   return (
     <div
       className={
@@ -38,7 +31,7 @@ export function EntityDisplay ({ entity, opacity }: EntityDisplayProps) {
     >
       <img
         className='w-full absolute z-[27]'
-        src={images[entity.type]}
+        src={entity.image}
         alt={entity.type}
       />
 

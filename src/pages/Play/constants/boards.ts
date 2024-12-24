@@ -1,5 +1,5 @@
 import { Board } from '../models/Board.ts'
-import { Entity } from '../models/Entity.ts'
+import { Box } from '../models/Box.ts'
 import { Position } from '../models/Position.ts'
 import { Square } from '../models/Square.ts'
 
@@ -39,10 +39,8 @@ export const boards: { [key: string]: Board } = {
         }),
         new Square({
           entities: [
-            new Entity({
-              position: new Position(2, 1),
-              type: 'box',
-              free: false
+            new Box({
+              position: new Position(2, 1)
             })
           ],
           position: new Position(2, 1)
@@ -98,10 +96,8 @@ export const boards: { [key: string]: Board } = {
         }),
         new Square({
           entities: [
-            new Entity({
-              position: new Position(4, 3),
-              type: 'box',
-              free: false
+            new Box({
+              position: new Position(4, 3)
             })
           ],
           position: new Position(4, 3)

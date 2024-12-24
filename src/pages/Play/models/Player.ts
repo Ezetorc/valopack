@@ -9,8 +9,7 @@ import { Parser } from '../services/Parser.service.ts'
 
 export class Player extends Entity {
   public name: string
-  public image: string
-  public icon: string
+  public portrait: string
   public role: Role
   public level: number
   public abilities: Ability[]
@@ -22,7 +21,7 @@ export class Player extends Entity {
   constructor ({
     name = 'Unknown',
     image = '',
-    icon = '',
+    portrait = '',
     role = 'duelist',
     level = 1,
     abilities = [],
@@ -44,7 +43,7 @@ export class Player extends Entity {
 
     this.name = name
     this.image = image
-    this.icon = icon
+    this.portrait = portrait
     this.role = role
     this.level = level
     this.abilities = parsedAbilities
