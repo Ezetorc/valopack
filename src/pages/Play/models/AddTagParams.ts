@@ -1,4 +1,4 @@
-import {Tag} from './Tag.ts'
+import { Tag } from './Tag.ts'
 import { GetParams } from './GetParams.ts'
 
 export interface AddTagParams {

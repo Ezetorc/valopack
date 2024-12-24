@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-// 320 - 767 | 768 - 1279 | 1280 - 1920
+// tm 320 - 767 | md 768 - 1279 | xl 1280 - 1920
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {

@@ -1,11 +1,11 @@
 import { Agent } from './../models/Agent'
-import { agents } from '../constants/agentsWithOnlyOneAbility'
 import { Pack } from '../pages/Shop/models/Pack'
 import { Product } from '../pages/Shop/models/Product'
 import { Role } from '../models/Role'
 import { getShuffled } from '../utilities/getShuffled'
 import { Inventory } from '../models/Inventory'
 import { Card } from '../models/Card'
+import { agents } from '../constants/agents'
 
 export class Agents {
   static async getAll (): Promise<Agent[]> {
@@ -66,7 +66,7 @@ export class Agents {
     const newAgents: Agent[] = await actions[product.pack.type]()
     const newInventory: Inventory = inventory
     const newCards: Card[] = this.getCardsFromAgents(newAgents)
-    
+
     newInventory.addCards(newCards)
 
     return { newAgents, newInventory }

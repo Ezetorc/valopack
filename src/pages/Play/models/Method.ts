@@ -14,8 +14,8 @@ export interface Method {
     | 'wait'
     | 'add-tag'
     | 'remove-tag'
-    | 'add-box'
-    | 'remove-box'
+    | 'add-entity'
+    | 'remove-entity'
     | 'show-fade'
     | 'add-class'
     | 'remove-class',

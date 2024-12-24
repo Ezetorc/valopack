@@ -25,7 +25,7 @@ export function ProductDisplay ({ product }: { product: Product }) {
   return (
     <button
       onMouseEnter={handleMouseEnter}
-      className='w-full max-w-[400px] aspect-[1/1.5] grid grid-rows-[1fr_3fr] relative bg-transparent border-none cursor-pointer group'
+      className='w-full max-w-[clamp(300px,30vw,500px)] aspect-[1/1.5] grid grid-rows-[1fr_3fr] relative bg-transparent border-none cursor-pointer group'
       onClick={handleClick}
     >
       <img

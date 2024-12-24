@@ -1,23 +1,16 @@
 import { Route, Routes } from 'react-router-dom'
-import React, { Suspense, useEffect } from 'react'
+import { lazy, Suspense } from 'react'
 import Loading from './components/Loading.tsx'
 import { paths } from './valopack.config.ts'
-import { useAbility } from './pages/Play/hooks/useAbility.ts'
 
-const LazyHome = React.lazy(() => import('./pages/Home/components/Home.tsx'))
-const LazyShop = React.lazy(() => import('./pages/Shop/components/Shop.tsx'))
-const LazyPlay = React.lazy(() => import('./pages/Play/components/Play.tsx'))
-const LazyTeam = React.lazy(
+const LazyHome = lazy(() => import('./pages/Home/components/Home.tsx'))
+const LazyShop = lazy(() => import('./pages/Shop/components/Shop.tsx'))
+const LazyPlay = lazy(() => import('./pages/Play/components/Play.tsx'))
+const LazyTeam = lazy(
   () => import('./pages/Team/components/TeamDisplay.tsx')
 )
 
 export default function App () {
-  const { pendingActions } = useAbility()
-
-  useEffect(() => {
-    console.log('pendingActions ', pendingActions)
-  }, [pendingActions])
-
   return (
     <Suspense fallback={<Loading />}>
       <Routes>

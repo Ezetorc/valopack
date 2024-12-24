@@ -71,23 +71,32 @@ export function useAbility () {
   const handleMethod = (method: Method, squareTo: Square): void => {
     const { type, params } = method
 
-    if (type == 'add-box') {
+    if (type == 'add-entity') {
+      console.log('addEntity')
       addEntity(params as AddEntityParams, squareTo)
-    } else if (type == 'remove-box') {
+    } else if (type == 'remove-entity') {
+      console.log('removeEntity')
       removeEntity(params as RemoveEntityParams, squareTo)
     } else if (type == 'modify-attribute') {
+      console.log('modifyAttribute')
       modifyAttribute(params as ModifyAttributeParams, squareTo)
     } else if (type == 'add-tag') {
+      console.log('addTag')
       addTag(params as AddTagParams, squareTo)
     } else if (type == 'wait') {
+      console.log('wait')
       wait(params as WaitParams, squareTo)
     } else if (type == 'show-fade') {
+      console.log('showFade')
       showFade(params as ShowFadeParams, squareTo)
     } else if (type == 'add-class') {
+      console.log('addClass')
       addClass(params as AddClassParams, squareTo)
     } else if (type == 'remove-tag') {
+      console.log('removeTag')
       removeTag(params as RemoveTagParams, squareTo)
     } else if (type == 'remove-class') {
+      console.log('removeClass')
       removeClass(params as RemoveClassParams, squareTo)
     }
   }
@@ -124,6 +133,8 @@ export function useAbility () {
       if (!params.tags) return squares
 
       const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
+      console.log('getSquares')
+
       const filteredSquares: Square[] = squares.filter(square =>
         square.hasEntityWithTag(parsedTags)
       )
@@ -141,7 +152,7 @@ export function useAbility () {
     const entityToAdd: Entity = new Entity({ type: params.entityType })
 
     squares.forEach(square => {
-      square.addEntity(entityToAdd)
+      square.addEntity(entityToAdd, params.position)
     })
   }
 

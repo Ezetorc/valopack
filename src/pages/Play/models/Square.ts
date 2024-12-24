@@ -68,8 +68,12 @@ export class Square {
     return this.entities.every(entity => entity.free === true)
   }
 
-  addEntity (entity: Entity): void {
-    this.entities.unshift(entity)
+  addEntity (entity: Entity, position?: 'backward' | 'forward'): void {
+    if (position === 'forward') {
+      this.entities.push(entity)
+    } else {
+      this.entities.unshift(entity)
+    }
   }
 
   addClass (className: string): void {

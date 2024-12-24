@@ -25,8 +25,8 @@ export default function Settings () {
   return (
     <Modal className='flex flex-col overflow-y-scroll'>
       <header className='w-full h-[20%] grid grid-cols-[2fr,1fr] place-items-center border-b-white border-b-[1px]'>
-        <span className='text-[clamp(60px,3vw,80px)]'>{texts.settings}</span>
-        <CloseButton className='w-[clamp(140px,10vw,160px)] mr-[15%]' onClose={handleClose} />
+        <span className='text-[clamp(40px,3vw,70px)]'>{texts.settings}</span>
+        <CloseButton className='w-[clamp(110px,10vw,130px)] mr-[15%]' onClose={handleClose} />
       </header>
 
       <div className='w-full h-[80%] flex justify-center'>

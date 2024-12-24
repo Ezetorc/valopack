@@ -5,15 +5,32 @@ export const skySmoke: Ability = {
   useRange: [1, 10],
   uses: 1,
   index: undefined,
-  validEntityTypes: ["empty"],
+  validEntityTypes: ['empty'],
   methods: [
     {
-      type: 'add-box',
+      type: 'add-entity',
       params: {
         get: {
-          getBy: 'squareTo'
+          getBy: 'range',
+          range: 1
         },
-        entityType: 'stimBeacon'
+        entityType: 'skySmoke',
+        position: 'forward'
+      }
+    },
+    {
+      type: 'add-tag',
+      params: {
+        get: {
+          getBy: 'range',
+          range: 1
+        },
+        tags: [
+          {
+            text: 'skySmoke',
+            team: 'current-team'
+          }
+        ]
       }
     },
     {
@@ -22,7 +39,7 @@ export const skySmoke: Ability = {
         get: {
           getBy: 'squareTo'
         },
-        classNames: ['scale-up']
+        classNames: ['animate-scale_up']
       }
     },
     {
@@ -37,60 +54,8 @@ export const skySmoke: Ability = {
               get: {
                 getBy: 'squareTo'
               },
-              classNames: ['scale-up']
+              classNames: ['animate-scale_up']
             }
-          }
-        ]
-      }
-    },
-    {
-      type: 'wait',
-      params: {
-        type: 'miliseconds',
-        time: 2000,
-        methods: [
-          {
-            type: 'remove-box',
-            params: {
-              get: {
-                getBy: 'squareTo'
-              },
-              entityTypes: ['stimBeacon']
-            }
-          }
-        ]
-      }
-    },
-    {
-      type: 'modify-attribute',
-      params: {
-        get: {
-          getBy: 'range',
-          range: 1,
-          filters: {
-            entityTypes: ['player'],
-            teamSide: 'current-team'
-          }
-        },
-        attribute: 'speed',
-        amount: +1
-      }
-    },
-    {
-      type: 'add-tag',
-      params: {
-        get: {
-          getBy: 'range',
-          range: 1,
-          filters: {
-            entityTypes: ['player'],
-            teamSide: 'current-team'
-          }
-        },
-        tags: [
-          {
-            text: 'stimBeacon',
-            team: 'current-team'
           }
         ]
       }
@@ -99,54 +64,19 @@ export const skySmoke: Ability = {
       type: 'wait',
       params: {
         type: 'turns',
-        time: 2,
+        time: 4,
         methods: [
           {
-            type: 'modify-attribute',
+            type: 'remove-entity',
             params: {
               get: {
                 getBy: 'tag',
-                tags: [
-                  {
-                    text: 'stimBeacon',
-                    team: 'current-team'
-                  }
-                ]
+                tags: [{ text: 'skySmoke', team: 'current-team' }]
               },
-              attribute: 'speed',
-              amount: -1
-            }
-          },
-          {
-            type: 'remove-tag',
-            params: {
-              get: {
-                getBy: 'range',
-                range: 1,
-                filters: {
-                  entityTypes: ['player'],
-                  teamSide: 'current-team'
-                }
-              },
-              tags: [{ text: 'stimBeacon', team: 'current-team' }]
+              entityTypes: ['skySmoke']
             }
           }
         ]
-      }
-    },
-    {
-      type: 'show-fade',
-      params: {
-        get: {
-          getBy: 'range',
-          range: 1,
-          filters: {
-            entityTypes: ['player'],
-            teamSide: 'current-team'
-          }
-        },
-        color: 'current-team-color',
-        duration: 1
       }
     }
   ]

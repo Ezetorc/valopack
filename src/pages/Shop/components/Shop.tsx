@@ -31,7 +31,7 @@ export default function Shop () {
       {!ownedProduct ? (
         <>
           <Header />
-          <main className='p-[2%] gap-[3%] pt-[20vh] grid grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] justify-items-center w-[100vw] min-h-full'>
+          <main className='w-screen min-h-[100vh] grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))]'>
             {products.map((product, index) => (
               <ProductDisplay key={index} product={product} />
             ))}

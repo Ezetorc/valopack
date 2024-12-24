@@ -23,22 +23,18 @@ export function Header () {
     getCreditsOpen,
     setCreditsOpen
   } = useSettings()
-  const settingsOpen: boolean = getSettingsOpen()
-  const isAudioMuted: boolean = getIsAudioMuted()
-  const creditsOpen: boolean = getCreditsOpen()
-  const credits: number = getCredits()
 
   const handleToggleAudio = () => {
     toggleAudioMuted()
   }
 
-  const handleClick = (): void => {
-    playAudio(clickAudio)
-  }
-
   const handleOpenCredits = (): void => {
     playAudio(clickAudio)
     setCreditsOpen(true)
+  }
+
+  const handleClick = (): void => {
+    playAudio(clickAudio)
   }
 
   const handleMouseEnter = (): void => {
@@ -52,63 +48,54 @@ export function Header () {
 
   return (
     <>
-      <header className='flex justify-center fixed top-0 z-[500] w-full h-[12vh] grid-row-1 xl:bg-red-600 md:bg-blue-600 tm:bg-green-600'>
-        <div className='relative w-full xl:w-[60%] h-full grid grid-cols-[1fr_2fr_1fr]'>
-          <div className='absolute w-full h-[98%] bg-black bg-opacity-40 xl:clip-header-aside z-[400]'></div>
-
-          <div className='z-[450] flex items-center overflow-hidden justify-center h-[clamp(80px,7vw,110px)] xl:ml-[25%] gap-x-[10%]'>
+      <header className='sticky w-[clamp(320px,100vw,1920px)] h-[clamp(110px,15vh,300px)] top-0 flex justify-center z-[500]'>
+        <div className='bg-[#00000066] xl:w-[90%] md:w-full tm:w-full h-[80%] absolute z-[900] xl:clip-header-aside'></div>
+        <ol className='grid grid-cols-[1fr,1.3fr,1fr] w-full h-full absolute z-[1000]'>
+          <li className='flex xl:justify-end md:justify-center tm:justify-center items-center xl:pr-[10%] h-[80%] gap-[10%]'>
             <button
               onMouseEnter={handleMouseEnter}
               onClick={handleOpen}
               aria-label={texts.settings}
-              className='bg-transparent border-none font-stroke cursor-pointer max-h-[100px] aspect-[2/1] flex justify-center items-center text-[clamp(1rem,3vw,4rem)] hover:text-v_aqua'
             >
-              <SettingsIcon />
+              <SettingsIcon size='clamp(40px,10vw,80px)' />
             </button>
             <button
               onMouseEnter={handleMouseEnter}
               onClick={handleToggleAudio}
               aria-label={texts.audio}
-              className='bg-transparent border-none font-stroke cursor-pointer max-h-[100px] aspect-[2/1] flex justify-center items-center text-[clamp(1rem,3vw,4rem)] hover:text-v_aqua'
             >
-              {isAudioMuted ? <AudioOFFIcon /> : <AudioONIcon />}
+              {getIsAudioMuted() ? (
+                <AudioOFFIcon size='clamp(40px,10vw,80px)' />
+              ) : (
+                <AudioONIcon size='clamp(40px,10vw,80px)' />
+              )}
             </button>
-          </div>
+          </li>
 
-          <div
+          <Link
+            to={paths.home}
             onMouseEnter={handleMouseEnter}
-            className='z-[450] flex items-center justify-center bg-v_red hover:bg-white clip-header-center h-[clamp(105px,8.7vw,135px)] md:text-[clamp(5rem,7vw,7rem)] xl:text-[clamp(1rem,7vw,7rem)]'
+            onClick={handleClick}
+            className='clip-header-center bg-v_red text-center content-center xl:hover:text-v_red xl:hover:bg-white text-[clamp(20px,10vw,90px)]'
           >
-            <Link
-              to={paths.home}
-              onClick={handleClick}
-              className='w-full h-full flex justify-center items-center text-white no-underline hover:text-[var(--main-color)] hover:text-v_red'
-            >
-              {appName}
-            </Link>
-          </div>
+            {appName}
+          </Link>
 
-          <div className='z-[450] flex h-[clamp(80px,7vw,110px)] justify-center items-center xl:mr-[10%] gap-x-[4%]'>
-            <button
-              className='relative max-h-[60px] w-[40%] text-[clamp(2.6rem,3vw,5rem)] flex justify-end items-center hover:text-v_aqua'
-              onClick={handleOpenCredits}
-              onMouseEnter={handleMouseEnter}
-            >
-              {credits}
-            </button>
+          <li className='flex xl:justify-start md:justify-center tm:justify-center items-center xl:pl-[10%] h-[80%] gap-[clamp(5px,5%,10px)]'>
+            <button onClick={handleOpenCredits} className='text-[clamp(25px,6vw,60px)] xl:hover:text-v_aqua'>{getCredits()}</button>
             <img
-              title={texts.credits}
               src={creditsKingdomImage}
               alt={texts.credits}
-              className='max-h-[50px] overflow-hidden'
+              title={texts.credits}
+              className='w-[clamp(30px,5vw,70px)] object-contain'
             />
-          </div>
-        </div>
+          </li>
+        </ol>
       </header>
 
       <Suspense fallback={<Loading />}>
-        {settingsOpen && <LazySettings />}
-        {creditsOpen && <LazyCredits />}
+        {getSettingsOpen() && <LazySettings />}
+        {getCreditsOpen() && <LazyCredits />}
       </Suspense>
     </>
   )

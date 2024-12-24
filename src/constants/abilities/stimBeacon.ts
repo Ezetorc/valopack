@@ -8,7 +8,7 @@ export const stimBeacon: Ability = {
   validEntityTypes: ['empty'],
   methods: [
     {
-      type: 'add-box',
+      type: 'add-entity',
       params: {
         get: {
           getBy: 'squareTo'
@@ -50,7 +50,7 @@ export const stimBeacon: Ability = {
         time: 2000,
         methods: [
           {
-            type: 'remove-box',
+            type: 'remove-entity',
             params: {
               get: {
                 getBy: 'squareTo'
@@ -121,12 +121,13 @@ export const stimBeacon: Ability = {
             type: 'remove-tag',
             params: {
               get: {
-                getBy: 'range',
-                range: 1,
-                filters: {
-                  entityTypes: ['player'],
-                  teamSide: 'current-team'
-                }
+                getBy: 'tag',
+                tags: [
+                  {
+                    text: 'stimBeacon',
+                    team: 'current-team'
+                  }
+                ]
               },
               tags: [{ text: 'stimBeacon', team: 'current-team' }]
             }
