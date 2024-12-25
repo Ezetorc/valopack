@@ -10,15 +10,15 @@ import { SquareDisplay } from './SquareDisplay.tsx'
 import { Distance } from '../services/Distance.service.ts'
 import { getMissingEntityTypes } from '../utilities/getMissingEntityTypes.ts'
 import { EntityType } from '../models/EntityType.ts'
+import { Board } from '../models/Board.ts'
 
-export function BoardDisplay () {
+export function BoardDisplay ({ board }: { board: Board }) {
   const {
-    getBoard,
     setSquareFrom,
     setSquareTo,
-    getAction,
+    action,
     movePlayer,
-    getSquareFrom,
+    squareFrom,
     resetActions,
     attackPlayer,
     toggleTurn
@@ -42,8 +42,6 @@ export function BoardDisplay () {
 
   const handleMoveAction = useCallback(
     (squareToMove: Square) => {
-      const squareFrom: Square | null = getSquareFrom()
-
       if (!squareFrom) return
 
       const player: Player = squareFrom.getPlayer() as Player
@@ -68,7 +66,7 @@ export function BoardDisplay () {
     },
     [
       movePlayer,
-      getSquareFrom,
+      squareFrom,
       resetActions,
       showInvalidMove,
       setSquareTo,
@@ -78,8 +76,6 @@ export function BoardDisplay () {
 
   const handleAttackAction = useCallback(
     (squareToAttack: Square) => {
-      const squareFrom: Square | null = getSquareFrom()
-
       if (!squareFrom) return
 
       const playerTo: Player = squareToAttack.getPlayer() as Player
@@ -102,7 +98,7 @@ export function BoardDisplay () {
       attackPlayer,
       resetActions,
       setSquareTo,
-      getSquareFrom,
+      squareFrom,
       showInvalidMove,
       changeTurn
     ]
@@ -110,11 +106,8 @@ export function BoardDisplay () {
 
   const handleAbilityAction = useCallback(
     (targetSquare: Square) => {
-      const squareFrom: Square | null = getSquareFrom()
-
       if (!squareFrom) return
 
-      const action: Action | null = getAction()
       const player: Player = squareFrom.getPlayer() as Player
       const { abilities } = player
       const selectedAbility: Ability =
@@ -154,12 +147,12 @@ export function BoardDisplay () {
       }
     },
     [
-      getAction,
+      action,
       handleAbility,
       resetActions,
       setSquareTo,
       showInvalidMove,
-      getSquareFrom,
+      squareFrom,
       changeTurn
     ]
   )
@@ -180,8 +173,6 @@ export function BoardDisplay () {
 
   const handleClick = useCallback(
     (clickedSquare: Square) => {
-      const action: Action | null = getAction()
-
       if (action === null) {
         if (action) {
           setSquareTo(clickedSquare)
@@ -192,7 +183,7 @@ export function BoardDisplay () {
         handleAction(action, clickedSquare)
       }
     },
-    [getAction, setSquareFrom, setSquareTo, handleAction]
+    [action, setSquareFrom, setSquareTo, handleAction]
   )
 
   return (
@@ -200,24 +191,22 @@ export function BoardDisplay () {
       className='grid grid-cols-[repeat(7,_1fr)] grid-rows-[repeat(5,_1fr)] border-[20px] border-[#ffffff5e] items-center w-[90%] min-w-[700px] max-w-[900px] aspect-[16/10]'
       ref={boardRef}
     >
-      {getBoard()
-        .grid.flat()
-        .map((square, squareIndex) => (
-          <SquareDisplay
-            onClick={() => handleClick(square)}
-            color={square.getColor(getBoard().colors)}
-            square={square}
-            key={`square-${squareIndex}`}
-          >
-            {square.entities.map((entity, entityIndex) => (
-              <EntityDisplay
-                entity={entity}
-                key={`box-${squareIndex}-${entityIndex}`}
-                opacity={entity.getOpacity(square)}
-              />
-            ))}
-          </SquareDisplay>
-        ))}
+      {board.grid.flat().map((square, squareIndex) => (
+        <SquareDisplay
+          onClick={() => handleClick(square)}
+          color={square.getColor(board.colors)}
+          square={square}
+          key={`square-${squareIndex}`}
+        >
+          {square.entities.map((entity, entityIndex) => (
+            <EntityDisplay
+              entity={entity}
+              key={`box-${squareIndex}-${entityIndex}`}
+              opacity={entity.getOpacity(square)}
+            />
+          ))}
+        </SquareDisplay>
+      ))}
     </div>
   )
 }

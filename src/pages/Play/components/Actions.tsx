@@ -5,7 +5,6 @@ import { ActionDisplay } from './ActionDisplay.tsx'
 import { teamColors } from '../../../valopack.config.ts'
 import { Action } from '../models/Action.ts'
 import { Ability } from '../models/Ability.ts'
-import { Square } from '../models/Square.ts'
 
 interface ActionsProps {
   onOpenInfo: () => void
@@ -13,8 +12,7 @@ interface ActionsProps {
 
 export function Actions ({ onOpenInfo }: ActionsProps) {
   const { texts } = useSettings()
-  const { getSquareFrom, setAction } = useBoard()
-  const squareFrom: Square | null = getSquareFrom()
+  const { squareFrom, turn, setAction } = useBoard()
 
   if (!squareFrom) return
 
@@ -57,7 +55,7 @@ export function Actions ({ onOpenInfo }: ActionsProps) {
         className='w-full max-w-[150px] border-b-[10px] border-b-transparent'
       />
 
-      {player.teamSide === 'ally' && (
+      {turn === "ally" && (
         <>
           <ActionDisplay
             onClick={() => setAction('move')}
