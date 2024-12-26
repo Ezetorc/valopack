@@ -1,4 +1,5 @@
 import { Agent } from '../models/Agent.ts'
+import { hotHands } from './abilities/hotHands.ts'
 import { skySmoke } from './abilities/skySmoke.ts'
 import { stimBeacon } from './abilities/stimBeacon.ts'
 
@@ -19,7 +20,7 @@ export const agents: Readonly<Agent[]> = [
       'https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/fullportrait.png',
     icon: 'https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayiconsmall.png',
     id: 1,
-    abilities: []
+    abilities: [hotHands]
   },
   {
     name: 'Sage',

@@ -1,1 +1,1 @@
-export type EntityType = 'player' | 'box' | 'stimBeacon' | 'skySmoke'
+export type EntityType = 'player' | 'box' | 'stimBeacon' | 'skySmoke' | 'fire'

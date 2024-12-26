@@ -12,17 +12,19 @@ interface ActionsProps {
 
 export function Actions ({ onOpenInfo }: ActionsProps) {
   const { texts } = useSettings()
-  const { squareFrom, turn, setAction } = useBoard()
+  const { squareFrom, setAction } = useBoard()
 
   if (!squareFrom) return
 
-  const player: Player = squareFrom.getFirstEntity() as Player
+  const player: Player = squareFrom.getPlayer() as Player
 
   if (!player) return
 
   const borderColor: string = teamColors[player.teamSide]
 
   const renderAbility = (index: number) => {
+    if (!player.abilities) return
+    
     const ability: Ability = player.abilities[index]
 
     if (!ability || !ability.identifier) return
@@ -55,7 +57,7 @@ export function Actions ({ onOpenInfo }: ActionsProps) {
         className='w-full max-w-[150px] border-b-[10px] border-b-transparent'
       />
 
-      {turn === "ally" && (
+      {
         <>
           <ActionDisplay
             onClick={() => setAction('move')}
@@ -74,7 +76,7 @@ export function Actions ({ onOpenInfo }: ActionsProps) {
           {renderAbility(0)}
           {renderAbility(1)}
         </>
-      )}
+      }
 
       <ActionDisplay
         className='grow-[1] bg-v_aqua_gradient border-v_aqua hover:border-white'

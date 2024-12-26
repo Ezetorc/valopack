@@ -76,6 +76,7 @@ export interface Dictionary {
   abilities: {
     skySmoke: AbilityInfo
     stimBeacon: AbilityInfo
+    hotHands: AbilityInfo
   }
   wannaBuy: (name: string) => string
 }

@@ -88,6 +88,11 @@ export const dictionaries: {
         name: 'Stim Beacon',
         description:
           'Throw a stim beacon that increase speed by one of allies around it for two turns.'
+      },
+      hotHands: {
+        name: 'Hot Hands',
+        description:
+          'Throw a fireball that deals 50 damage to enemies in a 3x3 area.'
       }
     },
     wannaBuy: (name: string) => `Do you want to buy ${name}?`
@@ -178,6 +183,11 @@ export const dictionaries: {
         name: 'Baliza potenciadora',
         description:
           'Lanza una baliza de estímulo que aumenta la velocidad en uno de los aliados a su alrededor durante dos turnos.'
+      },
+      hotHands: {
+        name: 'Manos Calientes',
+        description:
+          'Tira una bola de fuego que inflige 50 de daño a los enemigos en un área de 3x3.'
       }
     },
     audio: 'Audio',
