@@ -1,6 +1,7 @@
 import { Attributes } from '../../../models/Attributes.ts'
+import { Hexadecimal } from '../../../models/Hexadecimal.ts'
 import { TeamSide } from '../../../models/TeamSide.ts'
-import { maxLeveledAttributes } from '../../../valopack.config.ts'
+import { maxLeveledAttributes, teamColors } from '../../../valopack.config.ts'
 import { Ability } from '../models/Ability.ts'
 import { GetParams } from '../models/GetParams.ts'
 import { Method } from '../models/Method.ts'
@@ -30,6 +31,17 @@ export class Parser {
       { ...abilities[0], index: 0 },
       { ...abilities[1], index: 1 }
     ]
+  }
+
+  static getParsedColor (
+    color: Hexadecimal | 'current-team-color' | 'opposite-team-color',
+    turn: TeamSide
+  ): Hexadecimal {
+    if (color == 'current-team-color') {
+      return teamColors[turn] as Hexadecimal
+    } else {
+      return (turn == 'ally' ? teamColors['enemy']  : teamColors['ally']) as Hexadecimal
+    }
   }
 
   static getParsedAttributes (

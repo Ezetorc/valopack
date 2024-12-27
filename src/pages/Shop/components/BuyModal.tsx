@@ -2,7 +2,6 @@ import { Modal } from '../../../components/Modal.tsx'
 import { useShop } from '../hooks/useShop.ts'
 import { useSettings } from '../../../hooks/useSettings.ts'
 import { useUser } from '../../../hooks/useUser.ts'
-import { purchaseAudio } from '../../../constants/audios.ts'
 import { useEffect } from 'react'
 import { CloseButton } from '../../../components/CloseButton.tsx'
 import { Product } from '../models/Product.ts'
@@ -19,7 +18,7 @@ export function BuyModal ({ canBuy }: BuyModalProps) {
   const selectedProduct: Product | null = getSelectedProduct()
 
   useEffect(() => {
-    playAudio(purchaseAudio)
+    playAudio("purchase")
   })
 
   if (!selectedProduct) return null

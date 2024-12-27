@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import creditsKingdomImage from '../assets/images/kingdom_credits.webp'
 import { useSettings } from '../hooks/useSettings.ts'
 import { useUser } from '../hooks/useUser.ts'
-import { clickAudio, hoverAudio } from '../constants/audios.ts'
 import Loading from './Loading.tsx'
 import { paths, appName } from '../valopack.config.ts'
 import { AudioOFFIcon, AudioONIcon, SettingsIcon } from './Icons.tsx'
@@ -29,21 +28,21 @@ export function Header () {
   }
 
   const handleOpenCredits = (): void => {
-    playAudio(clickAudio)
+    playAudio('click')
     setCreditsOpen(true)
   }
 
   const handleClick = (): void => {
-    playAudio(clickAudio)
+    playAudio('click')
   }
 
   const handleMouseEnter = (): void => {
-    playAudio(hoverAudio)
+    playAudio('hover')
   }
 
   const handleOpen = (): void => {
     setSettingsOpen(true)
-    playAudio(clickAudio)
+    playAudio('click')
   }
 
   return (
@@ -82,7 +81,12 @@ export function Header () {
           </Link>
 
           <li className='flex xl:justify-start md:justify-center tm:justify-center items-center xl:pl-[10%] h-[80%] gap-[clamp(5px,5%,10px)]'>
-            <button onClick={handleOpenCredits} className='text-[clamp(25px,6vw,60px)] xl:hover:text-v_aqua'>{getCredits()}</button>
+            <button
+              onClick={handleOpenCredits}
+              className='text-[clamp(25px,6vw,60px)] xl:hover:text-v_aqua'
+            >
+              {getCredits()}
+            </button>
             <img
               src={creditsKingdomImage}
               alt={texts.credits}

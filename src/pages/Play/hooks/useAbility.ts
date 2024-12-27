@@ -1,4 +1,6 @@
-import { teamColors } from '../../../valopack.config'
+import { useSettings } from '../../../hooks/useSettings'
+import { AudioId } from '../../../models/Audio'
+import { Hexadecimal } from '../../../models/Hexadecimal'
 import { entities } from '../constants/entities'
 import { Ability } from '../models/Ability'
 import { AddClassParams } from '../models/AddClassParams'
@@ -11,6 +13,7 @@ import { GetParams } from '../models/GetParams'
 import { Method } from '../models/Method'
 import { ModifyAttributeParams } from '../models/ModifyAttributeParams'
 import { PendingAction } from '../models/PendingAction'
+import { PlayAudioParams } from '../models/PlayAudioParams'
 import { Player } from '../models/Player'
 import { RemoveClassParams } from '../models/RemoveClassParams'
 import { RemoveEntityParams } from '../models/RemoveEntityParams'
@@ -33,6 +36,8 @@ export function useAbility () {
     setPendingActions,
     pendingActions
   } = gameStore
+
+  const { playAudio } = useSettings()
 
   const updatePendingActions = (): void => {
     const newPendingActions: PendingAction[] = pendingActions
@@ -87,6 +92,8 @@ export function useAbility () {
       removeTag(params as RemoveTagParams, squareTo)
     } else if (type == 'remove-class') {
       removeClass(params as RemoveClassParams, squareTo)
+    } else if (type == 'play-audio') {
+      playAudio((params as PlayAudioParams).audioId as AudioId)
     }
   }
 
@@ -216,13 +223,7 @@ export function useAbility () {
 
   const showFade = (params: ShowFadeParams, squareTo: Square): void => {
     const squares: Square[] = getSquares(params.get, squareTo)
-    let color: string = params.color
-
-    if (params.color == 'current-team-color') {
-      color = teamColors[turn]
-    } else {
-      color = turn == 'ally' ? teamColors['enemy'] : teamColors['ally']
-    }
+    const color: Hexadecimal = Parser.getParsedColor(params.color, turn)
 
     squares.forEach(square => {
       square.addStyleProperty('--fade-color', color)

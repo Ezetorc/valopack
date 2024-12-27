@@ -49,7 +49,7 @@ export function Actions ({ onOpenInfo }: ActionsProps) {
   }
 
   return (
-    <footer className='flex bg-[#7979a8] w-[90%] aspect-[16/2] overflow-hidden items-center animate-appear gap-[3%] [padding-inline:2%]'>
+    <footer className='flex bg-[#7979a8] w-[clamp(320px,90%,1500px)] aspect-[16/2] overflow-hidden items-center animate-appear gap-[3%] [padding-inline:2%]'>
       <img
         style={{ borderColor }}
         src={player.image}

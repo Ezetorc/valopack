@@ -3,7 +3,6 @@ import { useShop } from '../hooks/useShop.ts'
 import { useSettings } from '../../../hooks/useSettings.ts'
 import { PackDisplay } from './PackDisplay.tsx'
 import CardDisplay from '../../../components/CardDisplay.tsx'
-import { clickAudio } from '../../../constants/audios.ts'
 import { CloseButton } from '../../../components/CloseButton.tsx'
 import { Product } from '../models/Product.ts'
 import { Card } from '../../../models/Card.ts'
@@ -24,7 +23,7 @@ export function PackOpener () {
 
   const handleClose = (): void => {
     setOwnedProduct(null)
-    playAudio(clickAudio)
+    playAudio("click")
   }
 
   return (

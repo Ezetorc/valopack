@@ -5,13 +5,12 @@ import { SettingsStore } from '../models/SettingsStore.ts'
 import { getSettingsStore } from '../stores/getSettingsStore.ts'
 import { useCallback, useMemo } from 'react'
 import { Section } from '../models/Section.ts'
-import { Language } from '../models/Language.ts'
+import { Audios } from '../constants/Audios.ts'
+import { AudioId } from '../models/Audio.ts'
 
 export function useSettings () {
   const settingsStore: SettingsStore = getSettingsStore()
-  const { getLanguage, getIsAudioMuted, setIsAudioMuted } = settingsStore
-  const language: Language = getLanguage()
-  const isAudioMuted: boolean = getIsAudioMuted()
+  const { language, isAudioMuted, setIsAudioMuted } = settingsStore
   const texts: Dictionary = useMemo(() => dictionaries[language], [language])
 
   const updatePage = (section: Section): void => {
@@ -26,10 +25,11 @@ export function useSettings () {
   }
 
   const playAudio = useCallback(
-    (audio: HTMLAudioElement) => {
-      if (!isAudioMuted) {
-        audio.play()
-      }
+    (audioId: AudioId) => {
+      if (isAudioMuted) return
+
+      const audioElement = new Audio(Audios[audioId])
+      audioElement.play()
     },
     [isAudioMuted]
   )

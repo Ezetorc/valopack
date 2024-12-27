@@ -2,6 +2,7 @@ import { AddClassParams } from './AddClassParams'
 import { AddEntityParams } from './AddEntityParams'
 import { AddTagParams } from './AddTagParams'
 import { ModifyAttributeParams } from './ModifyAttributeParams'
+import { PlayAudioParams } from './PlayAudioParams'
 import { RemoveClassParams } from './RemoveClassParams'
 import { RemoveEntityParams } from './RemoveEntityParams'
 import { RemoveTagParams } from './RemoveTagParams'
@@ -18,7 +19,8 @@ export interface Method {
     | 'remove-entity'
     | 'show-fade'
     | 'add-class'
-    | 'remove-class',
+    | 'remove-class'
+    | 'play-audio'
   params:
     | ModifyAttributeParams
     | WaitParams
@@ -29,4 +31,5 @@ export interface Method {
     | ShowFadeParams
     | AddClassParams
     | RemoveClassParams
+    | PlayAudioParams
 }

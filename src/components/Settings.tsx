@@ -1,6 +1,5 @@
 import { useSettings } from '../hooks/useSettings.ts'
 import { Language } from '../models/Language.ts'
-import { clickAudio } from '../constants/audios.ts'
 import { Modal } from './Modal.tsx'
 import { languages } from '../valopack.config.ts'
 import React from 'react'
@@ -12,7 +11,7 @@ export default function Settings () {
 
   const handleClose = (): void => {
     setSettingsOpen(false)
-    playAudio(clickAudio)
+    playAudio("click")
   }
 
   const handleChangeLanguage = (

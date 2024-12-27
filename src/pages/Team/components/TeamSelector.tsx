@@ -4,7 +4,6 @@ import CardDisplay from '../../../components/CardDisplay.tsx'
 import { Card } from '../../../models/Card.ts'
 import { Inventory } from '../../../models/Inventory.ts'
 import { CardSlot } from '../../../models/CardSlot.ts'
-import { clickAudio } from '../../../constants/audios.ts'
 import { CloseButton } from '../../../components/CloseButton.tsx'
 
 interface TeamSelectorProps {
@@ -21,11 +20,11 @@ export function TeamSelector ({ cardSlotToChange }: TeamSelectorProps) {
 
   const handleClose = (): void => {
     setSelectorVisible(false)
-    playAudio(clickAudio)
+    playAudio('click')
   }
 
   const handleClick = (clickedCard: Card): void => {
-    playAudio(clickAudio)
+    playAudio('click')
     setSelectorVisible(false)
 
     const newInventory: Inventory = new Inventory([...inventory.cards])

@@ -15,7 +15,7 @@ export const getSettingsStore = create<SettingsStore>((set, get) => ({
   getCreditsOpen: () => get().creditsOpen,
   setCreditsOpen: newCreditsOpen => set({ creditsOpen: newCreditsOpen }),
 
-  isAudioMuted: true,
+  isAudioMuted: false,
   getIsAudioMuted: () => get().isAudioMuted,
   setIsAudioMuted: newIsAudioMuted => set({ isAudioMuted: newIsAudioMuted })
 }))

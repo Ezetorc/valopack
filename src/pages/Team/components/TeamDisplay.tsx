@@ -5,7 +5,6 @@ import { CardSlotDisplay } from './CardSlotDisplay.tsx'
 import { TeamSelector } from './TeamSelector.tsx'
 import { Header } from '../../../components/Header.tsx'
 import { CardSlot } from '../../../models/CardSlot.ts'
-import { clickAudio } from '../../../constants/audios.ts'
 import { getCardSlotsByTeam } from '../utilities/getCardSlotsByTeam.ts'
 
 export default function TeamDisplay () {
@@ -17,7 +16,7 @@ export default function TeamDisplay () {
   )
 
   const handleClick = (clickedCardSlot: CardSlot): void => {
-    playAudio(clickAudio)
+    playAudio("click")
     setSelectorVisible(true)
     setCardSlotToChange(clickedCardSlot)
   }
