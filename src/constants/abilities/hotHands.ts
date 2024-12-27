@@ -14,8 +14,7 @@ export const hotHands: Ability = {
           getBy: 'range',
           range: 1
         },
-        entityType: 'fire',
-        position: 'backward'
+        entityType: 'fire'
       }
     },
     {

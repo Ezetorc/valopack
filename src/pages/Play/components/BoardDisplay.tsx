@@ -1,18 +1,18 @@
-import { useCallback, useRef } from 'react'
-import { Square } from '../models/Square.ts'
-import { useBoard } from '../hooks/useBoard.ts'
-import { Player } from '../models/Player.ts'
-import { Action } from '../models/Action.ts'
-import { useAbility } from '../hooks/useAbility.ts'
-import { Ability } from '../models/Ability.ts'
-import { EntityDisplay } from './EntityDisplay.tsx'
-import { SquareDisplay } from './SquareDisplay.tsx'
-import { Distance } from '../services/Distance.service.ts'
-import { getMissingEntityTypes } from '../utilities/getMissingEntityTypes.ts'
-import { EntityType } from '../models/EntityType.ts'
-import { Board } from '../models/Board.ts'
+import { useCallback, useRef, memo, useEffect, useState } from 'react'
+import { useAbility } from '../hooks/useAbility'
+import { useBoard } from '../hooks/useBoard'
+import { Ability } from '../models/Ability'
+import { Action } from '../models/Action'
+import { Board } from '../models/Board'
+import { EntityType } from '../models/EntityType'
+import { Player } from '../models/Player'
+import { Square } from '../models/Square'
+import { Distance } from '../services/Distance.service'
+import { getMissingEntityTypes } from '../utilities/getMissingEntityTypes'
+import { EntityDisplay } from './EntityDisplay'
+import { SquareDisplay } from './SquareDisplay'
 
-export function BoardDisplay ({ board }: { board: Board }) {
+const BoardDisplayComponent = ({ board }: { board: Board }) => {
   const {
     setSquareFrom,
     setSquareTo,
@@ -24,7 +24,13 @@ export function BoardDisplay ({ board }: { board: Board }) {
     toggleTurn
   } = useBoard()
   const { handleAbility, updatePendingActions } = useAbility()
+  const [, forceUpdate] = useState(0)
   const boardRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    forceUpdate(prev => prev + 1)
+    board.grid.flat().forEach(square => square.orderEntitiesByDepth())
+  }, [board])
 
   const changeTurn = useCallback(() => {
     updatePendingActions()
@@ -34,11 +40,10 @@ export function BoardDisplay ({ board }: { board: Board }) {
   const showInvalidMove = useCallback(() => {
     boardRef.current?.classList.add('animate-invalid_move')
 
-    setTimeout(
-      () => boardRef.current?.classList.remove('animate-invalid_move'),
-      300
-    )
-  }, [boardRef])
+    setTimeout(() => {
+      boardRef.current?.classList.remove('animate-invalid_move')
+    }, 300)
+  }, [])
 
   const handleMoveAction = useCallback(
     (squareToMove: Square) => {
@@ -174,16 +179,12 @@ export function BoardDisplay ({ board }: { board: Board }) {
   const handleClick = useCallback(
     (clickedSquare: Square) => {
       if (action === null) {
-        if (action) {
-          setSquareTo(clickedSquare)
-        } else {
-          setSquareFrom(clickedSquare)
-        }
+        setSquareFrom(clickedSquare)
       } else {
         handleAction(action, clickedSquare)
       }
     },
-    [action, setSquareFrom, setSquareTo, handleAction]
+    [action, setSquareFrom, handleAction]
   )
 
   return (
@@ -210,3 +211,10 @@ export function BoardDisplay ({ board }: { board: Board }) {
     </div>
   )
 }
+
+export const BoardDisplay = memo(
+  BoardDisplayComponent,
+  (prevProps, nextProps) => {
+    return prevProps.board === nextProps.board
+  }
+)

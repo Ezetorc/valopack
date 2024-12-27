@@ -23,8 +23,14 @@ export class Square {
     this.style = style
   }
 
+  orderEntitiesByDepth (): void {
+    this.entities.sort((a, b) => a.depth - b.depth)
+  }
+
   canEntityEnter (entity: Entity): boolean {
-    return this.entities.every(squareEntity => squareEntity.onEntityEnter(entity))
+    return this.entities.every(squareEntity =>
+      squareEntity.onEntityEnter(entity)
+    )
   }
 
   getFirstEntity (): Entity {
@@ -72,12 +78,8 @@ export class Square {
     return this.entities.every(entity => entity.free === true)
   }
 
-  addEntity (entity: Entity, position?: 'backward' | 'forward'): void {
-    if (position === 'forward') {
-      this.entities.push(entity)
-    } else {
-      this.entities.unshift(entity)
-    }
+  addEntity (entity: Entity): void {
+    this.entities.push(entity)
   }
 
   addClass (className: string): void {

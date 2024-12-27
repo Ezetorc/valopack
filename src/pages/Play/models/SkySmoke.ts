@@ -10,9 +10,9 @@ export class SkySmoke extends Entity {
       position: new Position(0, 0),
       free: true,
       tags: [],
-      onEntityEnter: () => true,
       image: 'src/pages/Play/assets/images/sky_smoke.webp',
-      type: 'skySmoke'
+      type: 'skySmoke',
+      depth: 40
     })
 
     this.teamSide = teamSide

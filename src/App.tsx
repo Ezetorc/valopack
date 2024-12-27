@@ -6,9 +6,7 @@ import { paths } from './valopack.config.ts'
 const LazyHome = lazy(() => import('./pages/Home/components/Home.tsx'))
 const LazyShop = lazy(() => import('./pages/Shop/components/Shop.tsx'))
 const LazyPlay = lazy(() => import('./pages/Play/components/Play.tsx'))
-const LazyTeam = lazy(
-  () => import('./pages/Team/components/TeamDisplay.tsx')
-)
+const LazyTeam = lazy(() => import('./pages/Team/components/TeamDisplay.tsx'))
 
 export default function App () {
   return (

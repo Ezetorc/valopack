@@ -6,20 +6,18 @@ import { Position } from '../models/Position.ts'
 import { getDamage } from '../utilities/getDamage.ts'
 import { GameStore } from '../models/GameStore.ts'
 import { getGameStore } from '../stores/getGameStore.ts'
-import { Board } from '../models/Board.ts'
 
 export function useBoard () {
   const gameStore: GameStore = getGameStore()
-  const { setSquareFrom, setSquareTo, setAction, setTurn, getTurn, getBoard } =
+  const { setSquareFrom, setSquareTo, setAction, setTurn, turn, board } =
     gameStore
 
   const toggleTurn = (): void => {
-    const newTurn: TeamSide = getTurn() === 'ally' ? 'enemy' : 'ally'
+    const newTurn: TeamSide = turn === 'ally' ? 'enemy' : 'ally'
     setTurn(newTurn)
   }
 
   const movePlayer = (player: Player, square: Square): void => {
-    const board: Board = getBoard()
     const squareTo: Square = board.getSquare(square.position)
     const playerSquare: Square = board.getSquare(player.position)
     const movedPlayer: Player = new Player({
@@ -42,7 +40,6 @@ export function useBoard () {
   }
 
   const killPlayer = (attacker: Player, target: Player): void => {
-    const board: Board = getBoard()
     const targetSquare: Square = board.getSquare(target.position)
 
     targetSquare.removeEntity(target)

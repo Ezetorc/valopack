@@ -10,6 +10,7 @@ export class Entity {
   public type: EntityType
   public position: Position
   public image: string
+  public depth: number
   public onEntityEnter: (entity: Entity) => boolean
 
   constructor ({
@@ -18,6 +19,7 @@ export class Entity {
     tags = [],
     onEntityEnter = () => true,
     image = '',
+    depth = 0,
     type
   }: Omit<Partial<Entity>, 'type'> & { type: EntityType }) {
     this.position = position
@@ -25,6 +27,7 @@ export class Entity {
     this.tags = tags
     this.type = type
     this.image = image
+    this.depth = depth
     this.onEntityEnter = onEntityEnter
   }
 
@@ -43,6 +46,8 @@ export class Entity {
       if (playerTeamSide == 'ally') {
         return 0.4
       }
+
+      return 0
     }
 
     return 1

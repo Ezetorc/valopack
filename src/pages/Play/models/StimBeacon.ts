@@ -9,7 +9,8 @@ export class StimBeacon extends Entity {
       tags: [],
       onEntityEnter: () => true,
       image: 'src/pages/Play/assets/images/stim_beacon.webp',
-      type: 'stimBeacon'
+      type: 'stimBeacon',
+      depth: 20
     })
   }
 }

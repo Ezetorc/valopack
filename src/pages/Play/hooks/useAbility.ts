@@ -1,4 +1,3 @@
-import { TeamSide } from '../../../models/TeamSide'
 import { teamColors } from '../../../valopack.config'
 import { entities } from '../constants/entities'
 import { Ability } from '../models/Ability'
@@ -13,7 +12,6 @@ import { Method } from '../models/Method'
 import { ModifyAttributeParams } from '../models/ModifyAttributeParams'
 import { PendingAction } from '../models/PendingAction'
 import { Player } from '../models/Player'
-import { Position } from '../models/Position'
 import { RemoveClassParams } from '../models/RemoveClassParams'
 import { RemoveEntityParams } from '../models/RemoveEntityParams'
 import { RemoveTagParams } from '../models/RemoveTagParams'
@@ -28,21 +26,19 @@ import { applyFilters } from '../utilities/applyFilters'
 export function useAbility () {
   const gameStore: GameStore = getGameStore()
   const {
-    getSquareFrom,
-    getBoard,
+    squareFrom,
+    board,
     setBoard,
-    getTurn,
+    turn,
     setPendingActions,
-    getPendingActions
+    pendingActions
   } = gameStore
 
   const updatePendingActions = (): void => {
-    const pendingActions: PendingAction[] = getPendingActions()
     const newPendingActions: PendingAction[] = pendingActions
       .map(pendingAction => {
         if (pendingAction.turns <= 0) {
           pendingAction.methods.forEach(method => {
-            console.log('pendingActionMethodHandled ')
             handleMethod(method, pendingAction.squareTo)
           })
         }
@@ -96,7 +92,7 @@ export function useAbility () {
 
   const removeTag = (params: RemoveTagParams, squareTo: Square): void => {
     const squares: Square[] = getSquares(params.get, squareTo)
-    const parsedTags: Tag[] = Parser.getParsedTags(params.tags, getTurn())
+    const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
 
     squares.forEach(square => {
       square.entities.forEach(entity => {
@@ -109,9 +105,6 @@ export function useAbility () {
 
   const getSquares = (params: GetParams, squareTo: Square): Square[] => {
     const { getBy, filters, range } = params
-    const squareFrom: Square | null = getSquareFrom()
-    const turn: TeamSide = getTurn()
-    const board: Board = getBoard()
     const squares: Square[] = []
 
     if (getBy === 'squareFrom' && squareFrom) {
@@ -151,12 +144,11 @@ export function useAbility () {
     }
 
     const entityToAdd: Entity = new EntityClass({
-      type: params.entityType,
-      position: params.position ? new Position(0, 0) : undefined
+      type: params.entityType
     })
 
     squares.forEach(square => {
-      square.addEntity(entityToAdd, params.position)
+      square.addEntity(entityToAdd)
     })
   }
 
@@ -187,7 +179,7 @@ export function useAbility () {
 
   const addTag = (params: AddTagParams, squareTo: Square): void => {
     const squares: Square[] = getSquares(params.get, squareTo)
-    const parsedTags: Tag[] = Parser.getParsedTags(params.tags, getTurn())
+    const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
 
     squares.forEach(square =>
       square.entities.forEach(entity => {
@@ -198,8 +190,6 @@ export function useAbility () {
 
   const wait = (params: WaitParams, squareTo: Square): void => {
     if (params.type == 'miliseconds') {
-      const board: Board = getBoard()
-
       setTimeout(() => {
         params.methods.forEach(method => {
           handleMethod(method, squareTo)
@@ -210,7 +200,6 @@ export function useAbility () {
         setBoard(newBoard)
       }, params.time)
     } else {
-      const turn: TeamSide = getTurn()
       const parsedMethods: Method[] = params.methods.map(method =>
         Parser.getParsedMethod(method, turn)
       )
@@ -221,13 +210,12 @@ export function useAbility () {
         methods: parsedMethods
       }
 
-      setPendingActions([...getPendingActions(), newPendingAction])
+      setPendingActions([...pendingActions, newPendingAction])
     }
   }
 
   const showFade = (params: ShowFadeParams, squareTo: Square): void => {
     const squares: Square[] = getSquares(params.get, squareTo)
-    const turn: TeamSide = getTurn()
     let color: string = params.color
 
     if (params.color == 'current-team-color') {

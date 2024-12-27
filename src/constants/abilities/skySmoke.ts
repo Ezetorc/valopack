@@ -14,8 +14,7 @@ export const skySmoke: Ability = {
           getBy: 'range',
           range: 1
         },
-        entityType: 'skySmoke',
-        position: 'forward'
+        entityType: 'skySmoke'
       }
     },
     {
@@ -64,7 +63,7 @@ export const skySmoke: Ability = {
       type: 'wait',
       params: {
         type: 'turns',
-        time: 4,
+        time: 3,
         methods: [
           {
             type: 'remove-entity',

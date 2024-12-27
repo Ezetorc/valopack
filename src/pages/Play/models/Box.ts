@@ -9,7 +9,8 @@ export class Box extends Entity {
       tags: [],
       onEntityEnter: () => true,
       image: 'src/pages/Play/assets/images/box.webp',
-      type: 'box'
+      type: 'box',
+      depth: 30
     })
   }
 }

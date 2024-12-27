@@ -41,6 +41,7 @@ export class Player extends Entity {
       level
     )
 
+    this.depth = 50
     this.name = name
     this.image = image
     this.portrait = portrait

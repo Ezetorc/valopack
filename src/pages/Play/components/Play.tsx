@@ -20,11 +20,6 @@ export default function Play () {
   const { updatePage } = useSettings()
   const { inventory, addCredits, removeCredits } = useUser()
 
-  useEffect(() => {
-    updatePage('play')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   const initialize = useCallback(async () => {
     if (!matchStarted) {
       const { allyPlayers, enemyPlayers } = board.getTotalPlayers()
@@ -60,8 +55,14 @@ export default function Play () {
   }, [addCredits, board, matchStarted, removeCredits, result])
 
   useEffect(() => {
+    updatePage('play')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
     initialize()
-  }, [initialize])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     handleGameResult()

@@ -1,4 +1,5 @@
 import { Entity } from './Entity'
+import { Player } from './Player'
 import { Position } from './Position'
 
 export class Fire extends Entity {
@@ -7,13 +8,17 @@ export class Fire extends Entity {
       position: new Position(0, 0),
       free: true,
       tags: [],
-      onEntityEnter: () => true,
       image: 'src/pages/Play/assets/images/fire.webp',
-      type: 'fire'
+      type: 'fire',
+      depth: 10
     })
 
     this.onEntityEnter = (entity: Entity): boolean => {
-      console.log('entity', entity)
+      if (entity.is('player')) {
+        const player: Player = entity as Player
+        player.setHealth(prevHealth => prevHealth - 30)
+      }
+
       return true
     }
   }
