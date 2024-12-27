@@ -1,1 +1,1 @@
-export type AbilityIdentifier = 'skySmoke' | 'stimBeacon' | "hotHands"
+export type AbilityIdentifier = 'skySmoke' | 'stimBeacon' | "hotHands" | "curveBall"

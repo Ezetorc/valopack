@@ -4,13 +4,16 @@ import { useBoard } from '../hooks/useBoard'
 import { Ability } from '../models/Ability'
 import { Action } from '../models/Action'
 import { Board } from '../models/Board'
-import { EntityType } from '../models/EntityType'
 import { Player } from '../models/Player'
 import { Square } from '../models/Square'
 import { Distance } from '../services/Distance.service'
-import { getMissingEntityTypes } from '../utilities/getMissingEntityTypes'
 import { EntityDisplay } from './EntityDisplay'
 import { SquareDisplay } from './SquareDisplay'
+import { isAbilityUsable } from '../utilities/isAbilityUsable'
+import { getTargetEntities } from '../utilities/getTargetEntities'
+import { getMissingEntities } from '../utilities/getMissingEntities'
+import { ValidEntityTypes } from '../models/ValidEntityTypes'
+import { EntityType } from '../models/EntityType'
 
 const BoardDisplayComponent = ({ board }: { board: Board }) => {
   const {
@@ -27,15 +30,19 @@ const BoardDisplayComponent = ({ board }: { board: Board }) => {
   const [, forceUpdate] = useState(0)
   const boardRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    forceUpdate(prev => prev + 1)
-    board.grid.flat().forEach(square => square.orderEntitiesByDepth())
-  }, [board])
-
   const changeTurn = useCallback(() => {
     updatePendingActions()
     toggleTurn()
   }, [toggleTurn, updatePendingActions])
+
+  const executeAbility = useCallback(
+    (ability: Ability, squareFrom: Square, targetSquare: Square) => {
+      handleAbility(ability, squareFrom, targetSquare)
+      resetActions()
+      changeTurn()
+    },
+    [changeTurn, handleAbility, resetActions]
+  )
 
   const showInvalidMove = useCallback(() => {
     boardRef.current?.classList.add('animate-invalid_move')
@@ -44,6 +51,16 @@ const BoardDisplayComponent = ({ board }: { board: Board }) => {
       boardRef.current?.classList.remove('animate-invalid_move')
     }, 300)
   }, [])
+
+  const handleInvalidAction = useCallback((): void => {
+    showInvalidMove()
+    setSquareTo(null)
+  }, [showInvalidMove, setSquareTo])
+
+  useEffect(() => {
+    forceUpdate(prev => prev + 1)
+    board.grid.flat().forEach(square => square.orderEntitiesByDepth())
+  }, [board])
 
   const handleMoveAction = useCallback(
     (squareToMove: Square) => {
@@ -65,18 +82,10 @@ const BoardDisplayComponent = ({ board }: { board: Board }) => {
         resetActions()
         changeTurn()
       } else {
-        showInvalidMove()
-        setSquareTo(null)
+        handleInvalidAction()
       }
     },
-    [
-      movePlayer,
-      squareFrom,
-      resetActions,
-      showInvalidMove,
-      setSquareTo,
-      changeTurn
-    ]
+    [movePlayer, squareFrom, resetActions, handleInvalidAction, changeTurn]
   )
 
   const handleAttackAction = useCallback(
@@ -95,18 +104,10 @@ const BoardDisplayComponent = ({ board }: { board: Board }) => {
         resetActions()
         changeTurn()
       } else {
-        showInvalidMove()
-        setSquareTo(null)
+        handleInvalidAction()
       }
     },
-    [
-      attackPlayer,
-      resetActions,
-      setSquareTo,
-      squareFrom,
-      showInvalidMove,
-      changeTurn
-    ]
+    [attackPlayer, resetActions, handleInvalidAction, squareFrom, changeTurn]
   )
 
   const handleAbilityAction = useCallback(
@@ -117,49 +118,25 @@ const BoardDisplayComponent = ({ board }: { board: Board }) => {
       const { abilities } = player
       const selectedAbility: Ability =
         action === 'ability0' ? abilities[0] : abilities[1]
-      const distance: number = Distance.get(
-        squareFrom.position,
-        targetSquare.position
+      const distance: number = Distance.get(squareFrom.position, targetSquare.position)
+      const validEntityTypes: ValidEntityTypes = selectedAbility.validEntityTypes
+      const targetEntities: "empty" | EntityType[] = getTargetEntities(targetSquare)
+      const missingEntityTypes: EntityType[] = getMissingEntities(validEntityTypes)
+      const canUseAbility: boolean = isAbilityUsable(
+        distance,
+        selectedAbility.useRange,
+        validEntityTypes,
+        targetEntities,
+        missingEntityTypes
       )
-
-      const validEntityTypes: (EntityType | 'empty')[] =
-        selectedAbility.validEntityTypes
-      const missingEntityTypes: EntityType[] = getMissingEntityTypes(
-        validEntityTypes.filter(type => type !== 'empty') as EntityType[]
-      )
-
-      const targetEntities: 'empty' | EntityType[] = targetSquare.isEmpty()
-        ? 'empty'
-        : targetSquare.getEntitiesTypes()
-
-      const canUseAbility: boolean =
-        Distance.isWithinRange(distance, selectedAbility.useRange) &&
-        (targetEntities === 'empty'
-          ? validEntityTypes.includes('empty')
-          : targetEntities.every(
-              entityType =>
-                validEntityTypes.includes(entityType) &&
-                !missingEntityTypes.includes(entityType)
-            ))
 
       if (canUseAbility) {
-        handleAbility(selectedAbility, squareFrom, targetSquare)
-        resetActions()
-        changeTurn()
+        executeAbility(selectedAbility, squareFrom, targetSquare)
       } else {
-        showInvalidMove()
-        setSquareTo(null)
+        handleInvalidAction()
       }
     },
-    [
-      action,
-      handleAbility,
-      resetActions,
-      setSquareTo,
-      showInvalidMove,
-      squareFrom,
-      changeTurn
-    ]
+    [action, squareFrom, handleInvalidAction, executeAbility]
   )
 
   const handleAction = useCallback(

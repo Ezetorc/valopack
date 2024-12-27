@@ -4,7 +4,7 @@ import { Method } from './Method.ts'
 
 export interface Ability {
   readonly identifier: AbilityIdentifier
-  readonly validEntityTypes: (EntityType | 'empty')[]
+  readonly validEntityTypes: (EntityType | 'empty')[] | 'all'
   readonly uses: number
   readonly useRange: [number, number]
   readonly index: undefined | 0 | 1

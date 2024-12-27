@@ -5,6 +5,28 @@ export const dictionaries: {
   [key: string]: Dictionary
 } = {
   en: {
+    abilities: {
+      skySmoke: {
+        name: 'Sky Smoke',
+        description:
+          'Throw a 3x3 smoke that let pass your allies but no enemies'
+      },
+      stimBeacon: {
+        name: 'Stim Beacon',
+        description:
+          'Throw a stim beacon that increase speed by one of allies around it for two turns.'
+      },
+      hotHands: {
+        name: 'Hot Hands',
+        description:
+          'Throw a fireball that deals 50 damage to enemies in a 3x3 area.'
+      },
+      curveBall: {
+        name: 'Curve Ball',
+        description:
+          'Throws a flash that affects enemies in a 3x3 area decreasing their Accuracy, Critical Chance and Defense.'
+      }
+    },
     addCard: 'Add Card',
     youHave: 'You have',
     buy: 'Buy',
@@ -78,23 +100,6 @@ export const dictionaries: {
     loading: 'LOADING',
     language: 'Language',
     level: 'Level',
-    abilities: {
-      skySmoke: {
-        name: 'Sky Smoke',
-        description:
-          'Throw a 3x3 smoke that let pass your allies but no enemies'
-      },
-      stimBeacon: {
-        name: 'Stim Beacon',
-        description:
-          'Throw a stim beacon that increase speed by one of allies around it for two turns.'
-      },
-      hotHands: {
-        name: 'Hot Hands',
-        description:
-          'Throw a fireball that deals 50 damage to enemies in a 3x3 area.'
-      }
-    },
     wannaBuy: (name: string) => `Do you want to buy ${name}?`
   },
 
@@ -188,6 +193,11 @@ export const dictionaries: {
         name: 'Manos Calientes',
         description:
           'Tira una bola de fuego que inflige 50 de daño a los enemigos en un área de 3x3.'
+      },
+      curveBall: {
+        name: 'Bola curva',
+        description:
+          'Tira una flash que afecta a los enemigos en un área de 3x3 disminuyendo su Precisión, Probabilidad de crítico y Defensa'
       }
     },
     audio: 'Audio',

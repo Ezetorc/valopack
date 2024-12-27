@@ -1,7 +1,9 @@
+import { AbilityIdentifier } from '../pages/Play/models/AbilityIdentifier.ts'
 import { Product } from '../pages/Shop/models/Product.ts'
 import { AbilityInfo } from './AbilityInfo.ts'
 
 export interface Dictionary {
+  abilities: { [key in AbilityIdentifier]: AbilityInfo}
   addCard: string
   buy: string
   audio: string
@@ -73,10 +75,5 @@ export interface Dictionary {
   loading: string
   language: string
   level: string
-  abilities: {
-    skySmoke: AbilityInfo
-    stimBeacon: AbilityInfo
-    hotHands: AbilityInfo
-  }
   wannaBuy: (name: string) => string
 }
