@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       screens: {
-        "tm": '320px'
+        tm: '320px'
       },
       fontFamily: {
         valorant: ['valorant', 'sans-serif'],
@@ -18,9 +18,23 @@ export default {
         fade: 'fade var(--fade-duration)',
         scale_up: 'scale_up 0.2s',
         show: 'show 0.5s forwards',
-        opening: 'opening 2s forwards'
+        opening: 'opening 2s forwards',
+        flash: 'flash var(--flash-duration) forwards'
       },
       keyframes: {
+        flash: {
+          '0%': {
+            'background-color': 'var(--flash-start-color)'
+          },
+
+          '90%': {
+            'background-color': 'var(--flash-end-color)'
+          },
+
+          '100%': {
+            'background-color': '#0000'
+          }
+        },
         appear: {
           from: { transform: 'scale(0)' },
           to: { transform: 'scale(1)' }

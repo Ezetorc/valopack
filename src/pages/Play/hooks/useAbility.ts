@@ -1,8 +1,7 @@
 import { useSettings } from '../../../hooks/useSettings'
-import { AudioId } from '../../../models/Audio'
 import { Hexadecimal } from '../../../models/Hexadecimal'
 import { entities } from '../constants/entities'
-import { Ability } from '../models/Ability'
+import { Ability } from '../../../models/Ability'
 import { AddClassParams } from '../models/AddClassParams'
 import { AddEntityParams } from '../models/AddEntityParams'
 import { AddTagParams } from '../models/AddTagParams'
@@ -25,6 +24,9 @@ import { WaitParams } from '../models/WaitParams'
 import { Parser } from '../services/Parser.service'
 import { getGameStore } from '../stores/getGameStore'
 import { applyFilters } from '../utilities/applyFilters'
+import { ShowFlashParams } from '../models/ShowFlashParams'
+import React from 'react'
+import { maxLeveledAttributes } from '../../../valopack.config'
 
 export function useAbility () {
   const gameStore: GameStore = getGameStore()
@@ -39,12 +41,14 @@ export function useAbility () {
 
   const { playAudio } = useSettings()
 
-  const updatePendingActions = (): void => {
+  const updatePendingActions = (
+    animationRef: React.RefObject<HTMLDivElement>
+  ): void => {
     const newPendingActions: PendingAction[] = pendingActions
       .map(pendingAction => {
         if (pendingAction.turns <= 0) {
           pendingAction.methods.forEach(method => {
-            handleMethod(method, pendingAction.squareTo)
+            handleMethod(method, pendingAction.squareTo, animationRef)
           })
         }
 
@@ -58,20 +62,25 @@ export function useAbility () {
   const handleAbility = (
     ability: Ability,
     squareFrom: Square,
-    squareTo: Square
+    squareTo: Square,
+    animationRef: React.RefObject<HTMLDivElement>
   ): void => {
     const player: Player | undefined = squareFrom.getPlayer()
 
     if (player && ability.index !== undefined) {
-      ;(player as Player).abilityUses[ability.index] -= 1
+      player.abilityUses[ability.index] -= 1
     }
 
     ability.methods.forEach(method => {
-      handleMethod(method, squareTo)
+      handleMethod(method, squareTo, animationRef)
     })
   }
 
-  const handleMethod = (method: Method, squareTo: Square): void => {
+  const handleMethod = (
+    method: Method,
+    squareTo: Square,
+    animationRef: React.RefObject<HTMLDivElement>
+  ): void => {
     const { type, params } = method
 
     if (type == 'add-entity') {
@@ -83,7 +92,7 @@ export function useAbility () {
     } else if (type == 'add-tag') {
       addTag(params as AddTagParams, squareTo)
     } else if (type == 'wait') {
-      wait(params as WaitParams, squareTo)
+      wait(params as WaitParams, squareTo, animationRef)
     } else if (type == 'show-fade') {
       showFade(params as ShowFadeParams, squareTo)
     } else if (type == 'add-class') {
@@ -93,7 +102,9 @@ export function useAbility () {
     } else if (type == 'remove-class') {
       removeClass(params as RemoveClassParams, squareTo)
     } else if (type == 'play-audio') {
-      playAudio((params as PlayAudioParams).audioId as AudioId)
+      playAudio((params as PlayAudioParams).audioId)
+    } else if (type == 'show-flash') {
+      showFlash(params as ShowFlashParams, animationRef)
     }
   }
 
@@ -126,7 +137,6 @@ export function useAbility () {
       if (!params.tags) return squares
 
       const parsedTags: Tag[] = Parser.getParsedTags(params.tags, turn)
-      console.log('getSquares')
 
       const filteredSquares: Square[] = squares.filter(square =>
         square.hasEntityWithTag(parsedTags)
@@ -179,7 +189,13 @@ export function useAbility () {
       const player: Player | undefined = square.getPlayer()
 
       if (player instanceof Player) {
-        player.attributes[params.attribute] += params.amount
+        const currentValue = player.attributes[params.attribute]
+        let newValue = currentValue + params.amount
+
+        const maxLevel = maxLeveledAttributes[params.attribute] || Infinity
+        newValue = Math.max(0, Math.min(newValue, maxLevel))
+
+        player.attributes[params.attribute] = newValue
       }
     })
   }
@@ -195,11 +211,15 @@ export function useAbility () {
     )
   }
 
-  const wait = (params: WaitParams, squareTo: Square): void => {
+  const wait = (
+    params: WaitParams,
+    squareTo: Square,
+    animationRef: React.RefObject<HTMLDivElement>
+  ): void => {
     if (params.type == 'miliseconds') {
       setTimeout(() => {
         params.methods.forEach(method => {
-          handleMethod(method, squareTo)
+          handleMethod(method, squareTo, animationRef)
         })
 
         const newBoard: Board = new Board(board.colors, [...board.grid])
@@ -234,6 +254,24 @@ export function useAbility () {
         square.removeClass('animate-fade')
       }, params.duration * 1000)
     })
+  }
+
+  const showFlash = (
+    params: ShowFlashParams,
+    animationRef: React.RefObject<HTMLDivElement>
+  ): void => {
+    if (animationRef?.current) {
+      const element = animationRef.current
+      element.style.setProperty('--flash-start-color', params.startColor)
+      element.style.setProperty('--flash-end-color', params.endColor)
+      element.style.setProperty('--flash-duration', `${params.duration}ms`)
+
+      element.classList.add('animate-flash')
+
+      setTimeout(() => {
+        element.classList.remove('animate-flash')
+      }, params.duration)
+    }
   }
 
   const addClass = (params: AddClassParams, squareTo: Square): void => {

@@ -7,6 +7,7 @@ import { RemoveClassParams } from './RemoveClassParams'
 import { RemoveEntityParams } from './RemoveEntityParams'
 import { RemoveTagParams } from './RemoveTagParams'
 import { ShowFadeParams } from './ShowFadeParams'
+import { ShowFlashParams } from './ShowFlashParams'
 import { WaitParams } from './WaitParams'
 
 export interface Method {
@@ -21,6 +22,7 @@ export interface Method {
     | 'add-class'
     | 'remove-class'
     | 'play-audio'
+    | 'show-flash'
   params:
     | ModifyAttributeParams
     | WaitParams
@@ -32,4 +34,5 @@ export interface Method {
     | AddClassParams
     | RemoveClassParams
     | PlayAudioParams
+    | ShowFlashParams
 }

@@ -1,7 +1,7 @@
 import { useCallback, useRef, memo, useEffect, useState } from 'react'
 import { useAbility } from '../hooks/useAbility'
 import { useBoard } from '../hooks/useBoard'
-import { Ability } from '../models/Ability'
+import { Ability } from '../../../models/Ability'
 import { Action } from '../models/Action'
 import { Board } from '../models/Board'
 import { Player } from '../models/Player'
@@ -29,15 +29,16 @@ const BoardDisplayComponent = ({ board }: { board: Board }) => {
   const { handleAbility, updatePendingActions } = useAbility()
   const [, forceUpdate] = useState(0)
   const boardRef = useRef<HTMLDivElement>(null)
+  const animationRef = useRef<HTMLDivElement>(null)
 
   const changeTurn = useCallback(() => {
-    updatePendingActions()
+    updatePendingActions(animationRef)
     toggleTurn()
   }, [toggleTurn, updatePendingActions])
 
   const executeAbility = useCallback(
     (ability: Ability, squareFrom: Square, targetSquare: Square) => {
-      handleAbility(ability, squareFrom, targetSquare)
+      handleAbility(ability, squareFrom, targetSquare, animationRef)
       resetActions()
       changeTurn()
     },
@@ -118,10 +119,16 @@ const BoardDisplayComponent = ({ board }: { board: Board }) => {
       const { abilities } = player
       const selectedAbility: Ability =
         action === 'ability0' ? abilities[0] : abilities[1]
-      const distance: number = Distance.get(squareFrom.position, targetSquare.position)
-      const validEntityTypes: ValidEntityTypes = selectedAbility.validEntityTypes
-      const targetEntities: "empty" | EntityType[] = getTargetEntities(targetSquare)
-      const missingEntityTypes: EntityType[] = getMissingEntities(validEntityTypes)
+      const distance: number = Distance.get(
+        squareFrom.position,
+        targetSquare.position
+      )
+      const validEntityTypes: ValidEntityTypes =
+        selectedAbility.validEntityTypes
+      const targetEntities: 'empty' | EntityType[] =
+        getTargetEntities(targetSquare)
+      const missingEntityTypes: EntityType[] =
+        getMissingEntities(validEntityTypes)
       const canUseAbility: boolean = isAbilityUsable(
         distance,
         selectedAbility.useRange,
@@ -166,9 +173,10 @@ const BoardDisplayComponent = ({ board }: { board: Board }) => {
 
   return (
     <div
-      className='grid grid-cols-[repeat(7,_1fr)] grid-rows-[repeat(5,_1fr)] border-[20px] border-[#ffffff5e] items-center w-[90%] min-w-[700px] max-w-[900px] aspect-[16/10]'
+      className='grid relative grid-cols-[repeat(7,_1fr)] grid-rows-[repeat(5,_1fr)] rounded-[5px] border-[20px] border-[#ffffff5e] items-center w-[90%] min-w-[700px] max-w-[900px] aspect-[16/10]'
       ref={boardRef}
     >
+      <div ref={animationRef} className='pointer-events-none absolute z-[100] w-full h-full' />
       {board.grid.flat().map((square, squareIndex) => (
         <SquareDisplay
           onClick={() => handleClick(square)}

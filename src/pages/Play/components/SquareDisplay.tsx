@@ -5,7 +5,7 @@ interface SquareDisplayProps {
   children: ReactNode
   color: string
   square: Square
-  onClick: () => void
+  onClick: () => void 
 }
 
 export function SquareDisplay ({

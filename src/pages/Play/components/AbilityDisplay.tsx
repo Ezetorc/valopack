@@ -1,6 +1,6 @@
 import { useSettings } from '../../../hooks/useSettings'
 import { AbilityInfo } from '../../../models/AbilityInfo'
-import { Ability } from '../models/Ability'
+import { Ability } from '../../../models/Ability'
 
 export function AbilityDisplay ({ ability }: { ability: Ability }) {
   const { texts } = useSettings()

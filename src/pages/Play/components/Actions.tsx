@@ -4,14 +4,14 @@ import { useSettings } from '../../../hooks/useSettings.ts'
 import { ActionDisplay } from './ActionDisplay.tsx'
 import { teamColors } from '../../../valopack.config.ts'
 import { Action } from '../models/Action.ts'
-import { Ability } from '../models/Ability.ts'
+import { Ability } from '../../../models/Ability.ts'
 
 interface ActionsProps {
   onOpenInfo: () => void
 }
 
 export function Actions ({ onOpenInfo }: ActionsProps) {
-  const { texts } = useSettings()
+  const { texts, playAudio } = useSettings()
   const { squareFrom, setAction } = useBoard()
 
   if (!squareFrom) return
@@ -24,7 +24,7 @@ export function Actions ({ onOpenInfo }: ActionsProps) {
 
   const renderAbility = (index: number) => {
     if (!player.abilities) return
-    
+
     const ability: Ability = player.abilities[index]
 
     if (!ability || !ability.identifier) return
@@ -32,6 +32,13 @@ export function Actions ({ onOpenInfo }: ActionsProps) {
     const abilityUses: number = player.abilityUses[index]
     const isAvailable: boolean = abilityUses > 0
     const actionType: string = `ability${index}`
+
+    const handleClick = (): void => {
+      if (isAvailable) {
+        playAudio("hover")
+        setAction(actionType as Action)
+      }
+    }
 
     return (
       <ActionDisplay
@@ -41,7 +48,7 @@ export function Actions ({ onOpenInfo }: ActionsProps) {
             ? 'border-v_red bg-v_red_gradient'
             : 'border-v_gray bg-v_gray_gradient'
         }`}
-        onClick={() => isAvailable && setAction(actionType as Action)}
+        onClick={handleClick}
       >
         {texts.abilities[ability.identifier].name}
       </ActionDisplay>

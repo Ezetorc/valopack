@@ -3,7 +3,7 @@ export interface Attributes {
   health: number
   defense: number
   speed: number
-  precision: number
+  precision: number 
   critic: number
   resistance: number
 }

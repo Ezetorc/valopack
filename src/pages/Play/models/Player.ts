@@ -4,7 +4,7 @@ import { Attributes } from '../../../models/Attributes.ts'
 import { Position } from './Position.ts'
 import { initialAttributes } from '../../../valopack.config.ts'
 import { Role } from '../../../models/Role.ts'
-import { Ability } from './Ability.ts'
+import { Ability } from '../../../models/Ability.ts'
 import { Parser } from '../services/Parser.service.ts'
 
 export class Player extends Entity {

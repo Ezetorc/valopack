@@ -1,4 +1,4 @@
-import { Ability } from '../pages/Play/models/Ability.ts'
+import { Ability } from './Ability.ts'
 import { Role } from './Role.ts'
 
 export interface Card {

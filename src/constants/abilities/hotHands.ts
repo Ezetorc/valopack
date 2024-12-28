@@ -1,4 +1,4 @@
-import { Ability } from '../../pages/Play/models/Ability'
+import { Ability } from '../../models/Ability'
 
 export const hotHands: Ability = {
   identifier: 'hotHands',
