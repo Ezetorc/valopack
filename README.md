@@ -1,4 +1,4 @@
-# 🎮 VALOPACK 🎴
+# 🎮 VALOPACK (Unfinished) 🎴
 
 **ValoPack** is an **unofficial VALORANT-inspired web game** where you collect, build, and battle using custom card packs.
 
